@@ -1,20 +1,85 @@
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ForglemMigEj</title>
+  <link rel="stylesheet" href="{{asset('styles/app.css')}}"> 
+  <link rel="icon" type="image/x-icon" href="{{asset('Images/favicon.ico')}}">
+  <link rel="prefetch" href="{{asset('Images/favicon.ico')}}">
+</head>
 
-{% block title %}Hello HomepageController!{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<body>
+  <div style="display: flex;">
+    <aside>
+    <div style="display: flex; width:auto; justify-content: center; align-items: center;">
+      <img src="{{asset('Images/favicon.ico')}}" alt="ForglemMigEj logo" style="max-width: 80px;">
+      <h1>ForglemMigEj</h1>
+    </div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/emili/cep2_MedicineWebsite/src/Controller/HomepageController.php</code></li>
-        <li>Your template at <code>C:/Users/emili/cep2_MedicineWebsite/templates/homepage/index.html.twig</code></li>
-    </ul>
-</div>
-{% endblock %}
+      <nav class="nav">
+        <a href="/" style="all: unset;">
+          <div class="nav-item">
+           <div class="nav-text">Forside</div>
+          </div>
+        </a>
+        
+
+        <a href="/medicin" style="all: unset;">
+          <div class="nav-item">
+            <div class="nav-text">Medicin</div>
+          </div>
+        </a>
+
+
+        <a href="/historik" style="all: unset;">
+          <div class="nav-item">
+            <div class="nav-text">Historik</div>
+          </div>
+        </a>
+
+        <a href="/udstyr" style="all: unset;">
+          <div class="nav-item">
+            <div class="nav-text">Udstyr</div>
+          </div>
+        </a>
+
+        <a href="/profil" style="all: unset;">
+          <div class="nav-item">
+            <div class="nav-text">Profil</div>
+          </div>
+        </a>
+
+        <a href="/hjaelp" style="all: unset;">
+          <div class="nav-item">
+            <div class="nav-text">Hjælp</div>
+          </div>
+        </a>
+
+        <a href="/login" style="all: unset;">
+          <div class="nav-item">
+            <div class="nav-text">Log ind</div>
+          </div>
+        </a>
+
+
+
+
+
+      </nav>
+    </div>
+    </aside>
+    
+    <div class="main-content">
+      <h2 style="text-align: center;">Velkommen til ForglemMigEj</h2>
+      <p style="text-align: center;">Her kan du holde styr på din medicin og dit udstyr</p>
+      <p style="text-align: center;">Du kan også se din historik og ændre i din profil</p>
+      <p style="text-align: center;">Hvis du har brug for hjælp, kan du finde det under Hjælp</p>
+      <p style="text-align: center;">God fornøjelse</p>
+    </div>
+  </div>
+</body>
+</html>
