@@ -4,13 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}ForglemMigEj{% endblock %}</title>
-    <link rel="stylesheet" href="{{ asset('styles/app.css') }}" />
     <link
       rel="icon"
       type="image/x-icon"
       href="{{ asset('Images/favicon.ico') }}" />
-    <link rel="prefetch" href="{{ asset('Images/favicon.ico') }}" />
+
+      
+
+    {% block javascripts %} {% block importmap %}
+    {{
+      importmap("app")
+    }}
+    {% endblock %} {% endblock %}
   </head>
+
   <body>
     <div style="display: flex; height: 100%">
       <aside>
@@ -89,64 +96,5 @@
         {% block content %}{% endblock %}
       </div>
     </div>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const navLinks = document.querySelectorAll("nav a");
-        const contentDiv = document.getElementById("content");
-
-        async function loadPage(url) {
-          if (window.location.pathname === url) {
-            return;
-          }
-          contentDiv.classList.add("fading");
-          try {
-            const response = await fetch(url);
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const html = await response.text();
-            const tempDiv = document.createElement("div");
-            tempDiv.innerHTML = html;
-
-            // Hent kun det indhold, der skal opdateres
-            const newContent = tempDiv.querySelector("#content");
-            if (newContent) {
-              setTimeout(function () {
-                contentDiv.innerHTML = newContent.innerHTML;
-                contentDiv.classList.remove("fading");
-              }, 250);
-            }
-
-            history.pushState({ url: url }, "", url);
-          } catch (error) {
-            console.error("Error loading page:", error);
-          }
-        }
-
-        navLinks.forEach((link) => {
-          link.addEventListener("click", function (event) {
-            event.preventDefault();
-            loadPage(this.getAttribute("href"));
-          });
-        });
-
-        window.addEventListener("popstate", function (event) {
-          if (event.state) {
-            loadPage(event.state.url);
-          } else {
-            loadPage("/");
-          }
-        });
-      });
-    </script>
-    <style>
-      #content {
-        transition: opacity 0.5s ease-in-out;
-        opacity: 1;
-      }
-      #content.fading {
-        opacity: 0;
-      }
-    </style>
   </body>
 </html>

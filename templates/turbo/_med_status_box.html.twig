@@ -7,15 +7,15 @@
 
 <div class="main-container" style="height: 80%">
   <turbo-frame id="medStatusFrame">
-    <div id="medStatusBox" class="forside-box" data-medicine-status="{{medicineStatus}}">
+    <div id="medStatusBox" class="forside-box">
         <div><h2 style="font-size: xx-large">Seneste medicin status</h2></div>
         <div>
             <h2 style="width: 100%">
                 <strong><span id="SenesteMedikament">{{ senMedikament }}</span> er taget til tiden</strong>
-                
             </h2>
         </div>
     </div>
+    <a id="updateMedStatusLink" href="{{ path('update_med_status') }}" data-turbo-frame="medStatusFrame" data-turbo="false">Update Medicine Status</a>
 </turbo-frame>
 
     <div style="display: flex; margin-top: 50px">
@@ -27,11 +27,8 @@
         </div>
         <div class="forside-box" style="width: 30%; background-color: #feb4b8">
             <div>Prioritet</div>
-
-           
         </div>
     </div>
 </div>
-
 
 {% endblock %}

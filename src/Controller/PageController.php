@@ -17,11 +17,26 @@ class PageController extends AbstractController
 
     return $this->render('page/home.html.twig', [
       'controller_name' => 'HomepageController',
-      'medicineStatus' =>   $number,
-      'senMedikament' =>    $meds[random_int(0, 5)],
+      'medicineStatus'  =>  $number,
+      'senMedikament'   =>  $meds[random_int(0, 5)],
       'nesteMedikament' =>  $meds[random_int(0, 5)],
     ]);
   }
+
+  #[Route('/update-med-status', name: 'update_med_status')]
+  public function updateMedStatus(): Response
+  {
+    $meds = array("Ibuprofen", "Paracetamol", "Aspirin", "Vitamin C", "Vitamin D", "Vitamin E");
+    $number = random_int(0, 1);
+    
+    return $this->render('turbo/_med_status_box.html.twig', [
+      'medicineStatus'  =>  $number,
+      'senMedikament'   =>  $meds[random_int(0, 5)],
+      'nesteMedikament' =>  $meds[random_int(0, 5)],
+    ]);
+  }
+
+
 
   #[Route('/medicin', name: 'medicin')]
   public function medicin(): Response
@@ -70,5 +85,4 @@ class PageController extends AbstractController
       'controller_name' => 'ProfilController',
     ]);
   }
-  
 }

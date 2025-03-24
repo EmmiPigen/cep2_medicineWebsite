@@ -56,3 +56,27 @@ h1, h2, h3 , h4, h5, h6 {
     border-radius: 25px;
     padding: 10px;
 }
+
+.forside-box-red{
+  border: 3px;
+  border-color: black;
+  border-radius: 25px;
+  padding: 10px;
+  background-color: #e06666;
+}
+
+.forside-box-green{
+  border: 3px;
+  border-color: black;
+  border-radius: 25px;
+  padding: 10px;
+  background-color: #a1c193;
+}
+
+#content {
+  transition: opacity 0.5s ease-in-out;
+  opacity: 1;
+}
+#content.fading {
+  opacity: 0;
+}
