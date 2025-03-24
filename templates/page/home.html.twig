@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div style="display: flex; width: 100%;">
+        <h3>Logget ind som:</h3>
+    </div>
+    <div class="main-container" style="height: 80%;">
+        <div id="medStatusBox" class="forside-box">
+            <div style="margin-top: -10px; justify-items: center">
+                <div><h2>Seneste medicin status</h2></div>
+            </div>
+
+            <script>
+                var element = document.getElementById("medStatusBox");
+                var x = "{{ medicineStatus }}";
+                medStatus = document.createElement("div");
+
+                if (x == "1") {
+                    element.style.backgroundColor = "#a1c193";
+                } else {
+                    element.style.backgroundColor = "#e06666";
+                }
+            </script>
+            <div>
+                <h3 style="width: 100%;"><strong><span id="SenesteMedikament">{{ senMedikament }}</span> er taget til tiden</strong></h3>
+                <div style="display: flex;">
+                    <h3></h3>
+                </div>
+                <p>{{ medicineStatus }}</p>
+            </div>
+        </div>
+        <div style="display: flex; margin-top: 50px">
+            <div class="forside-box" style="width: 30%; background-color: #feb4b8">
+                <div>Næste dosis</div>
+            </div>
+            <div class="forside-box" style="width: 30%; background-color: #feb4b8">
+                <div>Medikament</div>
+            </div>
+            <div class="forside-box" style="width: 30%; background-color: #feb4b8">
+                <div>Prioritet</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

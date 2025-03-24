@@ -1,17 +1,152 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+<html lang="da">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}ForglemMigEj{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('styles/app.css') }}" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{{ asset('Images/favicon.ico') }}" />
+    <link rel="prefetch" href="{{ asset('Images/favicon.ico') }}" />
+  </head>
+  <body>
+    <div style="display: flex; height: 100%">
+      <aside>
+        <div
+          style="
+            display: flex;
+            width: auto;
+            justify-content: center;
+            align-items: center;
+            max-width: 20vw;
+          ">
+          <img
+            src="{{ asset('Images/favicon.ico') }}"
+            alt="ForglemMigEj logo"
+            style="max-width: 80px" />
+          <h1>ForglemMigEj</h1>
+        </div>
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+        <div>
+          <nav class="nav">
+            <a href="{{ path('home') }}" data-page="home" style="all: unset">
+              <div class="nav-item">
+                <div class="nav-text">> Forside</div>
+              </div>
+            </a>
+            <a
+              href="{{ path('medicin') }}"
+              data-page="medicin"
+              style="all: unset">
+              <div class="nav-item">
+                <div class="nav-text">> Medicin</div>
+              </div>
+            </a>
+            <a
+              href="{{ path('historik') }}"
+              data-page="historik"
+              style="all: unset">
+              <div class="nav-item">
+                <div class="nav-text">> Historik</div>
+              </div>
+            </a>
+            <a
+              href="{{ path('udstyr') }}"
+              data-page="udstyr"
+              style="all: unset">
+              <div class="nav-item">
+                <div class="nav-text">> Udstyr</div>
+              </div>
+            </a>
+            <a
+              href="{{ path('profil') }}"
+              data-page="profil"
+              style="all: unset">
+              <div class="nav-item">
+                <div class="nav-text">> Profil</div>
+              </div>
+            </a>
+            <a
+              href="{{ path('hjaelp') }}"
+              data-page="hjaelp"
+              style="all: unset">
+              <div class="nav-item">
+                <div class="nav-text">> Hjælp</div>
+              </div>
+            </a>
+            <a href="{{ path('login') }}" data-page="login" style="all: unset">
+              <div class="nav-item">
+                <div class="nav-text">> Log ind</div>
+              </div>
+            </a>
+          </nav>
+        </div>
+      </aside>
+
+      <div class="main-content" id="content">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const navLinks = document.querySelectorAll("nav a");
+        const contentDiv = document.getElementById("content");
+
+        async function loadPage(url) {
+          if (window.location.pathname === url) {
+            return;
+          }
+          contentDiv.classList.add("fading");
+          try {
+            const response = await fetch(url);
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const html = await response.text();
+            const tempDiv = document.createElement("div");
+            tempDiv.innerHTML = html;
+
+            // Hent kun det indhold, der skal opdateres
+            const newContent = tempDiv.querySelector("#content");
+            if (newContent) {
+              setTimeout(function () {
+                contentDiv.innerHTML = newContent.innerHTML;
+                contentDiv.classList.remove("fading");
+              }, 250);
+            }
+
+            history.pushState({ url: url }, "", url);
+          } catch (error) {
+            console.error("Error loading page:", error);
+          }
+        }
+
+        navLinks.forEach((link) => {
+          link.addEventListener("click", function (event) {
+            event.preventDefault();
+            loadPage(this.getAttribute("href"));
+          });
+        });
+
+        window.addEventListener("popstate", function (event) {
+          if (event.state) {
+            loadPage(event.state.url);
+          } else {
+            loadPage("/");
+          }
+        });
+      });
+    </script>
+    <style>
+      #content {
+        transition: opacity 0.5s ease-in-out;
+        opacity: 1;
+      }
+      #content.fading {
+        opacity: 0;
+      }
+    </style>
+  </body>
 </html>
