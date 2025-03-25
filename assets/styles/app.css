@@ -28,6 +28,11 @@ h1, h2, h3 , h4, h5, h6 {
       color: white;
   }
 
+  .nav-active {
+      background-color: rgb(81, 135, 156);
+      font-weight: bold;
+  }
+
 .nav-text {
     font-size: 30px;
     font-weight: 400;
@@ -55,6 +60,7 @@ h1, h2, h3 , h4, h5, h6 {
     border-color: black;
     border-radius: 25px;
     padding: 10px;
+    background-color: #feb4b8;
 }
 
 .forside-box-red{

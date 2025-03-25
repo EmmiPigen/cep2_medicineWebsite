@@ -1,29 +1,22 @@
 document.addEventListener("DOMContentLoaded", function () {
   dynammiskIndlaesning();
   updateMedicineStatus();
+  highLightCurrentPage();
 });
 
-// Opdater medicinstatus på forsiden
-
 function updateMedicineStatus() {
-  if (window.location.pathname == "/") {
+  if (window.location.pathname === "/") {
     let medStatusBox = document.getElementById("medStatusBox");
     if (!medStatusBox) {
       console.error("Medicine status box not found");
       return;
     }
 
-    // Twig variabelen bliver korrekt indsat med escape('js')
     let medicineStatus = medStatusBox.getAttribute("data-medicine-status");
+    console.log("Medicine Status:", medicineStatus);
 
-    console.log("Medicine Status: " + medicineStatus);
-
-    // Ændre baggrundsfarven baseret på medicinstatus
-    if (medicineStatus == "1") {
-      medStatusBox.setAttribute('class', "forside-box-green"); // Grøn
-    } else {
-      medStatusBox.setAttribute('class', "forside-box-red");// Rød
-    }
+    medStatusBox.classList.toggle("forside-box-green", medicineStatus === "1");
+    medStatusBox.classList.toggle("forside-box-red", medicineStatus !== "1");
   }
 }
 
@@ -36,6 +29,7 @@ function dynammiskIndlaesning() {
     if (window.location.pathname === url) {
       return;
     }
+
     contentDiv.classList.add("fading");
     try {
       const response = await fetch(url);
@@ -48,13 +42,15 @@ function dynammiskIndlaesning() {
 
       // Hent kun det indhold, der skal opdateres
       const newContent = tempDiv.querySelector("#content");
+
       if (newContent) {
-        setTimeout(function () {
+        setTimeout(() => {
           contentDiv.innerHTML = newContent.innerHTML;
           contentDiv.classList.remove("fading");
 
           // Ensure the status update runs *after* the new content is loaded
           updateMedicineStatus();
+          highLightCurrentPage();
         }, 250);
       }
 
@@ -64,13 +60,17 @@ function dynammiskIndlaesning() {
     }
   }
 
+  //Remove previous event listeners
   navLinks.forEach((link) => {
-    link.addEventListener("click", function (event) {
-      event.preventDefault();
-      loadPage(this.getAttribute("href"));
-      updateMedicineStatus();
-    });
+    link.removeEventListener("click", handleNavLinks);
+    link.addEventListener("click", handleNavLinks);
   });
+
+  function handleNavLinks(event) {
+    event.preventDefault();
+    loadPage(this.getAttribute("href"));
+    updateMedicineStatus();
+  }
 
   window.addEventListener("popstate", function (event) {
     if (event.state) {
@@ -81,17 +81,13 @@ function dynammiskIndlaesning() {
   });
 }
 
-document.addEventListener("turbo:load", function () {
-  let updateLink = document.getElementById("medStatusFrame");
-
-  if (updateLink.onclick) {
-    updateLink.addEventListener("click", function (event) {
-      fetch(this.getAttribute("href"))
-        .then((response) => response.text())
-        .then((html) => {
-          document.getElementById("medStatusFrame").innerHTML = html;
-        })
-        .catch((error) => console.error("Error updating med status:", error));
-    });
-  }
-});
+function highLightCurrentPage() {
+  const navLinks = document.querySelectorAll("nav a");
+  navLinks.forEach((link) => {
+    let node = link.firstElementChild;
+    node.classList.remove("nav-active");
+    if (window.location.pathname === link.getAttribute("href")) {
+      node.classList.add("nav-active");
+    }
+  });
+}
