@@ -4,7 +4,7 @@
 Before you begin, ensure you have met the following requirements:
 
 - **PHP:** 8.1 or higher
-- **Composer:** (Use scoop to install on Windows: `scoop install composer` or homebrew on macOS `brew install composer`)
+- **Composer:** (Use scoop, if you have it installed, to install on Windows: `scoop install composer` or homebrew on macOS `brew install composer`)
 - **Symfony CLI:** (optional but recommended) (Use scoop to install on Windows: `scoop install symfony` or homebrew on macOS `brew install symfony`)
 - **A web server:** (e.g., Apache, Nginx, or the Symfony built-in server) 
 - **A database:** MySQL, PostgreSQL, SQLite, or SQL Server
