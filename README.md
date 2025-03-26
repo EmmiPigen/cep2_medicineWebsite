@@ -4,8 +4,8 @@
 Before you begin, ensure you have met the following requirements:
 
 - **PHP:** 8.1 or higher
-- **Composer:** (Use scoop to install on Windows: `scoop install composer` or homebrew on macOS `brew install composer`)
-- **Symfony CLI:** (optional but recommended) (Use scoop to install on Windows: `scoop install symfony` or homebrew on macOS `brew install symfony`)
+- **Composer:** (Use scoop, if you have it, to install on Windows: `scoop install composer` or homebrew on macOS `brew install composer`)
+- **Symfony CLI:** (optional but recommended) (Use scoop to install on Windows: `scoop install symfony-cli` or homebrew on macOS `brew install symfony-cli/tap/symfony-cli`)
 - **A web server:** (e.g., Apache, Nginx, or the Symfony built-in server) 
 - **A database:** MySQL, PostgreSQL, SQLite, or SQL Server
 
@@ -18,6 +18,10 @@ Just copy the `php.ini` file from the `Vigtige Filer` folder and paste it in the
 
 ## Installation 
 **If you have the Symfony CLI installed, you can use the built-in server to start the application. Otherwise, you can use a web server like Apache or Nginx.**
+If you have the symfony CLI installed, you can use the following commands to ensure that the necessary PHP extensions are installed:
+```bash
+symfony check:requirements
+```
 
 1. Clone the repository and navigate to the project directory:
   ```bash
