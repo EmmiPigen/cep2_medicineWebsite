@@ -1,8 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
   dynammiskIndlaesning();
+  runScript();
+});
+
+function runScript() {
   updateMedicineStatus();
   highLightCurrentPage();
-});
+}
 
 function updateMedicineStatus() {
   if (window.location.pathname === "/") {
@@ -49,8 +53,7 @@ function dynammiskIndlaesning() {
           contentDiv.classList.remove("fading");
 
           // Ensure the status update runs *after* the new content is loaded
-          updateMedicineStatus();
-          highLightCurrentPage();
+          runScript();
         }, 250);
       }
 
@@ -69,7 +72,7 @@ function dynammiskIndlaesning() {
   function handleNavLinks(event) {
     event.preventDefault();
     loadPage(this.getAttribute("href"));
-    updateMedicineStatus();
+    runScript();
   }
 
   window.addEventListener("popstate", function (event) {
@@ -90,4 +93,36 @@ function highLightCurrentPage() {
       node.classList.add("nav-active");
     }
   });
+}
+
+function medPriority() {
+  if (window.location.pathname === "/") {
+    let medPriorityText = document.getElementById("medPriorityText");
+    if (!medPriorityText) {
+      console.error("Medicine priority not found");
+      return;
+    }
+    let medPriority = medPriorityText.getAttribute("data-med-priority");
+    console.log("Medicine Priority:", medPriority);
+    
+    const medPriorityBox = document.getElementsByClassName("forside-box-next");
+    console.log(medPriorityBox);
+    
+    if (medPriority === "1") {
+      medPriorityText.innerText = "HØJ";
+      for (let i = 0; i < medPriorityBox.length; i++) {
+        medPriorityBox[i].style.backgroundColor = "red";
+      }
+    } else if (medPriority === "2") {
+      medPriorityText.innerText = "MIDDEL";
+      for (let i = 0; i < medPriorityBox.length; i++) {
+        medPriorityBox[i].style.backgroundColor = "orange";
+      }
+    } else if (medPriority === "3") {
+      medPriorityText.innerText = "LAV";
+      for (let i = 0; i < medPriorityBox.length; i++) {
+        medPriorityBox[i].style.backgroundColor = "green";
+      }
+    }
+  }
 }

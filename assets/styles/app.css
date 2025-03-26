@@ -12,8 +12,7 @@ h1, h2, h3 , h4, h5, h6 {
 
 .nav{
     position: relative;
-    margin: 20px 0;
-    width: 300px;
+    margin: 40px 0;
 }
 
 .nav-item {
@@ -57,8 +56,6 @@ h1, h2, h3 , h4, h5, h6 {
 }
 
 .forside-box {
-    border: 3px;
-    border-color: black;
     border-radius: 25px;
     padding: 10px;
     background-color: #feb4b8;
@@ -71,6 +68,15 @@ h1, h2, h3 , h4, h5, h6 {
 .forside-box-green{
   background-color: #a1c193;
 }
+
+.forside-box-next{
+  background-color: rgb(160, 195, 209);
+  border-radius: 25px;
+  padding: 10px;
+  width: 27%;
+  justify-items: center;
+}
+
 
 #content {
   transition: opacity 0.5s ease-in-out;

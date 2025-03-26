@@ -3,7 +3,7 @@
   <h3>Logget ind som:</h3>
 </div>
 
-<div class="main-container" style="height: 80%">
+<div class="main-container" style="height: 80%; margin-top: 50px;">
   <turbo-frame id="medStatusFrame">
     <div
       id="medStatusBox"
@@ -11,20 +11,22 @@
       data-medicine-status="{{ medicineStatus }}"
       style="justify-items: center">
       <div>
-        <h2>Seneste medicin status</h2>
+        <h2 style="font-size: xx-large; text-align: center; margin-top: -5pt">
+          Seneste medicin status
+        </h2>
       </div>
       <div>
         <div id="senMedikament">
-          <h3>Paracetamol</h3>
+          <h3>{{ medikament }}</h3>
         </div>
-        <div style = "display: flex; justify-content: space-between">
+        <div style="display: flex; justify-content: space-between">
           <div>
-            <h4>Medicin taget kl: </h4>
-            <h4>Medicin taget i: </h4>
+            <h4>Medicin taget kl:</h4>
+            <h4>Medicin taget i:</h4>
           </div>
           <div>
-            <h4 id="senMedikamentTagetKl">12:00</h4>
-            <h4 id="senMedikamentTagetI">Køkkenet</h4>
+            <h4>{{ timeTaken }}</h4>
+            <h4>Køkkenet</h4>
           </div>
         </div>
       </div>
@@ -32,16 +34,48 @@
   </turbo-frame>
   <div id="nextMedBox" class="forside-box" style="margin-top: 50px">
     <div>
-      <h2 style="font-size: xx-large">Medicin for idag</h2>
+      <h2 style="font-size: xx-large; text-align: center">
+        Medicin som skal tages i dag
+      </h2>
     </div>
-    <div>
-      <table>
-        <tr>
-          <th>Næste dosis</th>
-          <th>Medikament</th>
-          <th>Prioritet</th>
-        </tr>
-      </table>
+    <div id="nextMedInfo" style="display: grid">
+      <div
+        id="medListHeader"
+        style="display: flex; justify-content: space-evenly">
+        <h2 style="width: 27%; text-align: center">
+          Næste dosis skal tages:
+        </h2>
+        <h2 style="width: 27%; text-align: center">
+          Skal senest tages:
+        </h2>
+        <h2 style="width: 27%; text-align: center">Prioritet</h2>
+      </div>
+      <div
+        id="medListFirst"
+        style="display: flex; justify-content: space-evenly; margin-top: -10px;">
+        <div class="forside-box-next">
+          <h2>Kl: 12:00</h2>
+        </div>
+        <div class="forside-box-next">
+          <h2>Kl 12:15</h2>
+        </div>
+        <div id="medPriorityBox" class="forside-box-next">
+          <h2>HØJ</h2>
+        </div>
+      </div>
+      <div
+        id="medListSecond"
+        style="display: flex; justify-content: space-evenly; margin-top: 30px">
+        <div class="forside-box-next">
+          <h2>Kl: 18:00</h2>
+        </div>
+        <div class="forside-box-next">
+          <h2>Kl 18:15</h2>
+        </div>
+        <div class="forside-box-next">
+          <h2>LAV</h2>
+        </div>
+      </div>
     </div>
   </div>
 </div>

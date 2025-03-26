@@ -25,7 +25,7 @@ class Medikament
   private ?float $dosis = null;
 
   #[ORM\Column(length: 5)]
-  #[Assert\Choice(['mg', 'g', 'ml'], message: 'Dosis skal være i mg, g eller ml')]
+  #[Assert\Choice(['µg', 'mg', 'g', 'ml'], message: 'Dosis skal være i µg, mg, g  eller ml')]
   private ?string $unit = null;
 
   #[ORM\Column]
@@ -86,14 +86,14 @@ class Medikament
     return $this;
   }
 
-  public function getTimmInterval(): ?int
+  public function getTimeInterval(): ?int
   {
     return $this->timeInterval;
   }
 
-  public function setTimeInterval(int $timmInterval): static
+  public function setTimeInterval(int $timeInterval): static
   {
-    $this->timeInterval = $timmInterval;
+    $this->timeInterval = $timeInterval;
 
     return $this;
   }
@@ -127,7 +127,7 @@ class Medikament
     return $this->takenStatus;
   }
 
-  public function setTakenStatus(?bool $takenStatus): static
+  public function setTakenStatus(bool $takenStatus): static
   {
     $this->takenStatus = $takenStatus;
 

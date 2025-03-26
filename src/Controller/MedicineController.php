@@ -11,35 +11,29 @@ use App\Repository\MedikamentRepository;
 
 final class MedicineController extends AbstractController
 {
-    #[Route('/medicine/{id}', name: 'create_medicine')]
-    public function createMedicine(MedikamentRepository $MedikamentRepository, int $id): Response
-    {
-        /* $medicine = $entityManager->getRepository(Medikament::class)->find($id);
 
-        if (!$medicine) {
-            throw $this->createNotFoundException(
-                'No medicine found for id '.$id
-            );
-        } */
-        
-        $medicine = $MedikamentRepository
-          ->find($id);
-        
-        return new Response('Check out the medication: '.$medicine->getName());
+  #[Route('/medicine/', name: 'create_medicine')]
+  public function createMedicine(EntityManagerInterface $entityManager): Response
+  {
+    $medicineNames = ['Vitamin C', 'Aspirin', 'Ibuprofen', 'Paracetamol', 'Amoxicillin', 'Cough Syrup', 'Antihistamine', 'Probiotic', 'Omega-3', 'Zinc'];
+    $units = ['µg', 'mg', 'g', 'ml'];
+
+    for ($i = 0; $i < 10; $i++){
+      $medicine = new Medikament();
+      $medicine->setName($medicineNames[array_rand($medicineNames)]);
+      $medicine->setDosis(random_int(1, 1000));
+      $medicine->setUnit($units[array_rand($units)]);
+      $medicine->setPriority(random_int(1, 3));
+      $medicine->setTimeInterval(random_int(1, 24));
+      $medicine->setAmount(random_int(1, 5));
+      $medicine->setTimeTaken(new \DateTime('now - ' . rand(0, 48) . ' hours'));
+      
+      $entityManager->persist($medicine);
+
+      $entityManager->flush();
     }
+
+    
+    return new Response('Saved new medicine with id ' . $medicine->getId());
+  }
 }
-
-
-/* $medicine = new Medikament();
-$medicine->setName('Ibuprofen');
-$medicine->setDosis(400);
-$medicine->setPriority(1);
-$medicine->setTimeInterval(6);
-$medicine->setAmount(1);
-$medicine->setTimeTaken(new \DateTime('now'));
-
-//Tell doctrine you want to eventually save the medicine
-$entityManager->persist($medicine);
-
-//Actually save the medicine
-$entityManager->flush(); */
