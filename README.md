@@ -10,7 +10,6 @@ Before you begin, ensure you have met the following requirements:
 =======
 - **Composer:** (Use scoop, if you have it installed, to install on Windows: `scoop install composer` or homebrew on macOS `brew install composer`)
 - **Symfony CLI:** (optional but recommended) (Use scoop to install on Windows: `scoop install symfony` or homebrew on macOS `brew install symfony`)
->>>>>>> 38d9ee1479ed583a5e089553b0a32b1828b0d68e
 - **A web server:** (e.g., Apache, Nginx, or the Symfony built-in server) 
 - **A database:** MySQL, PostgreSQL, SQLite, or SQL Server
 
