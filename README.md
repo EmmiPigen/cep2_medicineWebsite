@@ -4,10 +4,8 @@
 Before you begin, ensure you have met the following requirements:
 
 - **PHP:** 8.1 or higher
-<<<<<<< HEAD
 - **Composer:** (Use scoop, if you have it, to install on Windows: `scoop install composer` or homebrew on macOS `brew install composer`)
 - **Symfony CLI:** (optional but recommended) (Use scoop to install on Windows: `scoop install symfony-cli` or homebrew on macOS `brew install symfony-cli/tap/symfony-cli`)
-=======
 - **Composer:** (Use scoop, if you have it installed, to install on Windows: `scoop install composer` or homebrew on macOS `brew install composer`)
 - **Symfony CLI:** (optional but recommended) (Use scoop to install on Windows: `scoop install symfony` or homebrew on macOS `brew install symfony`)
 - **A web server:** (e.g., Apache, Nginx, or the Symfony built-in server) 
@@ -89,12 +87,7 @@ For apache, you can create a virtual host configuration file, by editing the `ht
 Default port is 8000, so you can navigate to `http://localhost:8000` to view the application, if you are using the Symfony built-in server, or type `symfony open:local` to open the application in your default browser.
 If you are using Apache, you can navigate to `http://symfony-site.local` to view the application.
 
-
 For more information, see the [Symfony documentation](https://symfony.com/doc/current/setup.html).
-
 
 ## License ##
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-
-
