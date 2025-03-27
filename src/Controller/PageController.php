@@ -15,19 +15,32 @@ class PageController extends AbstractController
   public function show(MedikamentRepository $medikamentRepository): Response
   {
 
-    $medikament = $medikamentRepository->find(rand(30, 39));
-    
-    return $this->render('page/home.html.twig', [
-      'controller_name' => 'HomeController',
-      'medikament' => $medikament->getName(),
-      'dosis' => $medikament->getDosis(),
-      'unit' => $medikament->getUnit(),
-      'priority' => $medikament->getPriority(),
-      'timeInterval' => $medikament->getTimeInterval(),
-      'amount' => $medikament->getAmount(),
-      'timeTaken' => $medikament->getTimeTaken()->format('H:i'),
-      'medicineStatus' => $medikament->isTakenStatus()
-    ]);
+    $medikament = $medikamentRepository->find(rand(14, 18));
+
+    if (!$medikament) {
+      $medikamentData = [
+        'medikament' => 'Unknown',
+        'dosis' => 0,
+        'unit' => 'N/A',
+        'priority' => 'Low',
+        'timeInterval' => 0,
+        'amount' => 0,
+        'timeTaken' => '00:00',
+        'medicineStatus' => false
+      ];
+    } else {
+      $medikamentData = [
+        'medikament' => $medikament->getName(),
+        'dosis' => $medikament->getDosis(),
+        'unit' => $medikament->getUnit(),
+        'priority' => $medikament->getPriority(),
+        'timeInterval' => $medikament->getTimeInterval(),
+        'amount' => $medikament->getAmount(),
+        'timeTaken' => $medikament->getTimeTaken()->format('H:i'),
+        'medicineStatus' => $medikament->isTakenStatus()
+      ];
+    };
+    return $this->render('page/home.html.twig', $medikamentData);
   }
 
   #[Route('/medicin', name: 'medicin')]
