@@ -27,8 +27,8 @@ symfony check:requirements
 
 1. Clone the repository and navigate to the project directory:
   ```bash
-  git clone https://github.com/your-username/symfony-site.git
-  cd symfony-site
+  git clone https://github.com/your-username/cep2_medicineWebsite.git
+  cd cep2_medicineWebsite
   ```
 
 2. Install the required dependencies using Composer:
