@@ -34,7 +34,6 @@ h1, h2, h3 , h4, h5, h6 {
   }
 
 .nav-text {
-    font-size: 30px;
     font-weight: 400;
     padding: 0 30px;
     margin: 0px;
@@ -54,29 +53,6 @@ h1, h2, h3 , h4, h5, h6 {
     padding: 20px;
     position: relative;
 }
-
-.forside-box {
-    border-radius: 25px;
-    padding: 10px;
-    background-color: #feb4b8;
-}
-
-.forside-box-red{
-  background-color: #e06666;
-}
-
-.forside-box-green{
-  background-color: #a1c193;
-}
-
-.forside-box-next{
-  background-color: rgb(160, 195, 209);
-  border-radius: 25px;
-  padding: 10px;
-  width: 27%;
-  justify-items: center;
-}
-
 
 #content {
   transition: opacity 0.5s ease-in-out;

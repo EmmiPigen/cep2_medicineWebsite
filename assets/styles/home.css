@@ -1,0 +1,21 @@
+.forside-box {
+  border-radius: 25px;
+  padding: 10px;
+  background-color: #feb4b8;
+}
+
+.forside-box-red{
+background-color: #e06666;
+}
+
+.forside-box-green{
+background-color: #a1c193;
+}
+
+.forside-box-next{
+background-color: rgb(160, 195, 209);
+border-radius: 25px;
+padding: 10px;
+width: 27%;
+justify-items: center;
+}

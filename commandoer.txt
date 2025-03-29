@@ -1,0 +1,7 @@
+Useful commands for symfony and php
+
+
+symfony server:start
+
+php bin/console asset-map:compile                  
+   
