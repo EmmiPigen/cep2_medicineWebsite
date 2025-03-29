@@ -37,7 +37,7 @@ symfony check:requirements
 3. Set up environment variables:
   Copy `.env` to `.env.local` and configure your database and other settings:
   ```bash
-  cp .env .env.local
+  copy .env .env.local 
   ```
 edit the `.env.local` file to configure your database connection:
   ```bash
