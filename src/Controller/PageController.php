@@ -24,14 +24,14 @@ class PageController extends AbstractController
 
       //default data in when no medikament in database
       $medikamentData = [
-        'medickament' => 'Ingen medicin tilgængelig',
+        'medikament' => 'Ingen medicin tilgængelig',
         'dosis' => 'Ingen dosis tilgængelig',
         'unit' => 'Ingen enhed tilgængelig',
         'priority' => 'Ingen prioritet tilgængelig',
         'timeInterval' => 'Ingen tidsinterval tilgængelig',
         'amount' => 'Ingen mængde tilgængelig',
-        'TimeTaken' => 'Ingen tid taget tilgængelig',
-        'medicinStatus' => true
+        'timeTaken' => 'Ingen tid taget tilgængelig',
+        'medicineStatus' => true
       ];
     } else {
       $medikament = $medikamentList[array_rand($medikamentList)];
