@@ -2,5 +2,51 @@
 <div style="display: flex; width: 100%">
   <h3>Logget ind som:</h3>
 </div>
-<div class="main-container" style="height: 80%"></div>
+<!--Line between top of the page and the page elements-->
+<div
+  class="lineSeparator"
+  style="background-color: rgb(77, 70, 63); width: 100%"></div>
+
+<!--Start of the main container element -->
+<div class="main-container">
+  <!--Start of the turbo frame element -->
+  <turbo-frame class="main-container">
+    <!--Start of the medicin table box element -->
+    <div class="medicinTabelBox">
+      <h2 style="text-align: center">
+        Oversigt over Medicinintag og Manglende Doser
+      </h2>
+      <div style="overflow-x: auto; max-height: 400px; width: 100%">
+        <table class="medicinTabel">
+          <thead>
+            <tr>
+              <th>Status</th>
+              <th>Medikament</th>
+              <th>tid taget</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for medicin in medicinList %}
+            <tr>
+              <td
+                id="medStatusColoum"
+                data-medTakenStatus="{{ medicin.takenStatus }}"></td>
+              <td>{{ medicin.name }}</td>
+              <td>{{ medicin.timeTaken.format("h:i - d.m-Y") }}</td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="4" style="text-align: center">Ingen medicin</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!--End of the medicin table box element -->
+  </turbo-frame>
+  <!--End of the turbo frame element -->
+</div>
+<!--End of the main container element -->
+
 {% endblock %}

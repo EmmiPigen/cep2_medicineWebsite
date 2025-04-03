@@ -2,17 +2,18 @@
 <div style="display: flex; width: 100%">
   <h3>Logget ind som:</h3>
 </div>
+<div class = "lineSeparator" style = "  background-color: rgb(77, 70, 63); width: 100%;"></div>
 
-<div class="main-container" style="height: 80%; margin-top: 30%">
+
+<div class="main-container">
   <turbo-frame id="medStatusFrame">
     <div
       id="medStatusBox"
       class="forside-box"
       data-medicine-status="{{ medicineStatus }}"
-      style="justify-items: center"
-    >
+      style="justify-items: center">
       <div>
-        <h2 style="font-size: 10%; text-align: center; margin-top: -5pt">
+        <h2 style="font-size: 150%; text-align: center; margin-top: -5pt">
           Seneste medicin status
         </h2>
       </div>
@@ -33,25 +34,23 @@
       </div>
     </div>
   </turbo-frame>
-  <div id="nextMedBox" class="forside-box" style="margin-top: 20%">
+  <div id="nextMedBox" class="forside-box" style="margin-top: 2.5%">
     <div>
-      <h2 style="font-size: xx-large; text-align: center">
+      <h2 style="font-size: 150%; text-align: center; margin-top: -5pt">
         Medicin som skal tages i dag
       </h2>
     </div>
-    <div id="nextMedInfo" style="display: grid">
+    <div id="nextMedInfo" style="display: grid; margin-top: -4%">
       <div
         id="medListHeader"
-        style="display: flex; justify-content: space-evenly"
-      >
-        <h2 style="width: 27%; text-align: center">Næste dosis skal tages:</h2>
-        <h2 style="width: 27%; text-align: center">Skal senest tages:</h2>
-        <h2 style="width: 27%; text-align: center">Prioritet</h2>
+        style="display: flex; justify-content: space-evenly">
+        <h2 class="nextMedBox">Næste dosis skal tages:</h2>
+        <h2 class="nextMedBox">Skal senest tages:</h2>
+        <h2 class="nextMedBox">Prioritet</h2>
       </div>
       <div
         id="medListFirst"
-        style="display: flex; justify-content: space-evenly; margin-top: -10px"
-      >
+        style="display: flex; justify-content: space-evenly">
         <div class="forside-box-next">
           <h2>Kl: 12:00</h2>
         </div>
@@ -64,8 +63,7 @@
       </div>
       <div
         id="medListSecond"
-        style="display: flex; justify-content: space-evenly; margin-top: 30px"
-      >
+        style="display: flex; justify-content: space-evenly; margin-top: 1.5%">
         <div class="forside-box-next">
           <h2>Kl: 18:00</h2>
         </div>

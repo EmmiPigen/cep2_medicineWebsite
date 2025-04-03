@@ -1,3 +1,4 @@
+import 
 document.addEventListener("DOMContentLoaded", function () {
   dynammiskIndlaesning();
   runScript();
@@ -6,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function runScript() {
   updateMedicineStatus();
   highLightCurrentPage();
+  medTakenStatus()
 }
 
 function updateMedicineStatus() {

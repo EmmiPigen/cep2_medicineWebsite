@@ -1,21 +1,28 @@
 .forside-box {
   border-radius: 25px;
   padding: 10px;
-  background-color: #feb4b8;
+  background-color: skyblue;
 }
 
-.forside-box-red{
-background-color: #e06666;
+.forside-box-red {
+  background-color: #e06666;
 }
 
-.forside-box-green{
-background-color: #a1c193;
+.forside-box-green {
+  background-color: #a1c193;
 }
 
-.forside-box-next{
-background-color: rgb(160, 195, 209);
-border-radius: 25px;
-padding: 10px;
-width: 27%;
-justify-items: center;
+.forside-box-next {
+  background-color: rgb(166, 209, 160);
+  border-radius: 25px;
+  padding: 10px;
+  width: 27%;
+  justify-items: center;
+}
+
+h2.nextMedBox {
+  font-family: "Arial", sans-serif;
+  font-size: 130%;
+  width: 27%;
+  text-align: center;
 }
