@@ -31,7 +31,7 @@ class PageController extends AbstractController
         'timeInterval' => 'Ingen tidsinterval tilgængelig',
         'amount' => 'Ingen mængde tilgængelig',
         'TimeTaken' => 'Ingen tid taget tilgængelig',
-        'medicinStatus' => true
+        'medicinStatus' => 1
       ];
     } else {
       $medikament = $medikamentList[array_rand($medikamentList)];
