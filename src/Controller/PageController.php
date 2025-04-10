@@ -30,8 +30,8 @@ class PageController extends AbstractController
         'priority' => 'Ingen prioritet tilgængelig',
         'timeInterval' => 'Ingen tidsinterval tilgængelig',
         'amount' => 'Ingen mængde tilgængelig',
-        'TimeTaken' => 'Ingen tid taget tilgængelig',
-        'medicinStatus' => 1
+        'timeTaken' => 'Ingen tid taget tilgængelig',
+        'medicineStatus' => 1
       ];
     } else {
       $medikament = $medikamentList[array_rand($medikamentList)];
