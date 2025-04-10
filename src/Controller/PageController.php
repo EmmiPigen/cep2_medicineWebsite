@@ -6,9 +6,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Medikament;
+use App\Entity\User;
 use App\Repository\MedikamentRepository;
 use Psr\Log\LoggerInterface;
-use Twig\Extensions\IntlExtension;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Form\RegistrationFormType;
 
 
 class PageController extends AbstractController
@@ -30,7 +35,7 @@ class PageController extends AbstractController
         'priority' => 'Ingen prioritet tilgængelig',
         'timeInterval' => 'Ingen tidsinterval tilgængelig',
         'amount' => 'Ingen mængde tilgængelig',
-        'TimeTaken' => 'Ingen tid taget tilgængelig',
+        'timeTaken' => 'Ingen tid taget tilgængelig',
         'medicinStatus' => 1
       ];
     } else {
@@ -95,10 +100,25 @@ class PageController extends AbstractController
     return $this->render('page/hjaelp.html.twig', []);
   }
 
-  #[Route('/login', name: 'login')]
-  public function login(): Response
+  #[Route(path: '/login', name: 'login')]
+  public function login(AuthenticationUtils $authenticationUtils): Response
   {
-    return $this->render('page/login.html.twig', []);
+      // get the login error if there is one
+      $error = $authenticationUtils->getLastAuthenticationError();
+
+      // last username entered by the user
+      $lastUsername = $authenticationUtils->getLastUsername();
+
+      return $this->render('page/login.html.twig', [
+          'last_username' => $lastUsername,
+          'error' => $error,
+      ]);
+  }
+
+  #[Route('/logout', name: 'logout')]
+  public function logout(): void
+  {
+    throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
   }
 
   #[Route('/profil', name: 'profil')]
@@ -106,4 +126,34 @@ class PageController extends AbstractController
   {
     return $this->render('page/profil.html.twig', []);
   }
+
+  #[Route('/register', name: 'register')]
+  public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+  {
+      $user = new User();
+      $form = $this->createForm(RegistrationFormType::class, $user);
+      $form->handleRequest($request);
+
+      if ($form->isSubmitted() && $form->isValid()) {
+          /** @var string $plainPassword */
+          $plainPassword = $form->get('plainPassword')->getData();
+
+          // encode the plain password
+          $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
+
+          $entityManager->persist($user);
+          $entityManager->flush();
+
+          // do anything else you need here, like send an email
+
+          return $this->redirectToRoute('home');
+      }
+
+      return $this->render('utility/register.html.twig', [
+          'registrationForm' => $form,
+      ]);
+  }
+
 }
+
+
