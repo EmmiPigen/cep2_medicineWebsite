@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\UX\Turbo\Attribute\Broadcast;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Entity\User;
 
 #[ORM\Entity(repositoryClass: MedikamentRepository::class)]
 #[Broadcast]
@@ -18,7 +19,7 @@ class Medikament
   private ?int $id = null;
 
   #[ORM\Column(length: 255)]
-  private ?string $name = null;
+  private ?string $medikamentNavn = null;
 
   #[ORM\Column]
   #[Assert\LessThanOrEqual(1000, message: 'Dosis skal være mindre end 1000')]
@@ -47,102 +48,114 @@ class Medikament
 
   public function getId(): ?int
   {
-    return $this->id;
+      return $this->id;
   }
 
   public function getName(): ?string
   {
-    return $this->name;
+      return $this->medikamentNavn;
   }
 
-  public function setName(string $name): static
+  public function setName(string $medikamentNavn): static
   {
-    $this->name = $name;
+      $this->medikamentNavn = $medikamentNavn;
 
-    return $this;
+      return $this;
   }
 
   public function getDosis(): ?float
   {
-    return $this->dosis;
+      return $this->dosis;
   }
 
   public function setDosis(float $dosis): static
   {
-    $this->dosis = $dosis;
+      $this->dosis = $dosis;
 
-    return $this;
+      return $this;
   }
 
   public function getPriority(): ?int
   {
-    return $this->priority;
+      return $this->priority;
   }
 
   public function setPriority(int $priority): static
   {
-    $this->priority = $priority;
+      $this->priority = $priority;
 
-    return $this;
+      return $this;
   }
 
   public function getTimeInterval(): ?int
   {
-    return $this->timeInterval;
+      return $this->timeInterval;
   }
 
   public function setTimeInterval(int $timeInterval): static
   {
-    $this->timeInterval = $timeInterval;
+      $this->timeInterval = $timeInterval;
 
-    return $this;
+      return $this;
   }
 
   public function getAmount(): ?float
   {
-    return $this->amount;
+      return $this->amount;
   }
 
   public function setAmount(float $amount): static
   {
-    $this->amount = $amount;
+      $this->amount = $amount;
 
-    return $this;
+      return $this;
   }
 
   public function getTimeTaken(): ?\DateTimeInterface
   {
-    return $this->timeTaken;
+      return $this->timeTaken;
   }
 
   public function setTimeTaken(\DateTimeInterface $timeTaken): static
   {
-    $this->timeTaken = $timeTaken;
+      $this->timeTaken = $timeTaken;
 
-    return $this;
+      return $this;
   }
 
   public function isTakenStatus(): ?bool
   {
-    return $this->takenStatus;
+      return $this->takenStatus;
   }
 
-  public function setTakenStatus(bool $takenStatus): static
+  public function setTakenStatus(?bool $takenStatus): static
   {
-    $this->takenStatus = $takenStatus;
+      $this->takenStatus = $takenStatus;
 
-    return $this;
+      return $this;
   }
 
   public function getUnit(): ?string
   {
-    return $this->unit;
+      return $this->unit;
   }
 
   public function setUnit(string $unit): static
   {
-    $this->unit = $unit;
+      $this->unit = $unit;
 
-    return $this;
+      return $this;
+  }
+
+  public function getMedikamentNavn(): ?string
+  {
+      return $this->medikamentNavn;
+  }
+
+  public function setMedikamentNavn(string $medikamentNavn): static
+  {
+      $this->medikamentNavn = $medikamentNavn;
+
+      return $this;
   }
 }

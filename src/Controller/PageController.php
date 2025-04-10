@@ -6,8 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Medikament;
+use App\Entity\MedikamentListe;
 use App\Entity\User;
-use App\Repository\MedikamentRepository;
+use App\Repository\UserRepository;
+use App\Repository\MedikamentListeRepository;
+use App\Repository\MedikamentLogRepository;
+use App\Repository\UdstyrRepository;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -15,13 +19,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\RegistrationFormType;
 
+use App\Repository\MedikamentRepository;
 
 class PageController extends AbstractController
 {
   #[Route('/', name: 'home')]
-  public function show(MedikamentRepository $medikamentRepository, LoggerInterface $logger): Response
+  public function show(MedikamentRepository $medikament, MedikamentLogRepository $medikamentLog, MedikamentListeRepository $medikamentListe,LoggerInterface $logger): Response
   {
-    $medikamentList = $medikamentRepository->findAll();
+    $medikamentList = $medikament->findAll();
 
     if (empty($medikamentList)) {
       $logger->warning('Der er ingen medicin i databasen!');
@@ -36,7 +41,7 @@ class PageController extends AbstractController
         'timeInterval' => 'Ingen tidsinterval tilgængelig',
         'amount' => 'Ingen mængde tilgængelig',
         'timeTaken' => 'Ingen tid taget tilgængelig',
-        'medicinStatus' => 1
+        'medicineStatus' => 1
       ];
     } else {
       $medikament = $medikamentList[array_rand($medikamentList)];
