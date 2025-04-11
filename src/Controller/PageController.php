@@ -5,28 +5,80 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use App\Entity\Medikament;
-use App\Entity\MedikamentListe;
-use App\Entity\User;
-use App\Repository\UserRepository;
+
 use App\Repository\MedikamentListeRepository;
+use App\Entity\MedikamentListe;
+
+use App\Entity\MedikamentLog;
 use App\Repository\MedikamentLogRepository;
+
+use App\Entity\Udstyr;
 use App\Repository\UdstyrRepository;
+
 use Psr\Log\LoggerInterface;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\RegistrationFormType;
+
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+
+use App\Repository\UserRepository;
+use App\Entity\User;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Security\Core\Security;
+
+
 
 use App\Repository\MedikamentRepository;
 
 class PageController extends AbstractController
 {
   #[Route('/', name: 'home')]
-  public function show(MedikamentRepository $medikament, MedikamentLogRepository $medikamentLog, MedikamentListeRepository $medikamentListe,LoggerInterface $logger): Response
-  {
-    $medikamentList = $medikament->findAll();
+  #[IsGranted('IS_AUTHENTICATED_FULLY')]
+  public function show(
+    MedikamentLogRepository $medikamentLog, 
+    MedikamentListeRepository $medikamentListe,
+    LoggerInterface $logger
+  ): Response {
+    //Get the current logged in user
+    $user = $this->getUser();
+
+    if (!$user){
+      throw $this->createAccessDeniedException('Du skal være logget ind for at se denne side.');
+    }
+
+    //Get user id
+    $medLogs = $user->getMedikamentLogs(); // Get the user's medication logs
+    $medList = $user->getMedikamentListes(); // Get the user's medication list
+    
+    if ($medLogs->isEmpty()) {
+      $logger->warning('Der er ingen medicin logget for denne bruger!');
+      // Handle the case when there are no logs for the user
+      $lastLog = [
+        'medikamentNavn' => 'Ingen medicin logget',
+        'tagetTid' => 'Ingen tid logget',
+        'tagetStatus' => TRUE,
+        'tagetLokale' => 'Ingen lokation logget',
+      ];
+
+    } else {
+      $lastLog = $logs->last(); // Get the last log entry
+    }
+
+    if ($medList->isEmpty()) {
+      $logger->warning('Du har ingen medicin du skal tage!');
+      // Handle the case when there are no medications in the list
+      $nextMeds = [
+        'medikamentNavn' => 'Ingen medicin tilgængelig',
+        'tidspunktTages' => 'Intet tidspunt tilgængelig',
+        'tidsinterval' => 'Ingen tidsinterval tilgængelig',
+      ];
+    } else {
+      $nextMeds = 
+    }
+    /* $medikamentList = $medikament->findAll();
 
     if (empty($medikamentList)) {
       $logger->warning('Der er ingen medicin i databasen!');
@@ -62,9 +114,10 @@ class PageController extends AbstractController
         'medicineStatus' => $medikament->isTakenStatus()
       ];
     }
-
+    */
     //Render the template with the medication data
-    return $this->render('page/home.html.twig', $medikamentData);
+    return $this->render('page/home.html.twig',[
+      'lastLog' => $lastLog]);
   }
 
   #[Route('/medicin', name: 'medicin')]

@@ -14,11 +14,16 @@ h6 {
   font-family: Arial, sans-serif;
 }
 
+
+/*Classes for the navigation bar and other components rendered in the base.html.twig template*/
+
+/* The navigation bar */
 .nav {
   position: relative;
   margin: 40px 0;
 }
 
+/* The navigation bar items */
 .nav-item {
   display: flex;
   padding: 15px;
@@ -60,6 +65,9 @@ h6 {
   height: 80%;
 }
 
+
+
+/* This is classes the should be used on multiple pages */
 .flex-evenly {
   display: flex;
   justify-content: space-evenly;
@@ -69,6 +77,7 @@ h6 {
   transition: opacity 0.5s ease-in-out;
   opacity: 1;
 }
+
 #content.fading {
   opacity: 0;
 }

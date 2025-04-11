@@ -11,7 +11,7 @@
     <div
       id="medStatusBox"
       class="forside-box"
-      data-medicine-status="{{ medicineStatus }}"
+      data-medicine-status="{{lastLog.tagetStatus}}"
       style="justify-items: center">
       <div>
         <h2 style="font-size: 150%; text-align: center; margin-top: -5pt">
@@ -20,15 +20,15 @@
       </div>
       <div>
         <div id="senMedikament">
-          <h3>{{ medikament }}</h3>
+          <h3>{{ lastLog.medikamentNavn }}</h3>
         </div>
         <div style="display: flex; justify-content: space-between">
           <div>
-            <h4>Medicin taget kl:</h4>
-            <h4>Medicin taget i:</h4>
+            <h4>Medicin taget kl: </h4>
+            <h4>Medicin taget i: </h4>
           </div>
           <div>
-            <h4>{{ timeTaken }}</h4>
+            <h4>{{ lastLog.tagetTid }}</h4>
             <h4>Køkkenet</h4>
           </div>
         </div>

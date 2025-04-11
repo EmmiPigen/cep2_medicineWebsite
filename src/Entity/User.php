@@ -17,7 +17,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(name: 'user_id')]
     public ?int $userId = null;
 
     #[ORM\Column(length: 180)]
@@ -56,6 +56,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Udstyr>
      */
+    
     #[ORM\OneToMany(targetEntity: Udstyr::class, mappedBy: 'userId')]
     private Collection $udstyrs;
 

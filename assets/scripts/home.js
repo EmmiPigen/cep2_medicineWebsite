@@ -1,4 +1,3 @@
-import 
 document.addEventListener("DOMContentLoaded", function () {
   dynammiskIndlaesning();
   runScript();

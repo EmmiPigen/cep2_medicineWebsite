@@ -18,8 +18,6 @@ class MedikamentListe
     #[ORM\Column(length: 255)]
     private ?string $medikamentNavn = null;
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY)]
-    private array $tidspunkterTages = [];
 
     #[ORM\Column]
     private ?int $timeInterval = null;
@@ -31,8 +29,11 @@ class MedikamentListe
     private ?string $enhed = null;
 
     #[ORM\ManyToOne(inversedBy: 'medikamentListes')]
-    #[ORM\JoinColumn(name: 'userId', referencedColumnName: 'userId', nullable: false)]
+    #[ORM\JoinColumn(name: 'userId', referencedColumnName: 'user_id', nullable: false)]
     private ?User $userId = null;
+
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    private ?\DateTimeInterface $tidspunktTages = null;
 
     public function getId(): ?int
     {
@@ -52,17 +53,6 @@ class MedikamentListe
         return $this;
     }
 
-    public function getTidspunkterTages(): array
-    {
-        return $this->tidspunkterTages;
-    }
-
-    public function setTidspunkterTages(array $tidspunkterTages): static
-    {
-        $this->tidspunkterTages = $tidspunkterTages;
-
-        return $this;
-    }
 
     public function getTimeInterval(): ?int
     {
@@ -108,6 +98,18 @@ class MedikamentListe
     public function setUserId(?User $userId): static
     {
         $this->userId = $userId;
+
+        return $this;
+    }
+
+    public function getTidspunktTages(): ?\DateTimeInterface
+    {
+        return $this->tidspunktTages;
+    }
+
+    public function setTidspunktTages(\DateTimeInterface $tidspunktTages): static
+    {
+        $this->tidspunktTages = $tidspunktTages;
 
         return $this;
     }

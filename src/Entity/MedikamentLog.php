@@ -15,8 +15,6 @@ class MedikamentLog
     #[ORM\Column]
     private ?int $id = null;
 
-
-
     #[ORM\Column(length: 255)]
     private ?string $medikamentNavn = null;
 
@@ -29,8 +27,8 @@ class MedikamentLog
     #[ORM\Column(length: 255)]
     private ?string $tagetLokale;
 
-    #[ORM\ManyToOne(inversedBy: 'medikamentLogs')]
-    #[ORM\JoinColumn(name: 'userId', referencedColumnName: 'userId', nullable: false)]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'medikamentLogs')]
+    #[ORM\JoinColumn(name: 'userId', referencedColumnName: 'user_id', nullable: false)]
     public ?User $userId = null;
 
 

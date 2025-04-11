@@ -15,7 +15,7 @@ class Udstyr
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'udstyrs')]
-    #[ORM\JoinColumn(name: 'userId', referencedColumnName: 'userId', nullable: false)]
+    #[ORM\JoinColumn(name: 'userId', referencedColumnName: 'user_id', nullable: false)]
     private ?User $userId = null;
 
     #[ORM\Column(enumType: Lokale::class)]
