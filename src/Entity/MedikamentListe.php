@@ -32,8 +32,10 @@ class MedikamentListe
     #[ORM\JoinColumn(name: 'userId', referencedColumnName: 'user_id', nullable: false)]
     private ?User $userId = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
-    private ?\DateTimeInterface $tidspunktTages = null;
+    #[ORM\Column(type: Types::SIMPLE_ARRAY)]
+    private array $tidspunkterTages = [];
+
+
 
     public function getId(): ?int
     {
@@ -102,15 +104,17 @@ class MedikamentListe
         return $this;
     }
 
-    public function getTidspunktTages(): ?\DateTimeInterface
+    public function getTidspunkterTages(): array
     {
-        return $this->tidspunktTages;
+        return $this->tidspunkterTages;
     }
 
-    public function setTidspunktTages(\DateTimeInterface $tidspunktTages): static
+    public function setTidspunkterTages(array $tidspunkterTages): static
     {
-        $this->tidspunktTages = $tidspunktTages;
+        $this->tidspunkterTages = $tidspunkterTages;
 
         return $this;
     }
+
+
 }
