@@ -38,9 +38,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $FuldeNavn = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $cpr = null;
-
     /**
      * @var Collection<int, MedikamentLog>
      */
@@ -149,17 +146,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getCpr(): ?string
-    {
-        return $this->cpr;
-    }
-
-    public function setCpr(string $cpr): static
-    {
-        $this->cpr = $cpr;
-
-        return $this;
-    }
 
     public function getUserId(): ?int
     {

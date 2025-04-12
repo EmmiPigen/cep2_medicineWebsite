@@ -14,6 +14,12 @@ h6 {
   font-family: Arial, sans-serif;
 }
 
+h1 {
+  font-size: 2rem;
+  color: #131313;
+  font-weight: bolder;
+}
+
 
 /*Classes for the navigation bar and other components rendered in the base.html.twig template*/
 
@@ -59,13 +65,12 @@ h6 {
 }
 
 .main-container {
-  justify-content: center;
-  padding: 0.1%;
-  position: relative;
+
   height: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
-
-
 
 /* This is classes the should be used on multiple pages */
 .flex-evenly {
@@ -82,8 +87,25 @@ h6 {
   opacity: 0;
 }
 
-.lineSeparator {
-  width: 95%;
-  height: 3px;
-  border-radius: 10px;
+.user-info {
+  display: flex;
+  width: 100%;
+  margin-bottom: 0.5rem;
 }
+
+.line-separator {
+  height: 2px;
+  width: 100%;
+  background-color: #ccc;
+  margin: 1rem 0;
+}
+
+.line-separator.dark {
+  background-color: rgb(77, 70, 63);
+}
+
+.line-separator.darker {
+  background-color: rgb(39, 39, 39);
+}
+
+

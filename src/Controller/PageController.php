@@ -33,7 +33,6 @@ class PageController extends AbstractController
             throw $this->createAccessDeniedException('Du skal være logget ind for at se denne side.');
         }
 
-                                               //Get user id
         $medLogs = $user->getMedikamentLogs(); // Get the user's medication logs
 
         //Getting the next two medications the user have to take based on the current time
