@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %} {% block content %}
 <div class="user-info">
-  <h3>Logget ind som:</h3>
+  <h1>Logget ind som:</h1>
 </div>
 
 <div class="line-separator dark"></div>
@@ -44,19 +44,21 @@
   <!-- Next medicine box -->
   <section id="nextMedBox" class="next-med-box">
     <header class="next-med-header">
-      <h1>Medicin som skal tages i dag</h1>
+      <h2>Næste medicin som skal tages</h2>
     </header>
 
     <div id="nextMedInfo" class="next-med-info">
       <!-- Headers -->
       <div class="next-med-row next-med-header-row">
-        <h2>Næste dosis skal tages:</h2>
+        <h2>Medikament</h2>
+        <h2>Skal tages:</h2>
         <h2>Skal senest tages:</h2>
         <h2>Prioritet</h2>
       </div>
-
+      <div class="line-separator darker"></div>
       <!-- First medicine row -->
       <div class="next-med-row">
+        <div class="next-med-cell"><h2>Paracetamol</h2></div>
         <div class="next-med-cell"><h2>Kl: 12:00</h2></div>
         <div class="next-med-cell"><h2>Kl 12:15</h2></div>
         <div class="next-med-cell high-priority"><h2>HØJ</h2></div>
@@ -64,6 +66,7 @@
 
       <!-- Second medicine row -->
       <div class="next-med-row">
+        <div class="next-med-cell"><h2>Ibuprofen</h2></div>
         <div class="next-med-cell"><h2>Kl: 18:00</h2></div>
         <div class="next-med-cell"><h2>Kl 18:15</h2></div>
         <div class="next-med-cell low-priority"><h2>LAV</h2></div>

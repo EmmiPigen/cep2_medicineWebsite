@@ -14,13 +14,6 @@ h6 {
   font-family: Arial, sans-serif;
 }
 
-h1 {
-  font-size: 2rem;
-  color: #131313;
-  font-weight: bolder;
-}
-
-
 /*Classes for the navigation bar and other components rendered in the base.html.twig template*/
 
 /* The navigation bar */
@@ -65,11 +58,10 @@ h1 {
 }
 
 .main-container {
-
   height: 80%;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 /* This is classes the should be used on multiple pages */
@@ -90,14 +82,20 @@ h1 {
 .user-info {
   display: flex;
   width: 100%;
-  margin-bottom: 0.5rem;
+}
+
+.user-info h1 {
+  font-size: 2rem;
+  margin: 0;
+  padding: 0;
 }
 
 .line-separator {
-  height: 2px;
+  height: 3px;
   width: 100%;
   background-color: #ccc;
-  margin: 1rem 0;
+  margin: 0.5rem 0;
+  border-radius: 5rem;
 }
 
 .line-separator.dark {
@@ -107,5 +105,3 @@ h1 {
 .line-separator.darker {
   background-color: rgb(39, 39, 39);
 }
-
-

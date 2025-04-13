@@ -35,6 +35,9 @@ class MedikamentListe
     #[ORM\Column(type: Types::SIMPLE_ARRAY)]
     private array $tidspunkterTages = [];
 
+    #[ORM\Column(length: 255)]
+    private ?string $Prioritet = null;
+
 
 
     public function getId(): ?int
@@ -112,6 +115,18 @@ class MedikamentListe
     public function setTidspunkterTages(array $tidspunkterTages): static
     {
         $this->tidspunkterTages = $tidspunkterTages;
+
+        return $this;
+    }
+
+    public function getPrioritet(): ?string
+    {
+        return $this->Prioritet;
+    }
+
+    public function setPrioritet(string $Prioritet): static
+    {
+        $this->Prioritet = $Prioritet;
 
         return $this;
     }
