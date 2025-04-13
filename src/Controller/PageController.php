@@ -28,6 +28,7 @@ class PageController extends AbstractController
     ): Response {
         //Get the current logged in user
         $user = $this->getUser();
+        $userName = $user->getFuldeNavn();
 
         if (! $user) {
             throw $this->createAccessDeniedException('Du skal være logget ind for at se denne side.');
@@ -84,7 +85,8 @@ class PageController extends AbstractController
 
         //Render the template with the medication data
         return $this->render('page/home.html.twig', [
-            'lastLog' => $lastLog]);
+            'lastLog' => $lastLog,
+            'Navn'   => $userName,]);
     }
 
     #[Route('/medicin', name: 'medicin')]
