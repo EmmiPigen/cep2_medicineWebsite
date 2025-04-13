@@ -9,8 +9,6 @@
       type="image/x-icon"
       href="{{ asset('Images/favicon.ico') }}" />
 
-      
-
     {% block javascripts %} {% block importmap %}
     {{
       importmap("app")
@@ -28,12 +26,13 @@
             justify-content: center;
             align-items: center;
             margin: 15px 2.5pc;
-            align-content: center;">
+            align-content: center;
+          ">
           <img
             src="{{ asset('Images/favicon.ico') }}"
             alt="ForglemMigEj logo"
             style="max-width: 80px" />
-          <h1>ForglemMigEj</h1>
+          <h2>ForglemMigEj</h2>
         </div>
 
         <div>
@@ -83,7 +82,10 @@
                 <div class="nav-text">> Hjælp</div>
               </div>
             </a>
-            <a href="{{ path('login') }}" data-page="login" style="all: unset">
+            <a 
+              href="{{ path('login') }}" 
+              data-page="login" 
+              style="all: unset">
               <div class="nav-item">
                 <div class="nav-text">> Log ind</div>
               </div>

@@ -1,28 +1,104 @@
-.forside-box {
-  border-radius: 25px;
-  padding: 10px;
+.med-status-box {
+  border-radius: 2rem;
+  padding: 1rem;
   background-color: skyblue;
 }
 
-.forside-box-red {
+.med-status-box-red {
   background-color: #e06666;
 }
 
-.forside-box-green {
+.med-status-box-green {
   background-color: #a1c193;
 }
 
-.forside-box-next {
-  background-color: rgb(166, 209, 160);
-  border-radius: 25px;
-  padding: 10px;
-  width: 27%;
-  justify-items: center;
+.med-status-header h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 0.25rem;
+  margin-top: -0.25rem;
 }
 
-h2.nextMedBox {
-  font-family: "Arial", sans-serif;
-  font-size: 130%;
-  width: 27%;
+.main-status-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.med-name h3{
+  margin: 0.5rem 0;
+}
+
+.med-status-details {
+  display: flex;
+  justify-content: space-evenly;
+  width: 60%;
+}
+
+.med-status-labels,
+.med-status-values {
+  display: flex;
+  flex-direction: column;
+  margin-top: -0.5rem;
+}
+
+.med-status-details h2 {
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+}
+
+/* Next Medicine Box */
+.next-med-box {
+  padding: 0.5rem;
+  background-color: rgb(96, 148, 169);
+  border-radius: 2rem;
+}
+
+.next-med-header {
   text-align: center;
+}
+
+.next-med-header h2 {
+  font-size: 1.5rem;
+  margin: 0.1rem 0;
+}
+
+.next-med-info {
+  display: grid;
+}
+
+.next-med-row {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 0.1rem 0;
+}
+
+.next-med-header-row {
+  font-weight: bold;
+}
+
+.next-med-header-row h2 {
+  font-size: 1.3rem;
+  margin: 0.1rem 0;
+  text-align: center;
+  width: 33%;
+}
+
+.next-med-cell {
+  flex: 1;
+  text-align: center;
+  background: #fff;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  margin: 0.2rem 0.3rem;
+}
+
+.high-priority {
+  background-color: #f44336;
+  color: white;
+}
+
+.low-priority {
+  background-color: #8bc34a;
+  color: white;
 }

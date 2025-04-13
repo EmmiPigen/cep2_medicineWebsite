@@ -1,4 +1,3 @@
-import 
 document.addEventListener("DOMContentLoaded", function () {
   dynammiskIndlaesning();
   runScript();
@@ -21,8 +20,8 @@ function updateMedicineStatus() {
     let medicineStatus = medStatusBox.getAttribute("data-medicine-status");
     console.log("Medicine Status:", medicineStatus);
 
-    medStatusBox.classList.toggle("forside-box-green", medicineStatus === "1");
-    medStatusBox.classList.toggle("forside-box-red", medicineStatus !== "1");
+    medStatusBox.classList.toggle("med-status-box-green", medicineStatus === "1");
+    medStatusBox.classList.toggle("med-status-box-red", medicineStatus !== "1");
   }
 }
 
