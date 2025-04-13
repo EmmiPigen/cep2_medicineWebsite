@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250325120245 extends AbstractMigration
+final class Version20250413081853 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,12 +20,16 @@ final class Version20250325120245 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE medikament CHANGE timm_interval time_interval INT NOT NULL');
+        $this->addSql(<<<'SQL'
+            ALTER TABLE medikament_liste ADD prioritet VARCHAR(255) NOT NULL
+        SQL);
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE medikament CHANGE time_interval timm_interval INT NOT NULL');
+        $this->addSql(<<<'SQL'
+            ALTER TABLE medikament_liste DROP prioritet
+        SQL);
     }
 }

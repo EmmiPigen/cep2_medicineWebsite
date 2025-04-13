@@ -5,13 +5,12 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use App\Entity\Medikament;
+use App\Entity\MedikamentLog;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\MedikamentRepository;
 
 final class MedicineController extends AbstractController
 {
-
+  //This controller is just used to create some dummy data for testing purposes.
   #[Route('/medicine/', name: 'create_medicine')]
   public function createMedicine(EntityManagerInterface $entityManager): Response
   {
@@ -19,7 +18,10 @@ final class MedicineController extends AbstractController
     $units = ['µg', 'mg', 'g', 'ml'];
 
     for ($i = 0; $i < 10; $i++){
-      $medicine = new Medikament();
+      $medicine = new MedikamentLog();
+      $medicine->
+
+
       $medicine->setName($medicineNames[array_rand($medicineNames)]);
       $medicine->setDosis(random_int(1, 1000));
       $medicine->setUnit($units[array_rand($units)]);
