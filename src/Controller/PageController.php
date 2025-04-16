@@ -6,7 +6,7 @@ use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Repository\MedikamentListeRepository;
 use App\Repository\MedikamentLogRepository;
-use App\Repository\MedikamentRepository;
+use App\Repository\UdstyrRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,17 +17,19 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
+date_default_timezone_set('Europe/Copenhagen');
+
 class PageController extends AbstractController
 {
     #[Route('/', name: 'home')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    public function show(
+    public function home(
         MedikamentLogRepository $medikamentLog,
         MedikamentListeRepository $medikamentListe,
         LoggerInterface $logger
     ): Response {
         //Get the current logged in user
-        $user = $this->getUser();
+        $user     = $this->getUser();
         $userName = $user->getFuldeNavn();
 
         if (! $user) {
@@ -43,7 +45,6 @@ class PageController extends AbstractController
         $nextMedications = [];
         foreach ($user->getMedikamentListes() as $med) {
             $times = $med->getTidspunkterTages();
-
             //Filter times that are still ahead today
 
             $upcomingTimes = array_filter($times, function ($time) use ($nowTime) {
@@ -52,12 +53,16 @@ class PageController extends AbstractController
 
             // get the soonest time
             if (! empty($upcomingTimes)) {
-                $nextTime = min($upcomingTimes);
+                $nextTime     = min($upcomingTimes);
+                $tidsinterval = $med->getTimeInterval();
+
+                $sidstTages = date("H:i", strtotime("+$tidsinterval minutes", strtotime($nextTime)));
 
                 $nextMedications[] = [
                     'medikamentNavn' => $med->getMedikamentNavn(),
                     'tidspunktTages' => $nextTime,
-                    'tidsinterval'   => $med->getTimeInterval(),
+                    'sidstTages'     => $sidstTages,
+                    'prioritet'      => $med->getPrioritet(),
                 ];
             }
         }
@@ -65,9 +70,12 @@ class PageController extends AbstractController
         //Sort the soonest upcoming times
         usort($nextMedications, fn($a, $b) => strcmp($a['tidspunktTages'], $b['tidspunktTages']));
 
-        $nextMed = $nextMedications[0] ?? null; // Get the first upcoming medication
-        
-        
+        //Get all the remaining medications for today not taken yet
+        $restMedsIdag = array_filter($nextMedications, function ($med) use ($nowTime) {
+            return $med['tidspunktTages'] >= $nowTime;
+        });
+
+        //print_r($restMedsIdag);
 
         if ($medLogs->isEmpty()) {
             $logger->warning('Der er ingen medicin logget for denne bruger!');
@@ -85,46 +93,86 @@ class PageController extends AbstractController
 
         //Render the template with the medication data
         return $this->render('page/home.html.twig', [
-            'lastLog' => $lastLog,
-            'Navn'   => $userName,]);
+            'Navn'         => $userName,
+            'lastLog'      => $lastLog,
+            'restMedsIdag' => $restMedsIdag]);
     }
 
     #[Route('/medicin', name: 'medicin')]
-    public function historik(): Response
-    {
-        return $this->render('page/medicin.html.twig', []);
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    public function medicin(
+        MedikamentListeRepository $medikamentListe,
+        LoggerInterface $logger
+    ): Response {
+        $user     = $this->getUser();
+        $userName = $user->getFuldeNavn();
+
+        return $this->render('page/medicin.html.twig', [
+            'Navn' => $userName,
+        ]);
     }
 
     #[Route('/historik', name: 'historik')]
-    public function showMedicin(MedikamentRepository $medikamentRepository): Response
-    {
-        // Fetch all medications from the repository
-        $medicinList = $medikamentRepository->findAll();
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    public function historik(
+        MedikamentLogRepository $medikamnetLog,
+        LoggerInterface $logger
+    ): Response {
+        $user     = $this->getUser();
+        $userName = $user->getFuldeNavn();
+
+        $medLogs     = $user->getMedikamentLogs(); // Get the user's medication logs
+        $medicinList = [];
+
+        foreach ($medLogs as $log) {
+            $medicinList[] = [
+                'medikamentNavn' => $log->getMedikamentNavn(),
+                'tagetTid'       => $log->getTagetTid(),
+                'tagetStatus'    => $log->getTagetStatus(),
+                'tagetLokale'    => $log->getTagetLokale(),
+            ];
+        }
 
         // Check if the list is empty and handle accordingly
         if (empty($medicinList)) {
-            return $this->render('page/medicin.html.twig', [
+            return $this->render('page/historik.html.twig', [
                 'medicinList' => [],
                 'message'     => 'Ingen medicin tilgængelig',
+                'Navn'        => $userName,
             ]);
         }
 
         // Render the template with the medication list
         return $this->render('page/historik.html.twig', [
             'medicinList' => $medicinList,
+            'Navn'        => $userName,
         ]);
     }
 
     #[Route('/udstyr', name: 'udstyr')]
-    public function udstyr(): Response
-    {
-        return $this->render('page/udstyr.html.twig', []);
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    public function udstyr(
+        UdstyrRepository $udstyrRepository,
+        LoggerInterface $logger
+    ): Response {
+        $user = $this->getUser();
+        $userName = $user->getFuldeNavn();
+
+        return $this->render('page/udstyr.html.twig', [
+            'Navn' => $userName,
+        ]);
     }
 
     #[Route('/hjaelp', name: 'hjaelp')]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function hjaelp(): Response
     {
-        return $this->render('page/hjaelp.html.twig', []);
+        $user = $this->getUser();
+        $userName = $user->getFuldeNavn();
+
+        return $this->render('page/hjaelp.html.twig', [
+            'Navn' => $userName,
+        ]);
     }
 
     #[Route(path: '/login', name: 'login')]
@@ -149,9 +197,16 @@ class PageController extends AbstractController
     }
 
     #[Route('/profil', name: 'profil')]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function profil(): Response
     {
-        return $this->render('page/profil.html.twig', []);
+        $user = $this->getUser();
+        $userName = $user->getFuldeNavn();
+
+
+        return $this->render('page/profil.html.twig', [
+            'Navn' => $userName,
+        ]);
     }
 
     #[Route('/register', name: 'register')]

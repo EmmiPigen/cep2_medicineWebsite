@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", function () {
 function runScript() {
   updateMedicineStatus();
   highLightCurrentPage();
-  medTakenStatus()
 }
 
 function updateMedicineStatus() {
@@ -20,8 +19,8 @@ function updateMedicineStatus() {
     let medicineStatus = medStatusBox.getAttribute("data-medicine-status");
     console.log("Medicine Status:", medicineStatus);
 
-    medStatusBox.classList.toggle("med-status-box-green", medicineStatus === "1");
-    medStatusBox.classList.toggle("med-status-box-red", medicineStatus !== "1");
+    medStatusBox.classList.toggle("green", medicineStatus === "1");
+    medStatusBox.classList.toggle("red", medicineStatus !== "1");
   }
 }
 
