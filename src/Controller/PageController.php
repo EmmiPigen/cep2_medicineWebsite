@@ -42,7 +42,7 @@ class PageController extends AbstractController
 
         //Set the time to this morning at 8:00 for debugging purposes
 
-        $now     = new \DateTime('08:00');
+        $now     = new \DateTime();
         $nowTime = $now->format('H:i');
 
         $nextMedications = [];
