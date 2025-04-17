@@ -12,5 +12,3 @@ sudo systemctl status apache2
 sudo ufw status
 sudo tail -f /var/log/apache2/error.log
 
-
-   

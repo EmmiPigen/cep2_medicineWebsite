@@ -1,12 +1,4 @@
 {% extends 'base.html.twig' %} {% block content %}
-<div class ="user-info-container">
-  <div class="user-info">
-    <h1>Logget ind som:</h1>
-    <h2>{{ Navn }}</h2>
-  </div>
-  <div class="line-separator dark"></div>
-</div>
-
 <!-- Start of the main container -->
 <div class="main-container">
   <!-- Medicine status box -->
@@ -49,26 +41,28 @@
     <div id="nextMedInfo" class="next-med-info">
       <div class="line-separator darker"></div>
       <!-- First medicine row -->
-      <table class="next-med-box-table">
-        <thead>
-          <tr class="next-med-header-row">
-            <th>Medikament</th>
-            <th>Skal tages:</th>
-            <th>Skal senest tages:</th>
-            <th>Prioritet</th>
-          </tr>
-        </thead>
-        <tbody class="next-med-table-body">
-          {% for medicin in restMedsIdag %}
-          <tr class="next-med-cell">
-            <td>{{ medicin.medikamentNavn }}</td>
-            <td>{{ medicin.tidspunktTages }}</td>
-            <td>{{ medicin.sidstTages }}</td>
-            <td>{{ medicin.prioritet }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+      <div class="next-med-box-table-wrapper">
+        <table class="next-med-box-table">
+          <thead>
+            <tr class="next-med-header-row">
+              <th>Medikament</th>
+              <th>Skal tages:</th>
+              <th>Skal senest tages:</th>
+              <th>Prioritet</th>
+            </tr>
+          </thead>
+          <tbody class="next-med-table-body">
+            {% for medicin in restMedsIdag %}
+            <tr class="next-med-cell" {{medicin.prioritet |lower }}-priority>
+              <td>{{ medicin.medikamentNavn }}</td>
+              <td>{{ medicin.tidspunktTages }}</td>
+              <td>{{ medicin.sidstTages }}</td>
+              <td>{{ medicin.prioritet }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
   </section>
 </div>

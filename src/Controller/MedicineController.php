@@ -17,9 +17,10 @@ final class MedicineController extends AbstractController
   public function createMedicine(EntityManagerInterface $entityManager): Response
   {
     $medicineNames = ['Vitamin C', 'Aspirin', 'Ibuprofen', 'Paracetamol', 'Amoxicillin', 'Cough Syrup', 'Antihistamine', 'Probiotic', 'Omega-3', 'Zinc'];
+    $units = ['mg', 'ml', 'g', 'unit'];
    
     for ($i = 0; $i < 10; $i++){
-      $medicine = new Medikamentlog();
+      $medicine = new Medikamentliste();
       
       $medicine->setMedikamentNavn($medicineNames[array_rand($medicineNames)]);
       $medicine->setTidspunkterTages($timetaken[array_rand($timetaken)]);
