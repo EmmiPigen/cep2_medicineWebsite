@@ -98,10 +98,6 @@
   text-align: center;
 }
 
-.next-med-table-body {
-  overflow-y: scroll;
-}
-
 .next-med-cell td {
   text-align: center;
   border-radius: 1rem;

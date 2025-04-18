@@ -15,7 +15,7 @@ body {
 
 body,
 html {
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   font-family: Arial, sans-serif;
 }
@@ -114,7 +114,7 @@ html {
   gap: 1rem;
   width: 100%;
   margin: 0 auto 0;
-  height: calc(100% - 4rem);
+  height: calc(100% - 5rem);
 }
 
 /* This is classes the should be used on multiple pages */
