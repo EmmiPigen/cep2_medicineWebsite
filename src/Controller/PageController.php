@@ -98,10 +98,8 @@ class PageController extends AbstractController
     LoggerInterface $logger
   ): Response {
     $user = $this->getUser();
-    $userName = $user->getFuldeNavn();
 
     return $this->render('page/medicin.html.twig', [
-      'Navn' => $userName,
     ]);
   }
 
@@ -120,8 +118,15 @@ class PageController extends AbstractController
       //Set the medicinList to null if there are no logs
       $medicinLogs = null;
     } else {
-      //Create an array containing the medication logs
-      $medicinLogs = $medLogs;
+      //Create an array containing all medication logs sorted by date
+      $medLogsArray=$medLogs->toArray();
+
+      usort($medLogsArray, function ($a, $b) {
+        return $b->getTagetTid() <=> $a->getTagetTid(); // Sort by tagetTid in descending order
+      });
+
+      
+      $medicinLogs = $medLogsArray;
     }
 
 
