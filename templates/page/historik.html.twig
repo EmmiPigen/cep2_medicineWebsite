@@ -1,49 +1,42 @@
 {% extends 'base.html.twig' %} {% block content %}
-<!--Line between top of the page and the page elements-->
-<div
-  class="lineSeparator"
-  style="background-color: rgb(77, 70, 63); width: 100%"></div>
-
-<!--Start of the main container element -->
 <div class="main-container">
-  <!--Start of the turbo frame element -->
-  <turbo-frame class="main-container">
-    <!--Start of the medicin table box element -->
-    <div class="medicinTabelBox">
-      <h2 style="text-align: center">
-        Oversigt over Medicinintag og Manglende Doser
-      </h2>
-      <div style="overflow-x: auto; max-height: 400px; width: 100%">
-        <table class="medicinTabel">
+  <div id="historikBox" class="historik-box">
+    <header class="historik-header">
+      <h1>Oversigt over registede medicineringer</h1>
+      <div class="line-separator darker"></div>
+    </header>
+
+      {% if medicinLogs is empty %}
+      <p class="no-meds-msg">Der er ingen registrerede medicineringer</p>
+      {% else %}
+      <div class="historik-table-wrapper">
+        <table class="historik-table">
           <thead>
-            <tr>
-              <th>Status</th>
-              <th>Medikament</th>
-              <th>tid taget</th>
+            <tr class="historik-table-header">
+              <th scope="col">Status</th>
+              <th scope="col">Medikament</th>
+              <th scope="col">Taget kl</th>
+              <th scope="col">Lokalet taget i</th>
             </tr>
           </thead>
-          <tbody>
-            {% for medicin in medicinList %}
-            <tr>
-              <td
-                id="medStatusColoum"
-                data-medTakenStatus="{{ medicin.takenStatus }}"></td>
-              <td>{{ medicin.name }}</td>
-              <td>{{ medicin.timeTaken.format("h:i - d.m-Y") }}</td>
+          <tbody class="historik-table-body">
+            {% for medicin in medicinLogs %}
+            <tr class="historik-table-row">
+              {% if medicin.TagetStatus == '0' %}
+              <td class="historik-table-status red">Ikke taget til tiden</td>
+              {% elseif medicin.TagetStatus == '1' %}
+              <td class="historik-table-status green">Taget</td>
+              {% elseif medicin.TagetStatus == '2' %}
+              {%endif%}
+              <td>{{ medicin.medikamentNavn }}</td>
+              <td>{{ medicin.tagetTid|date('d-m-Y H:i') }}</td>
+              <td>{{ medicin.tagetLokale.value }}</td>
             </tr>
-            {% else %}
-            <tr>
-              <td colspan="4" style="text-align: center">Ingen medicin</td>
-            </tr>
-            {% endfor %}
+            {%endfor%}
           </tbody>
         </table>
       </div>
-    </div>
-    <!--End of the medicin table box element -->
-  </turbo-frame>
-  <!--End of the turbo frame element -->
+      {%endif%}
+  </div>
 </div>
-<!--End of the main container element -->
-
 {% endblock %}
