@@ -26,14 +26,7 @@
   align-items: center;
 }
 
-.main-status-content p {
-  font-size: 2rem;
-  margin: 0.5rem 0;
-}
-
-.med-name h2 {
-  font-weight: bolder;
-  font-size: 1.5rem;
+.med-name h3 {
   margin: 0.5rem 0;
 }
 
@@ -50,7 +43,7 @@
   margin-top: -0.5rem;
 }
 
-.med-status-details span {
+.med-status-details h2 {
   font-size: 1.2rem;
   margin: 0.5rem 0;
 }
@@ -75,6 +68,11 @@
   margin: 0.1rem 0;
 }
 
+.next-med-box-wrapper {
+  max-height: 200px;
+  overflow-y: auto;
+
+}
 
 .next-med-box-table {
   width: 100%;
@@ -104,17 +102,13 @@
 
 .next-med-cell td {
   text-align: center;
+  background: #fff;
   border-radius: 1rem;
   padding: 0.5rem;
   margin: 0.5rem 0.3rem;
   font-size: 1.5rem;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
 }
-
-.next-med-cell-bg {
-  background-color: #fff
-}
-
 
 .high-priority {
   background-color: #f44336;
