@@ -2,6 +2,7 @@
 <!-- Start of the main container -->
 <div class="main-container">
   <!-- Medicine status box -->
+  {%if lastLog%}
   <div
     id="medStatusBox"
     class="med-status-box"
@@ -14,22 +15,36 @@
     <main class="main-status-content">
       <!-- Medicine status Name -->
       <section class="med-name">
-        <h3>{{ lastLog.medikamentNavn }}</h3>
+        <h2>{{ lastLog.medikamentNavn }}</h2>
       </section>
 
       <!-- Medicine status details -->
+
       <section class="med-status-details">
         <div class="med-status-labels">
-          <h2>Medicin taget kl:</h2>
-          <h2>Medicin taget i:</h2>
+          <span>Medicin taget kl:</span>
+          <span>Medicin taget i:</span>
         </div>
         <div class="med-status-values">
-          <h2>{{ lastLog.tagetTid }}</h2>
-          <h2>{{ lastLog.tagetLokale }}</h2>
+          <span>{{ lastLog.tagetTid|date('H:i') }}</span>
+          <span>{{ lastLog.tagetLokale.value }}</span>
         </div>
       </section>
     </main>
   </div>
+  {% else %}
+  <!-- If no medicine status is available -->
+  <div class="med-status-box">
+    <header class="med-status-header">
+      <h1>Seneste medicin status</h1>
+      <div class="line-separator darker"></div>
+    </header>
+
+    <main class="main-status-content">
+      <p>Der er endnu ikke registreret nogen medicineringer</p>
+    </main>
+  </div>
+  {% endif %}
   <!-- End of the medicine status box -->
 
   <!-- Next medicine box -->
@@ -40,29 +55,34 @@
 
     <div id="nextMedInfo" class="next-med-info">
       <div class="line-separator darker"></div>
+      {% if restMedsIdag is empty %}
+      <p class="no-meds-msg">Ikke flere medicineringer i dag</p>
+      {% else %}
       <!-- First medicine row -->
-      <div class="next-med-box-table-wrapper">
-        <table class="next-med-box-table">
-          <thead>
-            <tr class="next-med-header-row">
-              <th>Medikament</th>
-              <th>Skal tages:</th>
-              <th>Skal senest tages:</th>
-              <th>Prioritet</th>
-            </tr>
-          </thead>
-          <tbody class="next-med-table-body">
-            {% for medicin in restMedsIdag %}
-            <tr class="next-med-cell" {{medicin.prioritet |lower }}-priority>
-              <td>{{ medicin.medikamentNavn }}</td>
-              <td>{{ medicin.tidspunktTages }}</td>
-              <td>{{ medicin.sidstTages }}</td>
-              <td>{{ medicin.prioritet }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
+      <table class="next-med-box-table">
+        <thead>
+          <tr class="next-med-header-row">
+            <th scope="col">Medikament</th>
+            <th scope="col">Skal tages:</th>
+            <th scope="col">Skal senest tages:</th>
+            <th scope="col">Prioritet</th>
+          </tr>
+        </thead>
+
+        <tbody class="next-med-table-body">
+          {% for medicin in restMedsIdag %}
+          <tr class="next-med-cell">
+            <td class="next-med-cell-bg">{{ medicin.medikamentNavn }}</td>
+            <td class="next-med-cell-bg">{{ medicin.tidspunktTages }}</td>
+            <td class="next-med-cell-bg">{{ medicin.sidstTages }}</td>
+            <td class="{{ medicin.prioritet | priority_class }}">
+              {{ medicin.prioritet }}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
     </div>
   </section>
 </div>
