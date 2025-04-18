@@ -37,7 +37,7 @@ class PageController extends AbstractController
     }
 
     //Check if the user has any medications for today
-    $now = new \DateTime('07:00');
+    $now = new \DateTime('');
     $nowTime = $now->format('H:i');
 
     $nextMedications = [];
