@@ -18,7 +18,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 date_default_timezone_set('Europe/Copenhagen');
-
+setlocale(LC_TIME, 'da_DK');
 class PageController extends AbstractController
 {
   #[Route('/', name: 'home')]

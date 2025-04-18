@@ -29,7 +29,7 @@
               {% elseif medicin.TagetStatus == '2' %}
               {%endif%}
               <td>{{ medicin.medikamentNavn }}</td>
-              <td>{{ medicin.tagetTid|date('d-m-Y H:i') }}</td>
+              <td>{{ medicin.tagetTid|format_datetime('long', 'short', locale:'da') }}</td>
               <td>{{ medicin.tagetLokale.value }}</td>
             </tr>
             {%endfor%}
