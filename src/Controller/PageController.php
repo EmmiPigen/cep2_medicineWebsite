@@ -83,10 +83,15 @@ class PageController extends AbstractController
         if ($medLogs->isEmpty()) {
             $logger->warning('Der er ingen medicin logget for denne bruger!');
             // Handle the case when there are no logs for the user
+            $lastLog = [
+                'medikamentNavn' => 'Ingen medicin logget',
+                'tagetTid'       => 'Ingen tid logget',
+                'tagetStatus'    => true,
+                'tagetLokale'    => 'Ingen lokation logget',
+            ];
 
-            $lastLog = null;
         } else {
-            $lastLog = $medLogs->last(); // Get the last log entry
+            $lastLog = $logs->last(); // Get the last log entry
         }
 
         //Render the template with the medication data
