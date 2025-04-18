@@ -104,8 +104,8 @@ html {
   margin-left: 300px;
   width: calc(100vw - 300px - 5rem);
   min-width: 600px;
-  height: calc(100ch - 1.5rem);
-  padding: 0rem  2rem 0.5rem 3rem;
+  height: calc(100vh - 0.5rem);
+  padding: 0rem 2rem 0.5rem 3rem;
 }
 
 .main-container {
@@ -114,7 +114,7 @@ html {
   gap: 1rem;
   width: 100%;
   margin: 0 auto 0;
-  height: calc(100vh - 1.5rem);
+  height: calc(100% - 4rem);
 }
 
 /* This is classes the should be used on multiple pages */
@@ -138,15 +138,15 @@ html {
   background-color: rgb(230, 223, 215);
   width: 100%;
   margin: 0 auto;
-  padding: 1rem 0 0; 
+  padding: 1rem 0 0;
   z-index: 10;
-  
 }
 
 .user-info {
   display: flex;
   flex-direction: row;
   align-items: baseline;
+  justify-content: space-between;
 }
 
 .user-info h1 {
