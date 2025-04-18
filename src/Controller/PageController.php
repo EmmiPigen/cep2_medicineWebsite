@@ -42,7 +42,7 @@ class PageController extends AbstractController
 
         //Set the time to this morning at 8:00 for debugging purposes
 
-        $now     = new \DateTime('08:00');
+        $now     = new \DateTime('');
         $nowTime = $now->format('H:i');
 
         $nextMedications = [];
@@ -83,15 +83,10 @@ class PageController extends AbstractController
         if ($medLogs->isEmpty()) {
             $logger->warning('Der er ingen medicin logget for denne bruger!');
             // Handle the case when there are no logs for the user
-            $lastLog = [
-                'medikamentNavn' => 'Ingen medicin logget',
-                'tagetTid'       => 'Ingen tid logget',
-                'tagetStatus'    => true,
-                'tagetLokale'    => 'Ingen lokation logget',
-            ];
 
+            $lastLog = null;
         } else {
-            $lastLog = $logs->last(); // Get the last log entry
+            $lastLog = $medLogs->last(); // Get the last log entry
         }
 
         //Render the template with the medication data
