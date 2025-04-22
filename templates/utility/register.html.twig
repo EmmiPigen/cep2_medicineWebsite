@@ -1,9 +1,16 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Register{% endblock %}
-
 {% block content %}
-    <h1>Register</h1>
+<!--Start of the main container -->
+<div class="main-container">
+  <section id="registerBox" class="register-box">
+    <header class="register-header">
+      <h1>Opret bruger</h1>
+      <div class="line-separator darker"></div>
+    </header>
+    
+
+    
 
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.FuldeNavn)}}
@@ -15,4 +22,5 @@
 
         <button class="btn">Register</button>
     {{ form_end(registrationForm) }}
+    </div>  
 {% endblock %}

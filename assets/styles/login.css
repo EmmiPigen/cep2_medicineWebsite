@@ -1,0 +1,43 @@
+.main-container.login-page{
+  margin-top: 3rem;
+  flex-direction: row;
+  height: calc(100% - 3rem);
+  gap: 2rem;
+  justify-content: center;
+}
+
+.register-container{
+  display: flex;
+  flex-direction: column;
+  width: calc(50% - 2rem);
+  border-radius: 2rem;
+  background-color: rgb(96, 148, 169);
+  padding: 1rem 2rem;
+  height: 85%;
+  gap: 1rem;
+}
+
+.register-header h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin: 0.5rem 0;
+  font-weight: bold;
+  color: rgb(39, 39, 39);
+}
+
+.register-info {
+  background-color: rgb(211, 208, 195);
+  border-radius: 1rem;
+  padding: 0.5rem;
+}
+.register-info p {
+  font-size: 1.5rem;
+  margin: 0.5rem 0;
+  color: rgb(29, 29, 29);
+}
+
+.register-formular{
+  background-color: rgb(211, 208, 195);
+  border-radius: 1rem;
+  padding: 0.5rem;
+}

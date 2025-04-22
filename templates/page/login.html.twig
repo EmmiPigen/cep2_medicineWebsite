@@ -1,50 +1,80 @@
 {% extends 'base.html.twig' %} {% block content %}
-<div
-  class="lineSeparator"
-  style="background-color: rgb(77, 70, 63); width: 100%"></div>
+<div class="main-container login-page">
+  <!--Container for the login form beside the registration form-->
+  <section id="loginBox" class="login-container">
+    <form method="post">
+      {% if error %}
+      <div class="alert alert-danger">
+        {{ error.messageKey|trans(error.messageData, 'security') }}
+      </div>
+      {% endif %} {% if app.user %}
+      <div class="mb-3">
+        You are logged in as {{ app.user.userIdentifier }},
+        <a href="{{ path('logout') }}">Logout</a>
+      </div>
+      {% endif %}
 
-<form method="post">
-  {% if error %}
-  <div class="alert alert-danger">
-    {{ error.messageKey|trans(error.messageData, 'security') }}
-  </div>
-  {% endif %} {% if app.user %}
-  <div class="mb-3">
-    You are logged in as {{ app.user.userIdentifier }},
-    <a href="{{ path('logout') }}">Logout</a>
-  </div>
-  {% endif %}
+      <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+      <label for="username">Email</label>
+      <input
+        type="email"
+        value="{{ last_username }}"
+        name="_username"
+        id="username"
+        class="form-control"
+        autocomplete="email"
+        required
+        autofocus />
+      <label for="password">Password</label>
+      <input
+        type="password"
+        name="_password"
+        id="password"
+        class="form-control"
+        autocomplete="current-password"
+        required />
 
-  <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-  <label for="username">Email</label>
-  <input
-    type="email"
-    value="{{ last_username }}"
-    name="_username"
-    id="username"
-    class="form-control"
-    autocomplete="email"
-    required
-    autofocus />
-  <label for="password">Password</label>
-  <input
-    type="password"
-    name="_password"
-    id="password"
-    class="form-control"
-    autocomplete="current-password"
-    required />
+      <input
+        type="hidden"
+        name="_csrf_token"
+        value="{{ csrf_token('authenticate') }}" />
 
-  <input
-    type="hidden"
-    name="_csrf_token"
-    value="{{ csrf_token('authenticate') }}" />
+      <div class="checkbox mb-3">
+        <input type="checkbox" name="_remember_me" id="_remember_me" />
+        <label for="_remember_me">Remember me</label>
+      </div>
 
-  <div class="checkbox mb-3">
-    <input type="checkbox" name="_remember_me" id="_remember_me" />
-    <label for="_remember_me">Remember me</label>
-  </div>
+      <button class="btn btn-lg btn-primary" type="submit">Sign in</button>
+    </form>
+  </section>
 
-  <button class="btn btn-lg btn-primary" type="submit">Sign in</button>
-</form>
+  <!--Container for the registration form beside the login form-->
+  <section id="registerBox" class="register-container">
+    <header class="register-header">
+      <h2>Opret en ny bruger</h2>
+      <div class="line-separator darker"></div>
+    </header>
+
+    <section class="register-info">
+      <p>For at kunne bruge systemet, skal du oprette en bruger.</p>
+      <p>Udfyld venligst formularen, hvis du ikke allerede har en bruger.</p>
+    </section>
+
+    <section class="register-formular">
+      {{ form_start(registrationForm) }}
+      {{ form_row(registrationForm.FuldeNavn) }}
+      {{ form_row(registrationForm.email) }}
+      {{
+        form_row(registrationForm.plainPassword, {
+          label: "Password"
+        })
+      }}
+      {{ form_row(registrationForm.agreeTerms) }}
+
+      <button class="btn">Register</button>
+      {{ form_end(registrationForm) }}
+    </section>
+  </section>
+</div>
+
 {% endblock %}

@@ -99,6 +99,7 @@ class PageController extends AbstractController
   ): Response {
     $user = $this->getUser();
 
+
     return $this->render('page/medicin.html.twig', [
     ]);
   }
@@ -119,13 +120,13 @@ class PageController extends AbstractController
       $medicinLogs = null;
     } else {
       //Create an array containing all medication logs sorted by date
-      $medLogsArray=$medLogs->toArray();
+      $medLogsArray = $medLogs->toArray();
 
       usort($medLogsArray, function ($a, $b) {
         return $b->getTagetTid() <=> $a->getTagetTid(); // Sort by tagetTid in descending order
       });
 
-      
+
       $medicinLogs = $medLogsArray;
     }
 
@@ -157,17 +158,36 @@ class PageController extends AbstractController
   }
 
   #[Route(path: '/login', name: 'login')]
-  public function login(AuthenticationUtils $authenticationUtils): Response
-  {
-    // get the login error if there is one
-    $error = $authenticationUtils->getLastAuthenticationError();
+  public function login(
+    Request $request,
+    AuthenticationUtils $authenticationUtils,
+    UserPasswordHasherInterface $userPasswordHasher,
+    EntityManagerInterface $entityManager
+  ): Response {
+    //LOGIN FORM
+    $error = $authenticationUtils->getLastAuthenticationError(); // get the login error if there is one
+    $lastUsername = $authenticationUtils->getLastUsername();  // last username entered by the user
 
-    // last username entered by the user
-    $lastUsername = $authenticationUtils->getLastUsername();
+    //REGISTRATION FORM
+    $user = new User();
+    $form = $this->createForm(RegistrationFormType::class, $user);
+    $form->handleRequest($request);
 
+    if ($form->isSubmitted() && $form->isValid()) {
+      /** @var string $plainPassword */
+      $plainPassword = $form->get('plainPassword')->getData();
+      // encode the plain password
+      $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
+
+      $entityManager->persist($user);
+      $entityManager->flush();
+
+      return $this->redirectToRoute('home');
+    }
     return $this->render('page/login.html.twig', [
       'last_username' => $lastUsername,
       'error' => $error,
+      'registrationForm' => $form->createView(),
     ]);
   }
 
@@ -190,8 +210,11 @@ class PageController extends AbstractController
   }
 
   #[Route('/register', name: 'register')]
-  public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
-  {
+  public function register(
+    Request $request,
+    UserPasswordHasherInterface $userPasswordHasher,
+    EntityManagerInterface $entityManager
+  ): Response {
     $user = new User();
     $form = $this->createForm(RegistrationFormType::class, $user);
     $form->handleRequest($request);
