@@ -40,28 +40,42 @@
   background-color: rgb(211, 208, 195);
   border-radius: 1rem;
   padding: 1rem;
+  gap: 1.2rem;
 }
 
 .register-form label {
   font-size: 1rem;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.3rem;
   color: #333;
-  display: block;
 }
 
 .register-form input[type="text"],
 .register-form input[type="email"],
 .register-form input[type="password"] {
   width: 100%;
-  padding: 0.5rem 0.75rem;
+  padding: 0.6rem 0.8rem;
   font-size: 1rem;
-  border: 1px solid #aaa;
+  border: 1px solid #bbb;
   border-radius: 0.5rem;
   background-color: #fff;
-  box-sizing: border-box  ;
+  box-sizing: border-box;
 }
 
-.register-form input[type="checkbox"] {
-  transform: scale(1.2);
-  margin-right: 0.5rem;
+.register-form button.btn {
+  align-self: flex-start;
+  padding: 0.6rem 1.5rem;
+  background-color: rgb(96, 148, 169);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 1rem auto 0 auto;
+  display: block;
+}
+
+.register-form button.btn:hover {
+  background-color: rgb(17, 73, 95);
 }
