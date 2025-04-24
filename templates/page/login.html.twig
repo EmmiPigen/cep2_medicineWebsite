@@ -44,6 +44,14 @@
         <label for="_remember_me">Remember me</label>
       </div>
 
+<<<<<<< Updated upstream
+=======
+      <div class="checkbox mb-3">
+        <input type="checkbox" name="_remember_me" id="_remember_me" />
+        <label for="_remember_me">Remember me</label>
+      </div>
+
+>>>>>>> Stashed changes
       <button class="btn btn-lg btn-primary" type="submit">Sign in</button>
     </form>
   </section>
@@ -55,11 +63,16 @@
       <div class="line-separator darker"></div>
     </header>
 
+<<<<<<< Updated upstream
     <section class="register-info">
+=======
+    <section class="register-description">
+>>>>>>> Stashed changes
       <p>For at kunne bruge systemet, skal du oprette en bruger.</p>
       <p>Udfyld venligst formularen, hvis du ikke allerede har en bruger.</p>
     </section>
 
+<<<<<<< Updated upstream
     <section class="register-formular">
       {{ form_start(registrationForm) }}
       {{ form_row(registrationForm.FuldeNavn) }}
@@ -72,6 +85,29 @@
       {{ form_row(registrationForm.agreeTerms) }}
 
       <button class="btn">Register</button>
+=======
+    <section class="register-form">
+      {{ form_start(registrationForm) }}
+
+      {{
+        form_row(registrationForm.FuldeNavn, {
+          label: "Fulde navn"
+        })
+      }}
+      {{
+        form_row(registrationForm.email, {
+          label: "Email"
+        })
+      }}
+
+      {{
+        form_row(registrationForm.plainPassword, {
+          label: "Adgangskode"
+        })
+      }}
+
+      <button type="submit" class="btn">Opret Bruger</button>
+>>>>>>> Stashed changes
       {{ form_end(registrationForm) }}
     </section>
   </section>

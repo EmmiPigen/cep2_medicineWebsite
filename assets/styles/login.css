@@ -7,14 +7,14 @@
 }
 
 .register-container{
+  background-color: rgb(96, 148, 169);
+  border-radius: 2rem;
+  padding: 1rem 1.5rem;
   display: flex;
   flex-direction: column;
-  width: calc(50% - 2rem);
-  border-radius: 2rem;
-  background-color: rgb(96, 148, 169);
-  padding: 1rem 2rem;
-  height: 85%;
   gap: 1rem;
+  height: 85%;
+  width: calc(50% - 2rem);
 }
 
 .register-header h2 {
@@ -25,19 +25,43 @@
   color: rgb(39, 39, 39);
 }
 
-.register-info {
+.register-description {
   background-color: rgb(211, 208, 195);
   border-radius: 1rem;
   padding: 0.5rem;
 }
-.register-info p {
+.register-description p {
   font-size: 1.5rem;
   margin: 0.5rem 0;
   color: rgb(29, 29, 29);
 }
 
-.register-formular{
+.register-form{
   background-color: rgb(211, 208, 195);
   border-radius: 1rem;
-  padding: 0.5rem;
+  padding: 1rem;
+}
+
+.register-form label {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+  color: #333;
+  display: block;
+}
+
+.register-form input[type="text"],
+.register-form input[type="email"],
+.register-form input[type="password"] {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #aaa;
+  border-radius: 0.5rem;
+  background-color: #fff;
+  box-sizing: border-box  ;
+}
+
+.register-form input[type="checkbox"] {
+  transform: scale(1.2);
+  margin-right: 0.5rem;
 }
