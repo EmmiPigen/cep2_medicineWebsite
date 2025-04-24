@@ -2,7 +2,7 @@
 <div class="main-container login-page">
   <!--Container for the login form beside the registration form-->
   <section id="loginBox" class="login-container">
-    <form method="post">
+    <form method="post" action="{{ path('login') }}">
       {% if error %}
       <div class="alert alert-danger">
         {{ error.messageKey|trans(error.messageData, 'security') }}
@@ -18,7 +18,7 @@
       <label for="email">Email</label>
       <input
         type="email"
-        value="{{ last_username }}"
+        value="{{ last_username|default('') }}"
         name="_username"
         id="username"
         class="form-control"

@@ -182,8 +182,12 @@ class PageController extends AbstractController
       $entityManager->persist($user);
       $entityManager->flush();
 
+      
+      dump($request->request->all());
       return $this->redirectToRoute('home');
     }
+    dump($request->request->all());
+
     return $this->render('page/login.html.twig', [
       'last_username' => $lastUsername,
       'error' => $error,

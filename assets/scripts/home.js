@@ -71,8 +71,13 @@ function dynammiskIndlaesning() {
 
   function handleNavLinks(event) {
     event.preventDefault();
-    loadPage(this.getAttribute("href"));
-    runScript();
+    const targetURL = this.getAttribute("href");
+    
+    if(!targetURL || targetURL === "null") {
+      console.warn("Invalid link target:", targetURL);
+      return;
+    }
+    loadPage(targetURL);
   }
 
   window.addEventListener("popstate", function (event) {
