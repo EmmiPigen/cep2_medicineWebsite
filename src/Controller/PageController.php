@@ -164,34 +164,17 @@ class PageController extends AbstractController
     UserPasswordHasherInterface $userPasswordHasher,
     EntityManagerInterface $entityManager
   ): Response {
-    //LOGIN FORM
-    $error = $authenticationUtils->getLastAuthenticationError(); // get the login error if there is one
-    $lastUsername = $authenticationUtils->getLastUsername();  // last username entered by the user
-
-    //REGISTRATION FORM
+    $error = $authenticationUtils->getLastAuthenticationError();
+    $lastUsername = $authenticationUtils->getLastUsername();
+  
+    // Prepare registration form
     $user = new User();
-    $form = $this->createForm(RegistrationFormType::class, $user);
-    $form->handleRequest($request);
-
-    if ($form->isSubmitted() && $form->isValid()) {
-      /** @var string $plainPassword */
-      $plainPassword = $form->get('plainPassword')->getData();
-      // encode the plain password
-      $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
-
-      $entityManager->persist($user);
-      $entityManager->flush();
-
-      
-      dump($request->request->all());
-      return $this->redirectToRoute('home');
-    }
-    dump($request->request->all());
-
+    $registrationForm = $this->createForm(RegistrationFormType::class, $user);
+  
     return $this->render('page/login.html.twig', [
       'last_username' => $lastUsername,
       'error' => $error,
-      'registrationForm' => $form->createView(),
+      'registrationForm' => $registrationForm,
     ]);
   }
 

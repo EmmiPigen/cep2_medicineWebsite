@@ -61,7 +61,7 @@
     </section>
 
     <section class="register-form">
-      {{ form_start(registrationForm) }}
+      {{ form_start(registrationForm, {'action': path('register') }) }}
 
       {{
         form_row(registrationForm.FuldeNavn, {
