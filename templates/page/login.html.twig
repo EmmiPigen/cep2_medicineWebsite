@@ -1,89 +1,102 @@
 {% extends 'base.html.twig' %} {% block content %}
 <div class="main-container login-page">
+  {% if app.user %}
+  <section class="logged-in-info">
+    <h1>Du er logget ind som {{ app.user.fuldeNavn }}</h1>
+    <a href="{{ path('logout') }}">Log ud</a>
+  </section>
+  {% else %}
+  <section class="logged-in-info">
+    <h1>Du er ikke logget ind endnu</h1>
+  </section>
+  {% endif %}
+  <div class="line-separator loginHeader darker"></div>
+
   <!--Container for the login form beside the registration form-->
-  <section id="loginBox" class="login-container">
-    <form method="post" action="{{ path('login') }}">
-      {% if error %}
-      <div class="alert alert-danger">
-        {{ error.messageKey|trans(error.messageData, 'security') }}
-      </div>
-      {% endif %} {% if app.user %}
-      <div class="mb-3">
-        You are logged in as {{ app.user.userIdentifier }},
-        <a href="{{ path('logout') }}">Logout</a>
-      </div>
-      {% endif %}
+  <main>
+    <section id="loginBox" class="login-container">
+      <form method="post" action="{{ path('login') }}">
+        {% if error %}
+        <div class="alert alert-danger">
+          {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+        {% endif %}
 
-      <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-      <label for="email">Email</label>
-      <input
-        type="email"
-        value="{{ last_username|default('') }}"
-        name="_username"
-        id="username"
-        class="form-control"
-        autocomplete="email"
-        required
-        autofocus />
-      <label for="password">Password</label>
-      <input
-        type="password"
-        name="_password"
-        id="password"
-        class="form-control"
-        autocomplete="current-password"
-        required />
+        <header class="login-header">
+          <h2>Log Ind</h2>
+          <div class="line-separator darker"></div>
+        </header>
+        <label for="email">Email adresse</label>
+        <input
+          type="email"
+          value="{{ last_username|default('') }}"
+          name="_username"
+          id="username"
+          class="form-input"
+          autocomplete="email"
+          required
+          autofocus />
+        <label for="password">Adgangskode</label>
+        <input
+          type="password"
+          name="_password"
+          id="password"
+          class="form-input"
+          autocomplete="current-password"
+          required />
 
-      <input
-        type="hidden"
-        name="_csrf_token"
-        value="{{ csrf_token('authenticate') }}" />
+        <input
+          type="hidden"
+          name="_csrf_token"
+          value="{{ csrf_token('authenticate') }}" />
 
-      <div class="checkbox mb-3">
-        <input type="checkbox" name="_remember_me" id="_remember_me" />
-        <label for="_remember_me">Remember me</label>
-      </div>
+        <div class="form-checkbox">
+          <input type="checkbox" name="_remember_me" id="_remember_me" />
+          <label for="_remember_me">Forbliv Logget Ind</label>
+        </div>
 
-      <button class="btn btn-lg btn-primary" type="submit">Sign in</button>
-    </form>
-  </section>
-
-  <!--Container for the registration form beside the login form-->
-  <section id="registerBox" class="register-container">
-    <header class="register-header">
-      <h2>Opret en ny bruger</h2>
-      <div class="line-separator darker"></div>
-    </header>
-
-    <section class="register-description">
-      <p>For at kunne bruge systemet, skal du oprette en bruger.</p>
-      <p>Udfyld venligst formularen, hvis du ikke allerede har en bruger.</p>
+        <button class="btn-submit" type="submit">Log Ind</button>
+      </form>
     </section>
 
-    <section class="register-form">
-      {{ form_start(registrationForm, {'action': path('register') }) }}
+    <!--Container for the registration form beside the login form-->
+    <section id="registerBox" class="register-container">
+      <header class="register-header">
+        <h2>Opret en ny bruger</h2>
+        <div class="line-separator darker"></div>
+      </header>
 
-      {{
-        form_row(registrationForm.FuldeNavn, {
-          label: "Fulde navn"
-        })
-      }}
-      {{
-        form_row(registrationForm.email, {
-          label: "Email"
-        })
-      }}
+      <section class="register-description">
+        <p>For at kunne bruge systemet, skal du oprette en bruger.</p>
+        <p>Udfyld venligst formularen, hvis du ikke allerede har en bruger.</p>
+      </section>
 
-      {{
-        form_row(registrationForm.plainPassword, {
-          label: "Adgangskode"
-        })
-      }}
+      <section class="register-form">
+        {{ form_start(registrationForm, { action: path("register") }) }}
 
-      <button type="submit" class="btn">Opret Bruger</button>
-      {{ form_end(registrationForm) }}
+        {{
+          form_row(registrationForm.FuldeNavn, {
+            label: "Fulde navn"
+          })
+        }}
+        {{
+          form_row(registrationForm.email, {
+            label: "Email",
+            attr: {autocomplete: "email"}
+          })
+        }}
+
+        {{
+          form_row(registrationForm.plainPassword, {
+            label: "Adgangskode"
+          })
+        }}
+
+        <button type="submit" class="btn">Opret Bruger</button>
+        {{ form_end(registrationForm) }}
+      </section>
     </section>
-  </section>
+  </main>
 </div>
 
 {% endblock %}
