@@ -164,30 +164,18 @@ class PageController extends AbstractController
     UserPasswordHasherInterface $userPasswordHasher,
     EntityManagerInterface $entityManager
   ): Response {
-    //LOGIN FORM
-    $error = $authenticationUtils->getLastAuthenticationError(); // get the login error if there is one
-    $lastUsername = $authenticationUtils->getLastUsername();  // last username entered by the user
-
-    //REGISTRATION FORM
+    $error = $authenticationUtils->getLastAuthenticationError();
+    $lastUsername = $authenticationUtils->getLastUsername();
+  
+    // Prepare registration form
     $user = new User();
-    $form = $this->createForm(RegistrationFormType::class, $user);
-    $form->handleRequest($request);
-
-    if ($form->isSubmitted() && $form->isValid()) {
-      /** @var string $plainPassword */
-      $plainPassword = $form->get('plainPassword')->getData();
-      // encode the plain password
-      $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
-
-      $entityManager->persist($user);
-      $entityManager->flush();
-
-      return $this->redirectToRoute('home');
-    }
+    $registrationForm = $this->createForm(RegistrationFormType::class, $user);
+  
     return $this->render('page/login.html.twig', [
       'last_username' => $lastUsername,
       'error' => $error,
-      'registrationForm' => $form->createView(),
+      'registration_error' => null,
+      'registrationForm' => $registrationForm,
     ]);
   }
 
@@ -212,10 +200,13 @@ class PageController extends AbstractController
   #[Route('/register', name: 'register')]
   public function register(
     Request $request,
+    AuthenticationUtils $authenticationUtils,
     UserPasswordHasherInterface $userPasswordHasher,
     EntityManagerInterface $entityManager
   ): Response {
     $user = new User();
+    $error = $authenticationUtils->getLastAuthenticationError();
+
     $form = $this->createForm(RegistrationFormType::class, $user);
     $form->handleRequest($request);
 
@@ -228,14 +219,13 @@ class PageController extends AbstractController
 
       $entityManager->persist($user);
       $entityManager->flush();
-
-      // do anything else you need here, like send an email
-
       return $this->redirectToRoute('home');
     }
-
-    return $this->render('utility/register.html.twig', [
+    
+    return $this->render('page/login.html.twig', [
       'registrationForm' => $form,
+      'error' => null,
+      'registration_error' => $error,
     ]);
   }
 

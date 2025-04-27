@@ -9,10 +9,10 @@
     data-medicine-status="{{ lastLog.tagetStatus }}">
     <header class="med-status-header">
       <h1>Seneste medicin status</h1>
-      <div class="line-separator darker"></div>
+      <div class="divider dark"></div>
     </header>
 
-    <main class="main-status-content">
+    <main class="main-med-status-content">
       <!-- Medicine status Name -->
       <section class="med-name">
         <h2>{{ lastLog.medikamentNavn }}</h2>
@@ -37,10 +37,10 @@
   <div class="med-status-box">
     <header class="med-status-header">
       <h1>Seneste medicin status</h1>
-      <div class="line-separator darker"></div>
+      <div class="divider dark"></div>
     </header>
 
-    <main class="main-status-content">
+    <main class="main-med-status-content">
       <p>Der er endnu ikke registreret nogen medicineringer</p>
     </main>
   </div>
@@ -50,11 +50,11 @@
   <!-- Next medicine box -->
   <section id="nextMedBox" class="next-med-box">
     <header class="next-med-header">
-      <h2>Næste medicin som skal tages idag</h2>
+      <h1>Næste medicin som skal tages idag</h1>
     </header>
 
     <div id="nextMedInfo" class="next-med-info">
-      <div class="line-separator darker"></div>
+      <div class="divider dark"></div>
       {% if restMedsIdag is empty %}
       <p class="no-meds-msg">Ikke flere medicineringer i dag</p>
       {% else %}
@@ -69,7 +69,7 @@
           </tr>
         </thead>
 
-        <tbody class="next-med-table-body">
+        <tbody>
           {% for medicin in restMedsIdag %}
           <tr class="next-med-cell">
             <td class="next-med-cell-bg">{{ medicin.medikamentNavn }}</td>
