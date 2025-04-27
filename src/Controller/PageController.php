@@ -174,6 +174,7 @@ class PageController extends AbstractController
     return $this->render('page/login.html.twig', [
       'last_username' => $lastUsername,
       'error' => $error,
+      'registration_error' => null,
       'registrationForm' => $registrationForm,
     ]);
   }
@@ -199,10 +200,13 @@ class PageController extends AbstractController
   #[Route('/register', name: 'register')]
   public function register(
     Request $request,
+    AuthenticationUtils $authenticationUtils,
     UserPasswordHasherInterface $userPasswordHasher,
     EntityManagerInterface $entityManager
   ): Response {
     $user = new User();
+    $error = $authenticationUtils->getLastAuthenticationError();
+
     $form = $this->createForm(RegistrationFormType::class, $user);
     $form->handleRequest($request);
 
@@ -215,12 +219,13 @@ class PageController extends AbstractController
 
       $entityManager->persist($user);
       $entityManager->flush();
-
       return $this->redirectToRoute('home');
     }
-
-    return $this->render('utility/register.html.twig', [
+    
+    return $this->render('page/login.html.twig', [
       'registrationForm' => $form,
+      'error' => null,
+      'registration_error' => $error,
     ]);
   }
 

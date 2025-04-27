@@ -29,6 +29,7 @@ function dynammiskIndlaesning() {
   const contentDiv = document.getElementById("content");
 
   async function loadPage(url) {
+    
     console.log("Loading page:", url);
     if (window.location.pathname === url) {
       return;
@@ -105,4 +106,3 @@ function highLightCurrentPage() {
     }
   });
 }
-

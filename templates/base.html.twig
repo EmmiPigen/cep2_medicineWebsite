@@ -11,8 +11,9 @@
 
     {% block javascripts %} {% block importmap %}
     {{
-      importmap("app")
+      importmap('app')
     }}
+
     {% endblock %} {% endblock %}
   </head>
 
@@ -72,27 +73,36 @@
             </li>
             <li class="navigation-item">
               <a
-                href="{{ path('login') }}"
-                class="navigation-link"
-                data-page="login">
-                <span class="navigation-text">&gt; Login</span>
-              </a>
-            </li>
-            <li class="navigation-item">
-              <a
                 href="{{ path('hjaelp') }}"
                 class="navigation-link"
                 data-page="hjaelp">
                 <span class="navigation-text">&gt; Hjælp</span>
               </a>
             </li>
+            {% if app.user %}
+            <li class="navigation-item">
+              <a href="{{ path('logout') }}" class="navigation-link">
+                <span class="navigation-text">&gt; Log ud</span>
+              </a>
+            </li>
+            {% else %}
+            <li class="navigation-item">
+              <a
+                href="{{ path('login') }}"
+                class="navigation-link"
+                data-page="login">
+                <span class="navigation-text">&gt; Log ind</span>
+              </a>
+            </li>
+            {% endif %}
           </ul>
         </nav>
       </aside>
 
       <div class="main-content-background"></div>
       <main class="main-content" id="content">
-        {% if app.request.attributes.get('_route') != 'login'%}
+        {% if app.request.attributes.get('_route') != 'login' 
+        and app.request.attributes.get('_route') != 'register' %}
         <section class="user-info-section">
           <header class="user-info-header">
             <h1 class="user-info-title">Logget ind som:</h1>
