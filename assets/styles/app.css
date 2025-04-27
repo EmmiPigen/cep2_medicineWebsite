@@ -1,3 +1,14 @@
+/* This file contains the global styles for the application */
+/*Base styles*/
+body,
+html {
+  font-family: Arial, sans-serif;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
 html {
   font-size: 14px; /*Fallback for browsers that don't support clamp*/
   font-size: clamp(14px, 1.2vw, 18px);
@@ -5,34 +16,29 @@ html {
 }
 
 body {
-  background-color: skyblue;
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  width: 100vw;
+  background-color: var(--color-secondary);
   user-select: none;
 }
 
-body,
-html {
-  overflow-y: auto;
-  overflow-x: hidden;
-  font-family: Arial, sans-serif;
+h1, h2, h3, h4, h5, h6, p, span, a {
+  color: var(--color-text);
 }
 
-.page-layout {
+/*Layout styles*/
+.layout-wrapper {
   display: flex;
   min-height: 100vh;
 }
 
-/* The sidebar */
-.sidebar {
+/*Sidebar styles*/
+.sidebar-menu {
   position: fixed;
   width: 300px;
   height: 100%;
   padding-top: 1rem;
 }
 
+/*Logo and website name styles*/
 .logo-container {
   display: flex;
   align-items: center;
@@ -47,22 +53,19 @@ html {
 .logo-container h2 {
   font-size: 1.6rem;
 }
-/* The navigation bar */
-.nav {
+
+/*Navigation styles*/
+.navigation {
   margin: 40px 0;
 }
-.nav ul {
+
+
+.navigation-list {
   list-style: none;
   padding: 0;
 }
 
-.nav-link {
-  all: unset;
-  display: block;
-  width: 100%;
-}
-
-.nav-item {
+.navigation-item {
   display: flex;
   padding: 1rem;
   align-items: center;
@@ -71,27 +74,68 @@ html {
   transition: background-color 0.3s ease;
 }
 
-.nav-item:hover {
-  background-color: rgb(17, 73, 95);
+.navigation-item:hover {
+  background-color: var(--color-tertiary);
   color: white;
 }
 
-.nav-active {
-  background-color: rgb(81, 135, 156);
+.navigation-item.active {
+  background-color: var(--color-tertiary);
+  color: white;
   font-weight: bold;
-  border-left: 5px solid rgb(17, 73, 95);
+  border-left: 5px solid var(--color-light-blue);
 }
 
-.nav-text {
+.navigation-link {
+  all: unset;
+  display: block;
+  width: 100%;
+}
+
+.navigation-text {
   font-size: 2rem;
   padding: 0 1.7rem;
   color: inherit;
 }
 
+/*User info styles*/
+.user-info-section {
+  position: sticky;
+  top: 0rem;
+  background-color: var(--color-primary);
+  width: 100%;
+  margin: 0 auto;
+  padding: 1rem 0 0;
+  z-index: 10;
+}
+
+.user-info-header {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.user-info-title {
+  font-size: 2rem;
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+}
+
+.user-info-name{
+  font-size: 2rem;
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+  color: var(--color-tertiary)
+}
+
+/*Main content styles*/
 .main-content-background {
-  z-index: -1;
   position: fixed;
-  background-color: rgb(230, 223, 215);
+  z-index: -1;
+  background-color: var(--color-primary);
   border-radius: 40px 0 0 40px;
   width: calc(100vw - 300px);
   min-width: 600px;
@@ -103,11 +147,13 @@ html {
   position: absolute;
   margin-left: 300px;
   width: calc(100vw - 300px - 5rem);
-  min-width: 600px;
   height: calc(100vh - 0.5rem);
   padding: 0rem 2rem 0.5rem 3rem;
 }
 
+
+/* This is classes the should be used on multiple pages */
+/* But is not part of the base twig template */
 .main-container {
   display: flex;
   flex-direction: column;
@@ -117,12 +163,7 @@ html {
   height: calc(100% - 5rem);
 }
 
-/* This is classes the should be used on multiple pages */
-.flex-evenly {
-  display: flex;
-  justify-content: space-evenly;
-}
-
+/* Content fading effect */
 #content {
   transition: opacity 0.5s ease-in-out;
   opacity: 1;
@@ -132,39 +173,8 @@ html {
   opacity: 0;
 }
 
-.user-info-container {
-  position: sticky;
-  top: 0rem;
-  background-color: rgb(230, 223, 215);
-  width: 100%;
-  margin: 0 auto;
-  padding: 1rem 0 0;
-  z-index: 10;
-}
-
-.user-info {
-  display: flex;
-  flex-direction: row;
-  align-items: baseline;
-  justify-content: space-between;
-}
-
-.user-info h1 {
-  font-size: 2rem;
-  margin: 0;
-  padding: 0;
-  display: inline-block;
-}
-
-.user-info h2 {
-  font-size: 1.5rem;
-  margin: 0;
-  padding: 0;
-  display: inline-block;
-  color: rgb(21, 81, 131);
-}
-
-.line-separator {
+/*Divider styles*/
+.divider {
   height: 3px;
   width: 100%;
   background-color: #ccc;
@@ -172,24 +182,15 @@ html {
   border-radius: 5rem;
 }
 
-.line-separator.dark {
-  background-color: rgb(77, 70, 63);
+.divider.dark {
+  background-color: var(--color-dark);
 }
 
-.line-separator.darker {
-  background-color: rgb(39, 39, 39);
-}
 
-/*Dynamic sizing of the sidebar and main content for tablet and mobile devices*/
+/*Responsive styles*/
 @media (max-width: 768px) {
-  .sidebar {
+  .sidebar-menu {
     width: 175px;
-  }
-  .main-content {
-    margin-left: 175px;
-  }
-  .main-content-background {
-    margin-left: 175px;
   }
 
   .logo-container {
@@ -203,9 +204,19 @@ html {
   .logo-container img {
     width: 50px;
   }
-
-  .nav-text {
+  
+  .navigation-text {
     font-size: 1.2rem;
     padding: 0;
   }
+
+  .main-content {
+    margin-left: 175px;
+    width: unset;
+  }
+  .main-content-background {
+    margin-left: 175px;
+  }
+
+
 }

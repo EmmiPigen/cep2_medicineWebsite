@@ -93,7 +93,7 @@ function highLightCurrentPage() {
   const navLinks = document.querySelectorAll("nav a");
   navLinks.forEach((link) => {
     const href = link.getAttribute("href");
-    const node = link.firstElementChild;
+    const node = link.closest("li"); // Find the closest <li> ancestor
 
     if(!href || !node) {
       console.warn("Skipping link due to missing href or node:", link);

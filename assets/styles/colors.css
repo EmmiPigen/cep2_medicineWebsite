@@ -1,0 +1,14 @@
+:root {
+  --color-primary: #e6dfce; /* DarkerBeige */
+  --color-primary-lighter: #f0eee9; /* Light Beige */
+  --color-secondary: #87CEEB; /* Blue */
+  --color-tertiary: #11495f; /* Dark Blue */
+  --color-light-blue: #b3c0db; /* Light Blue */
+  --color-red-highlight: #c74343; /* Red Highlight */
+  --color-yellow-highlight: #ff9800; /* Yellow Highlight */
+  --color-green-highlight: #75bd56; /* Green Highlight */
+
+
+  --color-dark: #232c3b; /* Dark Color */
+  --color-text: #1e2d2c; /* Text Color */
+}

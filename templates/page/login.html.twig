@@ -2,7 +2,9 @@
 <div class="main-container login-page">
   {% if app.user %}
   <section class="logged-in-info">
-    <h1>Du er logget ind som {{ app.user.fuldeNavn }}</h1>
+    <h1>
+      Du er logget ind som: <span>{{ app.user.fuldeNavn }}</span>
+    </h1>
     <a href="{{ path('logout') }}">Log ud</a>
   </section>
   {% else %}
@@ -15,47 +17,55 @@
   <!--Container for the login form beside the registration form-->
   <main>
     <section id="loginBox" class="login-container">
-      <form method="post" action="{{ path('login') }}">
-        {% if error %}
-        <div class="alert alert-danger">
-          {{ error.messageKey|trans(error.messageData, 'security') }}
-        </div>
-        {% endif %}
+ 
 
         <header class="login-header">
           <h2>Log Ind</h2>
           <div class="line-separator darker"></div>
         </header>
-        <label for="email">Email adresse</label>
-        <input
-          type="email"
-          value="{{ last_username|default('') }}"
-          name="_username"
-          id="username"
-          class="form-input"
-          autocomplete="email"
-          required
-          autofocus />
-        <label for="password">Adgangskode</label>
-        <input
-          type="password"
-          name="_password"
-          id="password"
-          class="form-input"
-          autocomplete="current-password"
-          required />
+        <section class="login-description">
+          <p>Log ind for at få adgang til systemet.</p>
+          <p>Udfyld venligst formularen nedenfor.</p>
+        </section>
 
-        <input
-          type="hidden"
-          name="_csrf_token"
-          value="{{ csrf_token('authenticate') }}" />
+        <section class="login-form">
+          <form method="post" action="{{ path('login') }}">
+            {% if error %}
+            <div class="alert alert-danger">
+              {{ error.messageKey|trans(error.messageData, 'security') }}
+            </div>
+            {% endif %}
+          <label for="email">Email adresse</label>
+          <input
+            type="email"
+            value="{{ last_username|default('') }}"
+            name="_username"
+            id="username"
+            class="form-input"
+            autocomplete="email"
+            required
+            autofocus />
+          <label for="password">Adgangskode</label>
+          <input
+            type="password"
+            name="_password"
+            id="password"
+            class="form-input"
+            autocomplete="current-password"
+            required />
 
-        <div class="form-checkbox">
-          <input type="checkbox" name="_remember_me" id="_remember_me" />
-          <label for="_remember_me">Forbliv Logget Ind</label>
-        </div>
+          <input
+            type="hidden"
+            name="_csrf_token"
+            value="{{ csrf_token('authenticate') }}" />
 
-        <button class="btn-submit" type="submit">Log Ind</button>
+          <div class="form-checkbox">
+            <input type="checkbox" name="_remember_me" id="_remember_me" />
+            <label for="_remember_me">Forbliv Logget Ind</label>
+          </div>
+
+          <button class="btn-submit" type="submit">Log Ind</button>
+        </section>
       </form>
     </section>
 
@@ -82,7 +92,7 @@
         {{
           form_row(registrationForm.email, {
             label: "Email",
-            attr: {autocomplete: "email"}
+            attr: { autocomplete: "email" }
           })
         }}
 
