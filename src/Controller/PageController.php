@@ -143,8 +143,23 @@ class PageController extends AbstractController
     UdstyrRepository $udstyrRepository,
     LoggerInterface $logger
   ): Response {
+    $user = $this->getUser();
 
+    $Ustyr = $user->getUdstyrs(); // Get the user's udstyr list
+    if ($Ustyr->isEmpty()) {
+      $UstyrListe= null; 
+    } else {
+      //Create an array containing all udstyr sorted by date
+      $UdstyrArray = $Ustyr->toArray();
+
+      usort($UdstyrArray, function ($a, $b) {
+        return $b->getLokale() <=> $a->getLokale();
+    } );
+      $UstyrListe = $UdstyrArray;
+    }
+  
     return $this->render('page/udstyr.html.twig', [
+      'UdstyrListe' => $UstyrListe,
     ]);
   }
 
@@ -238,3 +253,4 @@ class PageController extends AbstractController
   }
 
 }
+

@@ -15,3 +15,6 @@ import './styles/login.css'; //CSS styles til login siden
 
 //Imports til register siden
 import './styles/register.css'; //CSS styles til register siden
+
+// Imports til udstyr siden
+import './styles/udstyr.css'; //CSS styles til udstyr siden

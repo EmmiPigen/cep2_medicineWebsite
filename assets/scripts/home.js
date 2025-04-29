@@ -71,8 +71,13 @@ function dynammiskIndlaesning() {
 
   function handleNavLinks(event) {
     event.preventDefault();
-    loadPage(this.getAttribute("href"));
-    runScript();
+    const targetURL = this.getAttribute("href");
+    
+    if(!targetURL || targetURL === "null") {
+      console.warn("Invalid link target:", targetURL);
+      return;
+    }
+    loadPage(targetURL);
   }
 
   window.addEventListener("popstate", function (event) {
@@ -84,13 +89,20 @@ function dynammiskIndlaesning() {
   });
 }
 
+
 function highLightCurrentPage() {
   const navLinks = document.querySelectorAll("nav a");
   navLinks.forEach((link) => {
-    let node = link.firstElementChild;
-    node.classList.remove("nav-active");
-    if (window.location.pathname === link.getAttribute("href")) {
-      node.classList.add("nav-active");
+    const href = link.getAttribute("href");
+    const node = link.firstElementChild;
+
+    if(!href || !node) {
+      console.warn("Skipping link due to missing href or node:", link);
+      return;
+    }
+    node.classList.remove("active");
+    if (window.location.pathname === href) {
+      node.classList.add("active");
     }
   });
 }
