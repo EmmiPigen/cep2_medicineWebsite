@@ -1,9 +1,10 @@
 <?php
 namespace App\Controller;
 
-use App\Entity\Udstyr;
 use App\Entity\User;
+use App\Entity\MedikamentListe;
 use App\Form\RegistrationFormType;
+use App\Form\AddMedicinType;
 use App\Repository\MedikamentListeRepository;
 use App\Repository\MedikamentLogRepository;
 use App\Repository\UdstyrRepository;
@@ -94,13 +95,52 @@ class PageController extends AbstractController
   #[Route('/medicin', name: 'medicin')]
   #[IsGranted('IS_AUTHENTICATED_FULLY')]
   public function medicin(
-    MedikamentListeRepository $medikamentListe,
-    LoggerInterface $logger
+    EntityManagerInterface $entityManager,
+    AuthenticationUtils $authenticationUtils,
+    Request $request,
   ): Response {
-    $user = $this->getUser();
+    $error = $authenticationUtils->getLastAuthenticationError();
 
+    //Prepare the form for adding a new medication
+    $user = $this->getUser();
+    $medicinList = [];
+
+    $medikament = new MedikamentListe(); // Create a new MedikamentListe object
+
+    $form = $this->createForm(AddMedicinType::class, $medikament); // Create the form using the AddMedicinType class
+    $form->handleRequest($request); // Handle the form submission
+
+    if( $form->isSubmitted() && $form->isValid() ) {
+      $medicinList->setUserId($user); // Set the user for the medication
+
+      //Persist the new medication to the database
+      $entityManager->persist($medikament);
+      $entityManager->flush();
+
+      return $this->redirectToRoute('medicin'); // Redirect to the medicin page after saving
+    }
+
+    //Get the current logged in user's medication list if it exists
+    $medList = $user->getMedikamentListes(); // Get the user's medication list
+
+    if ($medList->isEmpty()) {
+      $medicinList = null;
+
+    } else {
+      //Create an array containing all medications sorted by name
+      $medListArray = $medList->toArray();
+
+      usort($medListArray, function ($a, $b) {
+        return strcmp($a->getMedikamentNavn(), $b->getMedikamentNavn()); // Sort by medicament name
+      });
+    
+      $medicinList = $medListArray;
+    }
 
     return $this->render('page/medicin.html.twig', [
+      'medicinList'=> $medicinList,
+      'form' => $form, // Pass the form to the template
+      'error' => $error,
     ]);
   }
 

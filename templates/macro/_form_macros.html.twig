@@ -11,3 +11,16 @@
     required
   />
 {% endmacro %}
+
+{# templates/_form_macros.html.twig #}
+{% macro addMedicinInputField(labelText, fieldName, fieldType, fieldValue, fieldId, fieldClass) %}
+  <label for="{{ fieldId }}">{{ labelText }}</label>
+  <input
+    type="{{ fieldType }}"
+    name="{{ fieldName }}"
+    id="{{ fieldId }}"
+    class="{{ fieldClass }}"
+    value="{{ fieldValue }}"
+    required
+  />
+{% endmacro %}

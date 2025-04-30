@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %} {% block content %}
 <div class="main-container">
-  <div id="historikBox" class="historik-box">
+  <main id="historikBox" class="historik-box">
     <header class="historik-header">
       <h1>Oversigt over registede medicineringer</h1>
-      <div class="line-separator darker"></div>
+      <div class="divider dark"></div>
     </header>
 
       {% if medicinLogs is empty %}
@@ -37,6 +37,6 @@
         </table>
       </div>
       {%endif%}
-  </div>
+  </main>
 </div>
 {% endblock %}
