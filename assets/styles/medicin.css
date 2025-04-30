@@ -76,6 +76,29 @@
   background-color: var(--color-primary);
 }
 
+.delete-cell {
+  width: 2rem;
+  text-align: center;
+  vertical-align: middle;
+  padding: 0;
+}
+
+.delete-form {
+  margin: 0;
+}
+
+.delete-x {
+  all: unset;
+  color: var(--color-red-highlight);
+  cursor: pointer;
+  font-size: 1.5rem;
+  display: inline-block;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+
+
 .medicinListe-container__AddMedicin-description {
   background-color: var(--color-primary-lighter);
   border-radius: 1rem;

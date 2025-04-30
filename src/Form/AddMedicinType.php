@@ -38,7 +38,7 @@ class AddMedicinType extends AbstractType
           'Styk' => 'Styk',
           'mL' => 'mL',
           'g' => 'g',
-          'Mg' => 'Mg',
+          'mg' => 'mg',
           'µg' => 'µg',
           'Ingen' => ''
         ],

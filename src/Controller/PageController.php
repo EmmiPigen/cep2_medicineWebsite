@@ -118,10 +118,6 @@ class PageController extends AbstractController
       $entityManager->flush();
 
       return $this->redirectToRoute('medicin'); // Redirect to the medicin page after saving
-    } else {
-      if ($form->isSubmitted()) {
-        //dd('Form submitted but not valid!', $form->getErrors(true, false));
-      }
     }
 
     //Get the current logged in user's medication list if it exists
@@ -275,4 +271,19 @@ class PageController extends AbstractController
     ]);
   }
 
+
+
+  #[Route('/medicin/{id}/delete', name: 'delete_medicin', methods: ['POST'])]
+  public function deleteMedicin(
+    Request $request,
+    MedikamentListe $medikamentListe,
+    EntityManagerInterface $entityManager
+  ): Response {
+    if ($this->isCsrfTokenValid('delete' . $medikamentListe->getId(), $request->request->get('_token'))) {
+      $entityManager->remove($medikamentListe);
+      $entityManager->flush();
+    }
+
+    return $this->redirectToRoute('medicin', [], Response::HTTP_SEE_OTHER);
+  }
 }
