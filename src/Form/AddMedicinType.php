@@ -8,6 +8,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Form\DataTransformer\CommaSeparatedStringToArrayTransformer;
 
@@ -16,20 +18,21 @@ class AddMedicinType extends AbstractType
   public function buildForm(FormBuilderInterface $builder, array $options): void
   {
     $builder
-      ->add('MedikamentNavn', TextType::class,[
-        'attr' => ['class' => 'medicinListe-container__AddMedicin-form__input']
-    ])
+      ->add('MedikamentNavn', TextType::class, [
+        'attr' => [
+          'placeholder' => 'Ibuprofen',
+          'class' => 'medicinListe-container__AddMedicin-form__input']
+      ])
       ->add('TidspunkterTages', TextType::class, [
         'label' => 'Tidspunkter (komma-separeret)',
+        'attr' => [
+          'placeholder' => 'f.eks. 08:00, 12:00, 18:00',
+          'class' => 'medicinListe-container__AddMedicin-form__input'
+        ]
+      ])
+      ->add('Dosis', NumberType::class, [
         'attr' => ['class' => 'medicinListe-container__AddMedicin-form__input']
-    ])
-      ->add('Dosis', IntegerType::class, [
-        'range' => [
-          'min' => 1,
-          'max' => 1000
-        ],
-        'attr' => ['class' => 'medicinListe-container__AddMedicin-form__input']
-    ])
+      ])
       ->add('Enhed', ChoiceType::class, [
         'choices' => [
           'Styk' => 'Styk',
@@ -40,10 +43,12 @@ class AddMedicinType extends AbstractType
           'Ingen' => ''
         ],
         'attr' => ['class' => 'medicinListe-container__AddMedicin-form__input']
-    ])
+      ])
       ->add('TimeInterval', IntegerType::class, [
-        'attr' => ['class' => 'medicinListe-container__AddMedicin-form__input']
-    ])
+        'attr' => [
+          'placeholder' => 'Interval i minutter',
+          'class' => 'medicinListe-container__AddMedicin-form__input']
+      ])
       ->add('Prioritet', ChoiceType::class, [
         'choices' => [
           'Høj' => 'Høj',
@@ -53,7 +58,7 @@ class AddMedicinType extends AbstractType
         'attr' => ['class' => 'medicinListe-container__AddMedicin-form__input']
       ]);
 
-      $builder->get('TidspunkterTages')
+    $builder->get('TidspunkterTages')
       ->addModelTransformer(new CommaSeparatedStringToArrayTransformer());
   }
 
