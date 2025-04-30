@@ -110,14 +110,18 @@ class PageController extends AbstractController
     $form = $this->createForm(AddMedicinType::class, $medikament); // Create the form using the AddMedicinType class
     $form->handleRequest($request); // Handle the form submission
 
-    if( $form->isSubmitted() && $form->isValid() ) {
-      $medicinList->setUserId($user); // Set the user for the medication
+    if ($form->isSubmitted() && $form->isValid()) {
+      $medikament->setUserId($user); // Set the user for the medication
 
       //Persist the new medication to the database
       $entityManager->persist($medikament);
       $entityManager->flush();
 
       return $this->redirectToRoute('medicin'); // Redirect to the medicin page after saving
+    } else {
+      if ($form->isSubmitted()) {
+        //dd('Form submitted but not valid!', $form->getErrors(true, false));
+      }
     }
 
     //Get the current logged in user's medication list if it exists
@@ -133,12 +137,12 @@ class PageController extends AbstractController
       usort($medListArray, function ($a, $b) {
         return strcmp($a->getMedikamentNavn(), $b->getMedikamentNavn()); // Sort by medicament name
       });
-    
+
       $medicinList = $medListArray;
     }
 
     return $this->render('page/medicin.html.twig', [
-      'medicinList'=> $medicinList,
+      'medicinList' => $medicinList,
       'form' => $form, // Pass the form to the template
       'error' => $error,
     ]);
@@ -188,6 +192,18 @@ class PageController extends AbstractController
     ]);
   }
 
+  #[Route('/profil', name: 'profil')]
+  #[IsGranted('IS_AUTHENTICATED_FULLY')]
+  public function profil(): Response
+  {
+    $user = $this->getUser();
+    $userName = $user->getFuldeNavn();
+
+
+    return $this->render('page/profil.html.twig', [
+    ]);
+  }
+
   #[Route('/hjaelp', name: 'hjaelp')]
   #[IsGranted('IS_AUTHENTICATED_FULLY')]
   public function hjaelp(): Response
@@ -206,11 +222,11 @@ class PageController extends AbstractController
   ): Response {
     $error = $authenticationUtils->getLastAuthenticationError();
     $lastUsername = $authenticationUtils->getLastUsername();
-  
+
     // Prepare registration form
     $user = new User();
     $registrationForm = $this->createForm(RegistrationFormType::class, $user);
-  
+
     return $this->render('page/login.html.twig', [
       'last_username' => $lastUsername,
       'error' => $error,
@@ -225,17 +241,7 @@ class PageController extends AbstractController
     throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
   }
 
-  #[Route('/profil', name: 'profil')]
-  #[IsGranted('IS_AUTHENTICATED_FULLY')]
-  public function profil(): Response
-  {
-    $user = $this->getUser();
-    $userName = $user->getFuldeNavn();
 
-
-    return $this->render('page/profil.html.twig', [
-    ]);
-  }
 
   #[Route('/register', name: 'register')]
   public function register(
@@ -251,7 +257,7 @@ class PageController extends AbstractController
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-      /** @var string $plainPassword */
+      /** @var string $plainPassword */ // Retrieve the plain password from the form
       $plainPassword = $form->get('plainPassword')->getData();
 
       // encode the plain password
@@ -261,7 +267,7 @@ class PageController extends AbstractController
       $entityManager->flush();
       return $this->redirectToRoute('home');
     }
-    
+
     return $this->render('page/login.html.twig', [
       'registrationForm' => $form,
       'error' => null,

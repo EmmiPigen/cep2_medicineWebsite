@@ -1,6 +1,6 @@
-{% extends 'base.html.twig' %}
-{% block content %}
-{% import '/macro/_form_macros.html.twig' as forms %}
+{% extends 'base.html.twig' %} {% block content %} {% import
+'/macro/_form_macros.html.twig' as forms %}
+<!--Importing the form macros for input fields and buttons for login-->
 
 <div class="main-container login-page">
   {% if app.user %}
@@ -16,7 +16,7 @@
     <h1>Du er ikke logget ind endnu</h1>
   </section>
   {% endif %}
-  
+
   <div class="divider login-header dark"></div>
 
   <!--Container for the login form beside the registration form-->
@@ -39,18 +39,30 @@
             {{ error.messageKey|trans(error.messageData, 'security') }}
           </div>
           {% endif %}
-      
+
           {{ forms.inputField('E-mailadresse', '_username', 'email', last_username|default(''), 'username', 'form-input') }}
-      
-          {{ forms.inputField('Adgangskode', '_password', 'password', '', 'password', 'form-input') }}
-      
-          <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
-      
+
+          {{
+            forms.inputField(
+              'Adgangskode',
+              '_password',
+              'password',
+              '',
+              'password',
+              'form-input'
+            )
+          }}
+
+          <input
+            type="hidden"
+            name="_csrf_token"
+            value="{{ csrf_token('authenticate') }}" />
+
           <div class="form-checkbox">
             <input type="checkbox" name="_remember_me" id="_remember_me" />
             <label for="_remember_me">Husk mig</label>
           </div>
-      
+
           <button class="btn-submit" type="submit">Log Ind</button>
         </form>
       </section>
@@ -64,23 +76,28 @@
       </header>
 
       <section class="register-description">
-        <p>For at kunne bruge systemet, skal du oprette en bruger. Udfyld venligst formularen, hvis du ikke allerede har en bruger.</p>
+        <p>
+          For at kunne bruge systemet, skal du oprette en bruger. Udfyld
+          venligst formularen, hvis du ikke allerede har en bruger.
+        </p>
       </section>
       <section class="register-form">
         {{ form_start(registrationForm, { action: path('register') }) }}
-      
+
         {{ form_row(registrationForm.FuldeNavn, { label: 'Fulde navn' }) }}
 
-        {{ form_row(registrationForm.email, { label: 'Email', attr: { autocomplete: 'email' } }) }}
+        {{
+          form_row(registrationForm.email, {
+            label: 'Email',
+            attr: { autocomplete: 'email' }
+          })
+        }}
 
-      
         {{ form_row(registrationForm.plainPassword, { label: 'Adgangskode' }) }}
 
-      
         <button type="submit" class="btn">Opret Bruger</button>
-      
-      {{ form_end(registrationForm) }}
-      
+
+        {{ form_end(registrationForm) }}
       </section>
     </section>
   </main>

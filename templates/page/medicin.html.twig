@@ -1,5 +1,86 @@
-{% extends 'base.html.twig' %} {% block content %}
+{% extends 'base.html.twig' %} {% block content %} {% import
+'/macro/_form_macros.html.twig' as forms %}
+<!--Importing the form macros for input fields and buttons for login-->
 
+<div class="main-container medicin">
+  <main class="medicinListe-container__overview">
+    <!--Container for overview of medikamenter-->
+    <header class="medicinListe-container__header">
+      <h1>Oversigt over medikamenter</h1>
+      <div class="divider dark"></div>
+    </header>
 
-<div class="main-container"></div>
+    <section class="medicinListe-container__table-wrapper">
+      <table class="medicinListe-container__table">
+        <thead>
+          <tr class="medicinListe-container__table-header">
+            <th scope="col">Medikament</th>
+            <th scope="col">Tages kl</th>
+            <th scope="col">Dosis</th>
+            <th scope="col">Interval</th>
+            <th scope="col">Prioritet</th>
+          </tr>
+        </thead>
+
+        <tbody class="medicinListe-container__table-body">
+          {% for medicin in medicinList %}
+          <tr class="medicinListe-container__table-row">
+            <td>{{ medicin.medikamentNavn }}</td>
+            <td>
+              {% if medicin.tidspunkterTages|length == 4 %}
+              {{ medicin.tidspunkterTages[0] }}, {{ medicin.tidspunkterTages[1]
+              }}<br />
+              {{ medicin.tidspunkterTages[2] }},
+              {{ medicin.tidspunkterTages[3] }}
+              {% else %}
+              {{ medicin.tidspunkterTages|join(', ') }}
+              {% endif %}
+            </td>
+            <td>{{ medicin.dosis }} {{ medicin.enhed }}</td>
+            <td>{{ medicin.timeInterval }}</td>
+            <td>{{ medicin.prioritet }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <!--Container for the table to add medikamenter-->
+  <aside class="medicinListe-container__AddMedicin">
+    <header class="medicinListe-container__header">
+      <h1>Tilføj medicin</h1>
+      <div class="divider dark"></div>
+    </header>
+    <section class="medicinListe-container__AddMedicin-description">
+      <p>Her kan du tilføje de medikmater som du skal tage i løbet af dagen</p>
+      <p>Udfyld venligst formularen nedenfor.</p>
+    </section>
+    <section class="medicinListe-container__AddMedicin-form">
+      {{ form_start(form) }}
+        {% if error %}
+        <div class="alert-danger">
+          {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+        {% endif %}
+
+        {{ form_start(form) }}
+        {{ form_row(form.MedikamentNavn) }}
+        {{ form_row(form.TidspunkterTages) }}
+        {{ form_row(form.Dosis) }}
+        {{ form_row(form.Enhed) }}
+        {{ form_row(form.TimeInterval) }}
+        {{ form_row(form.Prioritet) }}
+        
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('add_medicin') }}" />
+
+        <button class="medicinListe-container__AddMedicin-button" type="submit">
+          Tilføj medicin
+        </button>
+      {{ form_end(form) }}
+    </section>
+  </aside>
+</div>
 {% endblock %}
+
+
