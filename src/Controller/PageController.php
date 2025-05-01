@@ -183,8 +183,23 @@ class PageController extends AbstractController
     UdstyrRepository $udstyrRepository,
     LoggerInterface $logger
   ): Response {
+    $user = $this->getUser();
 
+    $udstyr = $user->getUdstyrs(); // Get the user's udstyr list
+    if ($udstyr->isEmpty()) {
+      $udstyrListe= null; 
+    } else {
+      //Create an array containing all udstyr sorted by date
+      $udstyrArray = $udstyr->toArray();
+
+      usort($udstyrArray, function ($a, $b) {
+        return $b->getLokale() <=> $a->getLokale();
+    } );
+      $udstyrListe = $udstyrArray;
+    }
+  
     return $this->render('page/udstyr.html.twig', [
+      'udstyrListe' => $udstyrListe,
     ]);
   }
 
@@ -271,8 +286,6 @@ class PageController extends AbstractController
     ]);
   }
 
-
-
   #[Route('/medicin/{id}/delete', name: 'delete_medicin', methods: ['POST'])]
   public function deleteMedicin(
     Request $request,
@@ -287,3 +300,4 @@ class PageController extends AbstractController
     return $this->redirectToRoute('medicin', [], Response::HTTP_SEE_OTHER);
   }
 }
+

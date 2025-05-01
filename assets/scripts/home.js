@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function runScript() {
   updateMedicineStatus();
   highLightCurrentPage();
+  setupRoomFiltering();
 }
 
 function updateMedicineStatus() {
@@ -90,19 +91,62 @@ function dynammiskIndlaesning() {
   });
 }
 
+
 function highLightCurrentPage() {
   const navLinks = document.querySelectorAll("nav a");
   navLinks.forEach((link) => {
     const href = link.getAttribute("href");
+
     const node = link.closest("li"); // Find the closest <li> ancestor
+
 
     if(!href || !node) {
       console.warn("Skipping link due to missing href or node:", link);
       return;
+
+    }
+    node.classList.remove("active");
+    if (window.location.pathname === href) {
+      node.classList.add("active");
+
     }
     node.classList.remove("active");
     if (window.location.pathname === href) {
       node.classList.add("active");
     }
+  });
+}
+
+
+// Setup room filtering
+function setupRoomFiltering() {
+  const buttons = document.querySelectorAll(".filter-button");
+  const roomSections = document.querySelectorAll(".room-section");
+  const noSelectionMsg = document.getElementById("no-selection-msg");
+
+  // Skjul alt ved start
+  roomSections.forEach(section => {
+    section.style.display = "none";
+  });
+
+  if (noSelectionMsg) {
+    noSelectionMsg.style.display = "block";
+  }
+
+  buttons.forEach(button => {
+    button.addEventListener("click", () => {
+      const selectedRoom = button.getAttribute("data-room");
+
+      let anyVisible = false;
+      roomSections.forEach(section => {
+      const match = selectedRoom === "Alle" || section.dataset.room === selectedRoom;
+      section.style.display = match ? "block" : "none";
+      if (match) anyVisible = true;
+    });
+
+      if (noSelectionMsg) {
+        noSelectionMsg.style.display = anyVisible ? "none" : "block";
+      }
+    });
   });
 }
