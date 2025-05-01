@@ -121,6 +121,9 @@ class MedikamentDBApiController extends AbstractController
                     'name'         => $med->getMedikamentNavn(),
                     'timeInterval' => $med->getTimeInterval(),
                     'timesToTake'  => $med->getTidspunkterTages(),
+                    'dose'         => $med->getDosis(),
+                    'unit'         => $med->getEnhed(),
+                    'priority'     => $med->getPrioritet()
                 ];
             }
             // Return the data as a JSON response
