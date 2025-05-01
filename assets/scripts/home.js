@@ -99,7 +99,6 @@ function highLightCurrentPage() {
 
     const node = link.closest("li"); // Find the closest <li> ancestor
 
-
     if(!href || !node) {
       console.warn("Skipping link due to missing href or node:", link);
       return;
