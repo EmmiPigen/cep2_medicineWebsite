@@ -17,7 +17,9 @@
 </style>
 
 <div class="main-container">
-
+{% if udstyrListe is empty %}
+    <div class="no-udstyr-msg">Ingen udstyr tilgængeligt</div>
+{% else %}
 
     <header class="udstyr-header">
         <h1>Udstyr</h1>
@@ -48,7 +50,7 @@
 </section>
 
 <p id="no-selection-msg">Vælg et rum for at se udstyr.</p>
-
+{% endif %}
 </div>
 
 {% endblock %}
