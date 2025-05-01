@@ -11,14 +11,15 @@
 
     {% block javascripts %} {% block importmap %}
     {{
-      importmap("app")
+      importmap('app')
     }}
+
     {% endblock %} {% endblock %}
   </head>
 
   <body>
-    <div class="page-layout">
-      <aside class="sidebar" aria-label="Hovedmenu">
+    <div class="layout-wrapper">
+      <aside class="sidebar-menu" aria-label="Hovedmenu">
         <header>
           <div class="logo-container">
             <img
@@ -28,93 +29,89 @@
           </div>
         </header>
 
-        <nav class="nav" role="navigation">
-          <ul>
-            <li>
-              <a href="{{ path('home') }}" class="nav-link" data-page="home">
-                <div class="nav-item">
-                  <div class="nav-text">&gt; Forside</div>
-                </div>
+        <nav class="navigation" role="navigation">
+          <ul class="navigation-list">
+            <li class="navigation-item">
+              <a
+                href="{{ path('home') }}"
+                class="navigation-link"
+                data-page="home">
+                <span class="navigation-text">&gt; Forside</span>
               </a>
             </li>
-            <li>
+            <li class="navigation-item">
               <a
                 href="{{ path('medicin') }}"
-                class="nav-link"
+                class="navigation-link"
                 data-page="medicin">
-                <div class="nav-item">
-                  <div class="nav-text">&gt; Medicin</div>
-                </div>
+                <span class="navigation-text">&gt; Medicin</span>
               </a>
             </li>
-            <li>
+            <li class="navigation-item">
               <a
                 href="{{ path('historik') }}"
-                class="nav-link"
+                class="navigation-link"
                 data-page="historik">
-                <div class="nav-item">
-                  <div class="nav-text">&gt; historik</div>
-                </div>
+                <span class="navigation-text">&gt; Historik</span>
               </a>
             </li>
-            <li>
+            <li class="navigation-item">
               <a
                 href="{{ path('udstyr') }}"
-                class="nav-link"
+                class="navigation-link"
                 data-page="udstyr">
-                <div class="nav-item">
-                  <div class="nav-text">&gt; Udstyr</div>
-                </div>
+                <span class="navigation-text">&gt; Udstyr</span>
               </a>
             </li>
-            <li>
+            <li class="navigation-item">
               <a
                 href="{{ path('profil') }}"
-                class="nav-link"
+                class="navigation-link"
                 data-page="profil">
-                <div class="nav-item">
-                  <div class="nav-text">&gt; Profil</div>
-                </div>
+                <span class="navigation-text">&gt; Profil</span>
               </a>
             </li>
-            <li>
-              <a href="{{ path('login') }}" class="nav-link" data-page="login">
-                <div class="nav-item">
-                  <div class="nav-text">&gt; Log ind</div>
-                </div>
-              </a>
-            </li>
-            <li>
+            <li class="navigation-item">
               <a
                 href="{{ path('hjaelp') }}"
-                class="nav-link"
+                class="navigation-link"
                 data-page="hjaelp">
-                <div class="nav-item">
-                  <div class="nav-text">&gt; Hjælp</div>
-                </div>
+                <span class="navigation-text">&gt; Hjælp</span>
               </a>
             </li>
+            {% if app.user %}
+            <li class="navigation-item">
+              <a href="{{ path('logout') }}" class="navigation-link">
+                <span class="navigation-text">&gt; Log ud</span>
+              </a>
+            </li>
+            {% else %}
+            <li class="navigation-item">
+              <a
+                href="{{ path('login') }}"
+                class="navigation-link"
+                data-page="login">
+                <span class="navigation-text">&gt; Log ind</span>
+              </a>
+            </li>
+            {% endif %}
           </ul>
         </nav>
       </aside>
 
-      <div class = "main-content-background"></div>
-      <div class="main-content" id="content">
-
-        {% if app.request.attributes.get('_route') != 'login' %}
-        {% if app.request.attributes.get('_route') != 'register' %}
-        
-        <div class ="user-info-container">
-          <div class="user-info">
-            <h1>Logget ind som:</h1>
-            <h2>{{ app.user.fuldeNavn }}</h2>
-          </div>
-          <div class="line-separator dark"></div>
-        </div>
-        {% endif %}
-        {% endif %}
-        {% block content %}{% endblock %}
-      </div>
+      <div class="main-content-background"></div>
+      <main class="main-content" id="content">
+        {% if app.request.attributes.get('_route') != 'login' 
+        and app.request.attributes.get('_route') != 'register' %}
+        <section class="user-info-section">
+          <header class="user-info-header">
+            <h1 class="user-info-title">Logget ind som:</h1>
+            <h1 class="user-info-name">{{ app.user.fuldeNavn }}</h1>
+          </header>
+          <div class="divider dark"></div>
+        </section>
+        {% endif %} {% block content %}{% endblock %}
+      </main>
     </div>
   </body>
 </html>

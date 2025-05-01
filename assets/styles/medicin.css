@@ -1,0 +1,181 @@
+.main-container.medicin {
+  flex-direction: row;
+}
+
+.medicinListe-container__overview,
+.medicinListe-container__AddMedicin {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-light-blue);
+  border-radius: 2rem;
+  border: 2px solid var(--color-tertiary);
+  padding: 0.5rem 1rem;
+  height: calc(100% - 1rem);
+  width: 65%;
+}
+.medicinListe-container__AddMedicin {
+  background-color: var(--color-dark-blue);
+  width: 35%;
+}
+
+.medicinListe-container__header h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin: 0;
+}
+
+.medicinListe-container__table-wrapper {
+  overflow-x: auto;
+  max-height: calc(100% - 5rem);
+  border: 3px solid var(--color-tertiary);
+  width: calc(100% + 0.3rem);
+  margin-left: -0.2rem;
+}
+
+.medicinListe-container__table {
+  width: 100%;
+  justify-content: space-between;
+  background-color: #ffffff;
+  border-bottom: 0;
+  border-collapse: collapse;
+}
+
+.medicinListe-container__table-header {
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+}
+
+.medicinListe-container__table-header th {
+  font-size: 1.2rem;
+  text-align: center;
+  border-bottom: 3px solid var(--color-tertiary);
+  border-left: 2px solid var(--color-tertiary);
+  background-color: var(--color-table-header);
+}
+
+.medicinListe-container__table-row td {
+  text-align: center;
+  font-size: 1.2rem;
+  padding: 0.3rem;
+  border-top: 2px solid var(--color-tertiary);
+  border-left: 2px solid var(--color-tertiary);
+}
+
+.medicinListe-container__table-status.red {
+  background-color: var(--color-red-highlight);
+}
+
+.medicinListe-container__table-status.yellow {
+  background-color: var(--color-yellow-highlight);
+}
+
+.medicinListe-container__table-status.green {
+  background-color: var(--color-green-highlight);
+}
+.medicinListe-container__table-row:nth-child(even) {
+  background-color: var(--color-primary);
+}
+
+.delete-cell {
+  width: 2rem;
+  text-align: center;
+  vertical-align: middle;
+  padding: 0;
+}
+
+.delete-form {
+  margin: 0;
+}
+
+.delete-x {
+  all: unset;
+  color: var(--color-red-highlight);
+  cursor: pointer;
+  font-size: 1.5rem;
+  display: inline-block;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+
+
+.medicinListe-container__AddMedicin-description {
+  background-color: var(--color-primary-lighter);
+  border-radius: 1rem;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  margin: 0.5rem auto 0 auto;
+  color: var(--color-text);
+}
+
+.medicinListe-container__AddMedicin-description p {
+  margin: 0;
+  padding: 0;
+}
+
+.medicinListe-container__AddMedicin-form{
+  display: flex;
+  flex-direction: column;
+  overflow-x: auto;
+  width: calc(100% + 0.5rem);
+}
+.medicinListe-container__AddMedicin-form form{
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 100%;
+  gap: 0.1rem;
+}
+
+.medicinListe-container__AddMedicin-form label {
+  font-size: 1.2rem;
+  margin: 0;
+  font-weight: bold;
+  color: var(--color-text);
+  margin: 0 auto;
+}
+
+.medicinListe-container__AddMedicin-form__input {
+  border-radius: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.medicinListe-container__AddMedicin-form__input-group {
+  display: flex;
+  flex-direction: row;
+  margin: 0.5rem auto;
+}
+
+.medicinListe-container__AddMedicin-form__input-group input {
+  width: 30%;
+  padding: 0.5rem;
+  margin: 0.5rem auto;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1.2rem;
+  box-sizing: border-box;
+}
+
+
+.medicinListe-container__AddMedicin-form__input:focus {
+  outline: none;
+  border: 2px solid var(--color-tertiary);
+}
+
+
+.medicinListe-container__AddMedicin-button {
+  background-color: var(--color-secondary);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 0.5rem auto;
+}
+
+.medicinListe-container__AddMedicin-button:hover {
+  background-color: var(--color-tertiary);
+  color: white;
+}

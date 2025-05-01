@@ -1,9 +1,10 @@
 <?php
 namespace App\Controller;
 
-use App\Entity\Udstyr;
 use App\Entity\User;
+use App\Entity\MedikamentListe;
 use App\Form\RegistrationFormType;
+use App\Form\AddMedicinType;
 use App\Repository\MedikamentListeRepository;
 use App\Repository\MedikamentLogRepository;
 use App\Repository\UdstyrRepository;
@@ -94,13 +95,52 @@ class PageController extends AbstractController
   #[Route('/medicin', name: 'medicin')]
   #[IsGranted('IS_AUTHENTICATED_FULLY')]
   public function medicin(
-    MedikamentListeRepository $medikamentListe,
-    LoggerInterface $logger
+    EntityManagerInterface $entityManager,
+    AuthenticationUtils $authenticationUtils,
+    Request $request,
   ): Response {
-    $user = $this->getUser();
+    $error = $authenticationUtils->getLastAuthenticationError();
 
+    //Prepare the form for adding a new medication
+    $user = $this->getUser();
+    $medicinList = [];
+
+    $medikament = new MedikamentListe(); // Create a new MedikamentListe object
+
+    $form = $this->createForm(AddMedicinType::class, $medikament); // Create the form using the AddMedicinType class
+    $form->handleRequest($request); // Handle the form submission
+
+    if ($form->isSubmitted() && $form->isValid()) {
+      $medikament->setUserId($user); // Set the user for the medication
+
+      //Persist the new medication to the database
+      $entityManager->persist($medikament);
+      $entityManager->flush();
+
+      return $this->redirectToRoute('medicin'); // Redirect to the medicin page after saving
+    }
+
+    //Get the current logged in user's medication list if it exists
+    $medList = $user->getMedikamentListes(); // Get the user's medication list
+
+    if ($medList->isEmpty()) {
+      $medicinList = null;
+
+    } else {
+      //Create an array containing all medications sorted by name
+      $medListArray = $medList->toArray();
+
+      usort($medListArray, function ($a, $b) {
+        return strcmp($a->getMedikamentNavn(), $b->getMedikamentNavn()); // Sort by medicament name
+      });
+
+      $medicinList = $medListArray;
+    }
 
     return $this->render('page/medicin.html.twig', [
+      'medicinList' => $medicinList,
+      'form' => $form, // Pass the form to the template
+      'error' => $error,
     ]);
   }
 
@@ -163,6 +203,18 @@ class PageController extends AbstractController
     ]);
   }
 
+  #[Route('/profil', name: 'profil')]
+  #[IsGranted('IS_AUTHENTICATED_FULLY')]
+  public function profil(): Response
+  {
+    $user = $this->getUser();
+    $userName = $user->getFuldeNavn();
+
+
+    return $this->render('page/profil.html.twig', [
+    ]);
+  }
+
   #[Route('/hjaelp', name: 'hjaelp')]
   #[IsGranted('IS_AUTHENTICATED_FULLY')]
   public function hjaelp(): Response
@@ -179,30 +231,18 @@ class PageController extends AbstractController
     UserPasswordHasherInterface $userPasswordHasher,
     EntityManagerInterface $entityManager
   ): Response {
-    //LOGIN FORM
-    $error = $authenticationUtils->getLastAuthenticationError(); // get the login error if there is one
-    $lastUsername = $authenticationUtils->getLastUsername();  // last username entered by the user
+    $error = $authenticationUtils->getLastAuthenticationError();
+    $lastUsername = $authenticationUtils->getLastUsername();
 
-    //REGISTRATION FORM
+    // Prepare registration form
     $user = new User();
-    $form = $this->createForm(RegistrationFormType::class, $user);
-    $form->handleRequest($request);
+    $registrationForm = $this->createForm(RegistrationFormType::class, $user);
 
-    if ($form->isSubmitted() && $form->isValid()) {
-      /** @var string $plainPassword */
-      $plainPassword = $form->get('plainPassword')->getData();
-      // encode the plain password
-      $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
-
-      $entityManager->persist($user);
-      $entityManager->flush();
-
-      return $this->redirectToRoute('home');
-    }
     return $this->render('page/login.html.twig', [
       'last_username' => $lastUsername,
       'error' => $error,
-      'registrationForm' => $form->createView(),
+      'registration_error' => null,
+      'registrationForm' => $registrationForm,
     ]);
   }
 
@@ -212,30 +252,23 @@ class PageController extends AbstractController
     throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
   }
 
-  #[Route('/profil', name: 'profil')]
-  #[IsGranted('IS_AUTHENTICATED_FULLY')]
-  public function profil(): Response
-  {
-    $user = $this->getUser();
-    $userName = $user->getFuldeNavn();
 
-
-    return $this->render('page/profil.html.twig', [
-    ]);
-  }
 
   #[Route('/register', name: 'register')]
   public function register(
     Request $request,
+    AuthenticationUtils $authenticationUtils,
     UserPasswordHasherInterface $userPasswordHasher,
     EntityManagerInterface $entityManager
   ): Response {
     $user = new User();
+    $error = $authenticationUtils->getLastAuthenticationError();
+
     $form = $this->createForm(RegistrationFormType::class, $user);
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-      /** @var string $plainPassword */
+      /** @var string $plainPassword */ // Retrieve the plain password from the form
       $plainPassword = $form->get('plainPassword')->getData();
 
       // encode the plain password
@@ -243,14 +276,28 @@ class PageController extends AbstractController
 
       $entityManager->persist($user);
       $entityManager->flush();
-
       return $this->redirectToRoute('home');
     }
 
-    return $this->render('utility/register.html.twig', [
+    return $this->render('page/login.html.twig', [
       'registrationForm' => $form,
+      'error' => null,
+      'registration_error' => $error,
     ]);
   }
 
+  #[Route('/medicin/{id}/delete', name: 'delete_medicin', methods: ['POST'])]
+  public function deleteMedicin(
+    Request $request,
+    MedikamentListe $medikamentListe,
+    EntityManagerInterface $entityManager
+  ): Response {
+    if ($this->isCsrfTokenValid('delete' . $medikamentListe->getId(), $request->request->get('_token'))) {
+      $entityManager->remove($medikamentListe);
+      $entityManager->flush();
+    }
+
+    return $this->redirectToRoute('medicin', [], Response::HTTP_SEE_OTHER);
+  }
 }
 

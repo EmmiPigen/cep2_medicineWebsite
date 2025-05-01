@@ -1,34 +1,31 @@
+/*Status box styles*/
 .med-status-box {
   border-radius: 2rem;
   padding: 1rem;
-  background-color: skyblue;
+  background-color: var(--color-secondary);
   height: 10rem;
 }
 
 .med-status-box.red {
-  background-color: #e06666;
+  background-color: var(--color-red-highlight)
 }
 
 .med-status-box.green {
-  background-color: #a1c193;
+  background-color: var(--color-green-highlight)
 }
 
-.med-status-header h1 {
+.med-status-header h1,
+.next-med-header h1 {
   text-align: center;
   font-size: 2rem;
   margin-bottom: 0.25rem;
   margin-top: -0.25rem;
 }
 
-.main-status-content {
+.main-med-status-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.main-status-content p {
-  font-size: 2rem;
-  margin: 0.5rem 0;
 }
 
 .med-name h2 {
@@ -48,6 +45,7 @@
   display: flex;
   flex-direction: column;
   margin-top: -0.5rem;
+  font-weight: bold;
 }
 
 .med-status-details span {
@@ -55,10 +53,15 @@
   margin: 0.5rem 0;
 }
 
-/* Next Medicine Box */
+.main-med-status-content p {
+  font-size: 2rem;
+  margin: 0.5rem 0;
+}
+
+/*Next Medicine Box*/
 .next-med-box {
   padding: 0.5rem;
-  background-color: rgb(96, 148, 169);
+  background-color: var(--color-light-blue);
   border-radius: 2rem;
 }
 
@@ -66,30 +69,15 @@
   display: grid;
 }
 
-.next-med-header {
-  text-align: center;
-}
-
-.next-med-header h2 {
+.no-meds-msg {
   font-size: 1.5rem;
-  margin: 0.1rem 0;
+  text-align: center;
+  margin: 0.5rem 0;
 }
-
 
 .next-med-box-table {
   width: 100%;
   border-spacing: 1rem 0.5rem;
-}
-
-.next-med-row {
-  display: flex;
-  justify-content: space-evenly;
-  margin: 0.1rem 0;
-}
-
-.next-med-header-row {
-  font-weight: bold;
-  font-family: Arial, sans-serif;
 }
 
 .next-med-header-row th {
@@ -104,29 +92,32 @@
   padding: 0.5rem;
   margin: 0.5rem 0.3rem;
   font-size: 1.5rem;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 2px 4px #00000080;
 }
 
 .next-med-cell-bg {
-  background-color: #fff
+  background-color: var(--color-primary-lighter);
 }
 
+/* Next Medicine Box - Priority Colors */
+/*these classes are used to set the background color of the priority cells*/
 
 .high-priority {
-  background-color: #f44336;
+  background-color: var(--color-red-highlight);
   color: white;
 }
 
 .mid-priority {
-  background-color: #ff9800;
+  background-color: var(--color-yellow-highlight);
   color: white;
 }
 
 .low-priority {
-  background-color: #8bc34a;
+  background-color: var(--color-green-highlight);
   color: white;
 }
 
+/*Responsive styles*/
 @media (max-width: 768px) {
   .med-status-box,
   .next-med-box {

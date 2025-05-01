@@ -30,6 +30,7 @@ function dynammiskIndlaesning() {
   const contentDiv = document.getElementById("content");
 
   async function loadPage(url) {
+    
     console.log("Loading page:", url);
     if (window.location.pathname === url) {
       return;
@@ -95,11 +96,19 @@ function highLightCurrentPage() {
   const navLinks = document.querySelectorAll("nav a");
   navLinks.forEach((link) => {
     const href = link.getAttribute("href");
-    const node = link.firstElementChild;
+
+    const node = link.closest("li"); // Find the closest <li> ancestor
+
 
     if(!href || !node) {
       console.warn("Skipping link due to missing href or node:", link);
       return;
+
+    }
+    node.classList.remove("active");
+    if (window.location.pathname === href) {
+      node.classList.add("active");
+
     }
     node.classList.remove("active");
     if (window.location.pathname === href) {
@@ -141,4 +150,3 @@ function setupRoomFiltering() {
     });
   });
 }
-

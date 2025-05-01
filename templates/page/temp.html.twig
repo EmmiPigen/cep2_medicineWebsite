@@ -1,7 +1,6 @@
-{% extends 'base.html.twig' %} {% block content %} {% import
-'/macro/_form_macros.html.twig' as forms %}
-<!--Importing the form macros for input fields and buttons for login-->
+<!-- @format -->
 
+{% extends 'base.html.twig' %} {% block content %}
 <div class="main-container login-page">
   {% if app.user %}
   <section class="logged-in-info">
@@ -16,42 +15,49 @@
     <h1>Du er ikke logget ind endnu</h1>
   </section>
   {% endif %}
-
-  <div class="divider login-header dark"></div>
+  <div class="divider loginHeader dark"></div>
 
   <!--Container for the login form beside the registration form-->
   <main>
-    <section id="loginBox" class="login-container">
+    <section
+      id="loginBox"
+      class="login-container">
       <header class="login-header">
         <h2>Log Ind</h2>
         <div class="divider dark"></div>
       </header>
-
       <section class="login-description">
         <p>Log ind for at få adgang til systemet.</p>
         <p>Udfyld venligst formularen nedenfor.</p>
       </section>
 
       <section class="login-form">
-        <form method="post" action="{{ path('login') }}">
+        <form
+          method="post"
+          action="{{ path('login') }}">
           {% if error %}
-          <div class="alert-danger">
+          <div class="alert alert-danger">
             {{ error.messageKey|trans(error.messageData, 'security') }}
           </div>
           {% endif %}
-
-          {{ forms.inputField('E-mailadresse', '_username', 'email', last_username|default(''), 'username', 'form-input') }}
-
-          {{
-            forms.inputField(
-              'Adgangskode',
-              '_password',
-              'password',
-              '',
-              'password',
-              'form-input'
-            )
-          }}
+          <label for="email">Email adresse</label>
+          <input
+            type="email"
+            value="{{ last_username|default('') }}"
+            name="_username"
+            id="username"
+            class="form-input"
+            autocomplete="email"
+            required
+            autofocus />
+          <label for="password">Adgangskode</label>
+          <input
+            type="password"
+            name="_password"
+            id="password"
+            class="form-input"
+            autocomplete="current-password"
+            required />
 
           <input
             type="hidden"
@@ -59,33 +65,43 @@
             value="{{ csrf_token('authenticate') }}" />
 
           <div class="form-checkbox">
-            <input type="checkbox" name="_remember_me" id="_remember_me" />
+            <input
+              type="checkbox"
+              name="_remember_me"
+              id="_remember_me" />
             <label for="_remember_me">Husk mig</label>
           </div>
-
-          <button class="btn-submit" type="submit">Log Ind</button>
+          <button
+            class="btn-submit"
+            type="submit">
+            Log Ind
+          </button>
         </form>
       </section>
     </section>
 
     <!--Container for the registration form beside the login form-->
-    <section id="registerBox" class="register-container">
+    <section
+      id="registerBox"
+      class="register-container">
       <header class="register-header">
         <h2>Opret en ny bruger</h2>
         <div class="divider dark"></div>
       </header>
 
       <section class="register-description">
-        <p>
-          For at kunne bruge systemet, skal du oprette en bruger. Udfyld
-          venligst formularen, hvis du ikke allerede har en bruger.
-        </p>
+        <p>For at kunne bruge systemet, skal du oprette en bruger.</p>
+        <p>Udfyld venligst formularen, hvis du ikke allerede har en bruger.</p>
       </section>
+
       <section class="register-form">
         {{ form_start(registrationForm, { action: path('register') }) }}
 
-        {{ form_row(registrationForm.FuldeNavn, { label: 'Fulde navn' }) }}
-
+        {{
+          form_row(registrationForm.FuldeNavn, {
+            label: 'Fulde navn'
+          })
+        }}
         {{
           form_row(registrationForm.email, {
             label: 'Email',
@@ -93,13 +109,21 @@
           })
         }}
 
-        {{ form_row(registrationForm.plainPassword, { label: 'Adgangskode' }) }}
+        {{
+          form_row(registrationForm.plainPassword, {
+            label: 'Adgangskode'
+          })
+        }}
 
-        <button type="submit" class="btn">Opret Bruger</button>
-
+        <button
+          type="submit"
+          class="btn">
+          Opret Bruger
+        </button>
         {{ form_end(registrationForm) }}
       </section>
     </section>
   </main>
 </div>
+
 {% endblock %}

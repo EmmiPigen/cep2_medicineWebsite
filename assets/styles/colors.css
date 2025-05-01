@@ -1,0 +1,17 @@
+:root {
+  --color-primary: #e6dfce; /* Darker Beige */
+  --color-primary-lighter: #e6e3dc; /* Light Beige */
+  --color-secondary: #87CEEB; /* Blue */
+  --color-tertiary: #11495f; /* Darker Blue */
+  --color-light-blue: #b3c0db; /* Light Blue */
+  --color-dark-blue: #6094a9; /* Dark Blue */
+  --color-red-highlight: #c74343; /* Red Highlight */
+  --color-yellow-highlight: #ff9800; /* Yellow Highlight */
+  --color-green-highlight: #75bd56; /* Green Highlight */
+
+  --color-table-header: #fcd467; /* Table Header Color */
+
+
+  --color-dark: #232c3b; /* Dark Color */
+  --color-text: #1e2d2c; /* Text Color */
+}
