@@ -1,65 +1,39 @@
 {% extends 'base.html.twig' %} {% block content %}
 
+
 <div class="main-container">
+
+
     <header class="udstyr-header">
         <h1>Udstyr</h1>
     </header>
 
+<section class="udstyr-container-wrapper">
     <nav class="udstyr-nav">
         <ul class="udstyr-nav-list">
-            <li><a href="#kitchen">Køkken</a></li>
-            <li><a href="#bedroom">Soveværelse</a></li>
-            <li><a href="#living-room">Stue</a></li>
-            <li><a href="#dining-room">Spisestue</a></li>
-            <li><a href="#bathroom">Badeværelse</a></li>
+            <li><button class="filter-button" data-room="Køkken">Køkken</button></li>
+            <li><button class="filter-button" data-room="Soveværelse">Soveværelse</button></li>
+            <li><button class="filter-button" data-room="Stue">Stue</button></li>
+            <li><button class="filter-button" data-room="Spisestue">Spisestue</button></li>
+            <li><button class="filter-button" data-room="Badeværelse">Badeværelse</button></li>
+            <li><button class="filter-button" data-room="Alle">Alle rum</button></li>
         </ul>
     </nav>
-    
+
     <section class="udstyr-container">
-        {% for udstyr in UdstyrListe%}
-        {% if udstyr.lokale.value == 'Køkken' %}
-        <div style="border: 1px solid #ccc; border-radius: 12px; padding: 20px; width: 325px; background-color: #f9f9f9;">
-            <h2>{{udstyr.enhed}}</h2>
-            <p>{{udstyr.lokale.value}}</p>
-            <p>{{udstyr.status}}</p>
-            <p>{{udstyr.power}}%</p>
-        </div>
-        {% endif %}
-        {% if udstyr.lokale.value == 'Soveværelse' %}
-        <div style="border: 1px solid #ccc; border-radius: 12px; padding: 20px; width: 325px; background-color: #f9f9f9;">
-            <h2>{{udstyr.enhed}}</h2>
-            <p>{{udstyr.lokale.value}}</p>
-            <p>{{udstyr.status}}</p>
-            <p>{{udstyr.power}}%</p>
-        </div>
-        {% endif %}
-        {% if udstyr.lokale.value == 'Stue' %}
-        <div style="border: 1px solid #ccc; border-radius: 12px; padding: 20px; width: 325px; background-color: #f9f9f9;">
-            <h2>{{udstyr.enhed}}</h2>
-            <p>{{udstyr.lokale.value}}</p>
-            <p>{{udstyr.status}}</p>
-            <p>{{udstyr.power}}%</p>
-        </div>
-        {% endif %}
-        {% if udstyr.lokale.value == 'Spisestue' %}
-        <div style="border: 1px solid #ccc; border-radius: 12px; padding: 20px; width: 325px; background-color: #f9f9f9;">
-            <h2>{{udstyr.enhed}}</h2>
-            <p>{{udstyr.lokale.value}}</p>
-            <p>{{udstyr.status}}</p>
-            <p>{{udstyr.power}}%</p>
-        </div>
-        {% endif %}
-        {% if udstyr.lokale.value == 'Badeværelse' %}
-        <div style="border: 1px solid #ccc; border-radius: 12px; padding: 20px; width: 325px; background-color: #f9f9f9;">
-            <h2>{{udstyr.enhed}}</h2>
-            <p>{{udstyr.lokale.value}}</p>
-            <p>{{udstyr.status}}</p>
-            <p>{{udstyr.power}}%</p>
-        </div>
-        {% endif %}
+        {% for udstyr in udstyrListe %}
+            <div class="udstyr-item room-section" data-room="{{ udstyr.lokale.value }}">
+                <h2>{{ udstyr.enhed }}</h2>
+                <p>Rum: {{ udstyr.lokale.value }}</p>
+                <p>Status: {{ udstyr.status }}</p>
+                <p>Power: {{ udstyr.power }}%</p>
+            </div>
         {% endfor %}
     </section>
+</section>
 
+<p id="no-selection-msg">Vælg et rum for at se udstyr.</p>
 
 </div>
+
 {% endblock %}

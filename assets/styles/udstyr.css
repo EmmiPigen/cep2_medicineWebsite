@@ -2,10 +2,17 @@ html {
     scroll-behavior: smooth;
 }
 
+.udstyr-header {
+    text-align: center;
+}
+
+
 .udstyr-nav {
     background-color: skyblue;
     padding: 10px;
     border-radius: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Skyggeeffekt for at give en "boks"-fornemmelse */
+    margin-bottom: 30px; /* Plads mellem navigation og udstyr */
 }
 
 .udstyr-nav-list {
@@ -20,18 +27,55 @@ html {
     display: inline-block;
 }
 
-.udstyr-nav-list a {
-    color: black;
-    text-decoration: none;
-    padding: 10px 15px;
+.filter-button {
+    background-color: skyblue;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
-.udstyr-nav-list a:hover {
+.filter-button:hover {
     background-color: rgb(17, 73, 95);
-    border-radius: 5px;
+    transform: scale(1.1); /* Gør knappen lidt større på hover */
+}
+
+.udstyr-container-wrapper {
+    padding: 10px;
 }
 
 .udstyr-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.udstyr-item {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
+}
+
+#no-selection-msg {
+    display: none;
+    font-size: 1.2rem;
+    color: #999;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Responsivt design */
+@media (max-width: 768px) {
+    .udstyr-container {
+        grid-template-columns: 1fr;
+    }
+
+    .udstyr-nav-list {
+        flex-direction: column;
+    }
 }

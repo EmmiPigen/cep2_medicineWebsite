@@ -145,21 +145,21 @@ class PageController extends AbstractController
   ): Response {
     $user = $this->getUser();
 
-    $Ustyr = $user->getUdstyrs(); // Get the user's udstyr list
-    if ($Ustyr->isEmpty()) {
-      $UstyrListe= null; 
+    $udstyr = $user->getUdstyrs(); // Get the user's udstyr list
+    if ($udstyr->isEmpty()) {
+      $udstyrListe= null; 
     } else {
       //Create an array containing all udstyr sorted by date
-      $UdstyrArray = $Ustyr->toArray();
+      $udstyrArray = $udstyr->toArray();
 
-      usort($UdstyrArray, function ($a, $b) {
+      usort($udstyrArray, function ($a, $b) {
         return $b->getLokale() <=> $a->getLokale();
     } );
-      $UstyrListe = $UdstyrArray;
+      $udstyrListe = $udstyrArray;
     }
   
     return $this->render('page/udstyr.html.twig', [
-      'UdstyrListe' => $UstyrListe,
+      'udstyrListe' => $udstyrListe,
     ]);
   }
 
