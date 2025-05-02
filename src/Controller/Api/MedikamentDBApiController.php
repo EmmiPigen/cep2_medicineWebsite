@@ -1,8 +1,9 @@
 <?php
 namespace App\Controller\Api;
 
-use App\Entity\User;
+use App\Entity\MedikamentLog;
 use App\Entity\Udstyr;
+use App\Entity\User;
 use App\Enum\Lokale;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,8 +22,13 @@ class MedikamentDBApiController extends AbstractController
         int $userId,
     ): Response {
         // Handle the POST request
-        if ($event == 'sendUdstyrListeInfo') {
-            $data = json_decode($request->getContent(), true);
+        if ($event === 'sendUdstyrListeInfo') {
+            $base64_string = $request->getContent();
+            // Decode the base64 string to get the JSON data
+            $data = base64_decode($base64_string);
+
+            // Decode the JSON data into an associative array
+            $data = json_decode($data, true);
 
             // Check if the userId is valid
             $user = $entityManager->getRepository(User::class)->find($userId);
@@ -39,10 +45,11 @@ class MedikamentDBApiController extends AbstractController
                     'status'  => 'error',
                     'message' => 'Invalid data format',
                     'data'    => $data,
+                    'event'   => $event,
                 ], Response::HTTP_BAD_REQUEST);
             }
-            // Loop through the udstyrData and create Udstyr entities
 
+            // Loop through the udstyrData and create Udstyr entities
             foreach ($data['udstyrData'] as $udstyrListe) {
                 // Create a new Udstyr entity and set its properties
                 // Check if it already exists
@@ -56,8 +63,12 @@ class MedikamentDBApiController extends AbstractController
                     $existingUdstyr->setStatus($udstyrListe['status']);
                     $existingUdstyr->setPower($udstyrListe['power']);
                     $existingUdstyr->setLokale(Lokale::from($udstyrListe['lokale'])); // Assuming 'lokale' is a valid enum value
+                    $entityManager->persist($existingUdstyr);
+                    $entityManager->flush();
+
                     continue; // Skip if the Udstyr already exists
                 }
+
                 $udstyr = new Udstyr();
                 $udstyr->setUserId($user);
                 $udstyr->setEnhed($udstyrListe['type']);
@@ -75,6 +86,49 @@ class MedikamentDBApiController extends AbstractController
                 'message' => 'Data received successfully',
             ], Response::HTTP_OK);
 
+        }
+
+        if ($event === 'MedicationRegistrationLog') {
+            // Decode the base64 string to get the JSON data
+            $base64_string = $request->getContent();
+            $data          = base64_decode($base64_string);
+            // Decode the JSON data into an associative array
+            $data = json_decode($data, true);
+
+            // Check if the userId is valid
+            $user = $entityManager->getRepository(User::class)->find($userId);
+            if (! $user) {
+                return new JsonResponse([
+                    'status'  => 'error',
+                    'message' => 'User not found',
+                ], Response::HTTP_NOT_FOUND);
+            }
+
+            // Check if the data is valid
+            if (! isset($data['medicationLog']) || ! is_array($data['medicationLog'])) {
+                return new JsonResponse([
+                    'status'  => 'error',
+                    'message' => 'Invalid data format',
+                    'data'    => $data,
+                    'event'   => $event,
+                ], Response::HTTP_BAD_REQUEST);
+            }
+
+            //Create the new medication registration log entry
+            $medication = new MedikamentLog();
+            $medication->setUserId($user);
+            $medication->setMedikamentNavn($data['medicationLog']['name']);
+            $medication->setTagetTid(new \DateTime($data['medicationLog']['tagetTid']));
+            $medication->setTagetStatus($data['medicationLog']['status']);
+            $medication->setTagetLokale(Lokale::from($data['medicationLog']['lokale'])); // Assuming 'lokale' is a valid enum value
+
+            $entityManager->persist($medication);
+            $entityManager->flush();
+
+            return new JsonResponse([
+                'status'  => 'success',
+                'message' => 'Data received successfully',
+            ], Response::HTTP_OK);
         }
 
         // If the event is not recognized, return an error response
