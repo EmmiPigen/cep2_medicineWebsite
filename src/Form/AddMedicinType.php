@@ -19,8 +19,9 @@ class AddMedicinType extends AbstractType
   {
     $builder
       ->add('MedikamentNavn', TextType::class, [
+        'label'=> 'Medikament navn',
         'attr' => [
-          'placeholder' => 'Ibuprofen',
+          'placeholder' => 'f.eks. Ibuprofen',
           'class' => 'medicinListe-container__AddMedicin-form__input']
       ])
       ->add('TidspunkterTages', TextType::class, [
@@ -31,7 +32,10 @@ class AddMedicinType extends AbstractType
         ]
       ])
       ->add('Dosis', NumberType::class, [
-        'attr' => ['class' => 'medicinListe-container__AddMedicin-form__input']
+        'label'=> 'Dosis',
+        'attr' => [
+          'placeholder' => 'f.eks. 500',
+          'class' => 'medicinListe-container__AddMedicin-form__input-group']
       ])
       ->add('Enhed', ChoiceType::class, [
         'choices' => [
@@ -42,20 +46,21 @@ class AddMedicinType extends AbstractType
           'µg' => 'µg',
           'Ingen' => ''
         ],
-        'attr' => ['class' => 'medicinListe-container__AddMedicin-form__input']
+        'attr' => ['class' => 'medicinListe-container__AddMedicin-form__input-group']
       ])
       ->add('TimeInterval', IntegerType::class, [
+        'label'=> 'Interval',
         'attr' => [
-          'placeholder' => 'Interval i minutter',
-          'class' => 'medicinListe-container__AddMedicin-form__input']
+          'placeholder' => 'I minutter',
+          'class' => 'medicinListe-container__AddMedicin-form__input-group']
       ])
       ->add('Prioritet', ChoiceType::class, [
         'choices' => [
           'Høj' => 'Høj',
-          'Mellem' => 'Mellem',
+          'Middel' => 'Middel',
           'Lav' => 'Lav'
         ],
-        'attr' => ['class' => 'medicinListe-container__AddMedicin-form__input']
+        'attr' => ['class' => 'medicinListe-container__AddMedicin-form__input-group']
       ]);
 
     $builder->get('TidspunkterTages')

@@ -25,18 +25,19 @@
             <img
               src="{{ asset('Images/favicon.ico') }}"
               alt="ForglemMigEj logo" />
-            <h2>ForglemMigEj</h2>
+            <h2>{{'base.pageTitle'|trans}}</h2>
           </div>
         </header>
 
         <nav class="navigation" role="navigation">
+          {% if app.user %}
           <ul class="navigation-list">
             <li class="navigation-item">
               <a
                 href="{{ path('home') }}"
                 class="navigation-link"
                 data-page="home">
-                <span class="navigation-text">&gt; Forside</span>
+                <span class="navigation-text">&gt; {{'base.navHome'|trans}}</span>
               </a>
             </li>
             <li class="navigation-item">
@@ -44,7 +45,7 @@
                 href="{{ path('medicin') }}"
                 class="navigation-link"
                 data-page="medicin">
-                <span class="navigation-text">&gt; Medicin</span>
+                <span class="navigation-text">&gt; {{'base.navMedicin'|trans}}</span>
               </a>
             </li>
             <li class="navigation-item">
@@ -52,7 +53,7 @@
                 href="{{ path('historik') }}"
                 class="navigation-link"
                 data-page="historik">
-                <span class="navigation-text">&gt; Historik</span>
+                <span class="navigation-text">&gt; {{'base.navHistory'|trans}}</span>
               </a>
             </li>
             <li class="navigation-item">
@@ -60,7 +61,7 @@
                 href="{{ path('udstyr') }}"
                 class="navigation-link"
                 data-page="udstyr">
-                <span class="navigation-text">&gt; Udstyr</span>
+                <span class="navigation-text">&gt; {{'base.navEquipment'|trans}}</span>
               </a>
             </li>
             <li class="navigation-item">
@@ -68,7 +69,7 @@
                 href="{{ path('profil') }}"
                 class="navigation-link"
                 data-page="profil">
-                <span class="navigation-text">&gt; Profil</span>
+                <span class="navigation-text">&gt; {{'base.navProfile'|trans}}</span>
               </a>
             </li>
             <li class="navigation-item">
@@ -76,37 +77,48 @@
                 href="{{ path('hjaelp') }}"
                 class="navigation-link"
                 data-page="hjaelp">
-                <span class="navigation-text">&gt; Hjælp</span>
+                <span class="navigation-text">&gt; {{'base.navHelp'|trans}}</span>
               </a>
             </li>
-            {% if app.user %}
             <li class="navigation-item">
               <a href="{{ path('logout') }}" class="navigation-link">
-                <span class="navigation-text">&gt; Log ud</span>
+                <span class="navigation-text">&gt; {{'base.navLogout'|trans}}</span>
               </a>
             </li>
-            {% else %}
-            <li class="navigation-item">
-              <a
-                href="{{ path('login') }}"
-                class="navigation-link"
-                data-page="login">
-                <span class="navigation-text">&gt; Log ind</span>
-              </a>
-            </li>
-            {% endif %}
           </ul>
+          {% else %}
+          <li class="navigation-item">
+            <a
+              href="{{ path('login') }}"
+              class="navigation-link"
+              data-page="login">
+              <span class="navigation-text">&gt; {{'base.navLogin'|trans}}</span>
+            </a>
+          </li>
+          <li class="navigation-item">
+            <a
+              href="{{ path('hjaelp') }}"
+              class="navigation-link"
+              data-page="hjaelp">
+              <span class="navigation-text">&gt; {{'base.navHelp'|trans}}</span>
+            </a>
+          </li>
+          {% endif %}
         </nav>
       </aside>
 
       <div class="main-content-background"></div>
       <main class="main-content" id="content">
-        {% if app.request.attributes.get('_route') != 'login' 
-        and app.request.attributes.get('_route') != 'register' %}
+        {% if app.request.attributes.get('_route') != 'login' and
+        app.request.attributes.get('_route') != 'register' %}
         <section class="user-info-section">
           <header class="user-info-header">
-            <h1 class="user-info-title">Logget ind som:</h1>
+            {% if app.user %}
+            <h1 class="user-info-title">{{'base.userInfo'|trans}}</h1>
             <h1 class="user-info-name">{{ app.user.fuldeNavn }}</h1>
+            {% else %}
+            <h1 class="user-info-title">{{'login.header2'|trans}}</h1>
+            {% endif %}
           </header>
           <div class="divider dark"></div>
         </section>

@@ -216,7 +216,6 @@ class PageController extends AbstractController
   }
 
   #[Route('/hjaelp', name: 'hjaelp')]
-  #[IsGranted('IS_AUTHENTICATED_FULLY')]
   public function hjaelp(): Response
   {
 
