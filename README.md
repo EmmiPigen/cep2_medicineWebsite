@@ -238,7 +238,7 @@ Since the response is encoded in base64, you will need to decode the response be
 The `medikamentListe` variable will now contain the list of medications for the user. You can then use this list to display the medications in your application.
 
 
-See the file `python.ipynb` for examples of how to make the requests and how to decode the responses.
+See the file [python.ipynb](python.ipynb) for examples of how to make the requests and how to decode the responses.
 
 ## License
 
