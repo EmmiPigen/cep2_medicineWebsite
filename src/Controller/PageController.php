@@ -7,6 +7,7 @@ use App\Form\RegistrationFormType;
 use App\Repository\MedikamentListeRepository;
 use App\Repository\MedikamentLogRepository;
 use App\Repository\UdstyrRepository;
+use App\Form\CaregiverType;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,6 +17,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use App\Form\ProfilBilledeType;
 
 date_default_timezone_set('Europe/Copenhagen');
 setlocale(LC_TIME, 'da_DK');
@@ -187,15 +189,52 @@ class PageController extends AbstractController
 
   #[Route('/profil', name: 'profil')]
   #[IsGranted('IS_AUTHENTICATED_FULLY')]
-  public function profil(): Response
+  public function profil(Request $request, EntityManagerInterface $entityManager): Response
   {
-    $user = $this->getUser();
-    $userName = $user->getFuldeNavn();
-
-
-    return $this->render('page/profil.html.twig', [
-    ]);
+      $user = $this->getUser();
+  
+      // Kontaktperson-formular
+      $form = $this->createForm(CaregiverType::class, $user);
+      $form->handleRequest($request);
+  
+      if ($form->isSubmitted() && $form->isValid()) {
+          $entityManager->persist($user);
+          $entityManager->flush();
+          $this->addFlash('success', 'Kontaktperson opdateret!');
+          return $this->redirectToRoute('profil');
+      }
+  
+      // Profilbillede-formular
+      $profilBilledeForm = $this->createForm(ProfilBilledeType::class);
+      $profilBilledeForm->handleRequest($request);
+  
+      if ($profilBilledeForm->isSubmitted() && $profilBilledeForm->isValid()) {
+          $file = $profilBilledeForm->get('profilBillede')->getData();
+  
+          if ($file) {
+              $newFilename = uniqid().'.'.$file->guessExtension();
+              $file->move(
+                  $this->getParameter('upload_directory'),
+                  $newFilename
+              );
+  
+              $user->setProfilBillede($newFilename);
+              $entityManager->persist($user);
+              $entityManager->flush();
+  
+              $this->addFlash('success', 'Profilbillede opdateret!');
+              return $this->redirectToRoute('profil');
+          }
+      }
+  
+      return $this->render('page/profil.html.twig', [
+          'user' => $user,
+          'caregiverForm' => $form->createView(),
+          'profilBilledeForm' => $profilBilledeForm->createView(),
+      ]);
   }
+  
+  
 
   #[Route('/register', name: 'register')]
   public function register(
@@ -228,5 +267,14 @@ class PageController extends AbstractController
       'registration_error' => $error,
     ]);
   }
+
+  #[Route('/test-sms', name: 'test_sms')]
+  public function testSms(SmsService $smsService): Response
+  {
+      $smsService->sendSms('+4521900301', 'Hej! Dette er en testbesked fra dit Symfony-projekt!');
+
+      return new Response('SMS sendt!');
+  }
+
 
 }

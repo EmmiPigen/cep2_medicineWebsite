@@ -1,4 +1,179 @@
-{% extends 'base.html.twig' %} {% block content %}
+{% extends 'base.html.twig' %}
+  
 
-<div class="main-container"></div>
+{% block content %}
+<div style="padding: 30px;">
+
+  <div style="display: flex; justify-content: space-between; gap: 50px;">
+
+    {# ---------------------------------- VENSTRE SIDE: BRUGERINFO ---------------------------------- #}
+    {#------Navn og profilbillede------#}
+    <div style="width: 30%;">
+      <h2>Min Profil:</h2>
+      {#---Tilføj billede her---#}
+      {% if user.profilBillede %}
+        <img src="{{ asset('uploads/' ~ user.profilBillede) }}" alt="Profilbillede" style="max-width: 150px; border-radius: 50%;">
+        {% else %}
+        <p>Ingen profilbillede endnu.</p>
+        {% endif %}
+
+        {{ form_start(profilBilledeForm) }}
+        {{ form_widget(profilBilledeForm.profilBillede, {
+            'attr': {
+                'id': 'profilUpload',
+                'style': 'display: none;'
+            }
+        }) }}
+
+        <button type="button"
+        onclick="document.getElementById('profil_billede_profilBillede').click();"
+        style="background-color: transparent;
+               border: 1.5px solid #96D0E4;
+               padding: 8px 16px;
+               border-radius: 5px;
+               cursor: pointer;
+               font-size: 0.8em;
+               margin-top: 20px;">
+  Vælg billede
+</button>
+        {{ form_end(profilBilledeForm) }}
+
+      <h3>{{ user.fuldeNavn }}</h3>
+    </div>
+
+    {#------Generel information------#}
+    <div  style="width: 30%; margin-top: 60px">
+        <h3 style="margin-top: 20px;">Generel information:</h3>
+        <hr style="width: 200px; border: 1px solid #96D0E4; margin: 5px 0;">
+        <p>
+            <span style="font-size: 0.9em; font-weight: bold"> 
+                Email: 
+            <br>
+            </span>
+                <span style="font-size: 0.8em;"> 
+                {{ user.email }}  
+            </span> 
+        </p>
+
+        <p>
+            <span style="font-size: 0.9em;"> 
+                <strong>Telefonnr.:</strong> <br>
+            </span>
+            <span style="font-size: 0.8em;"> 
+                {{ user.telefonnummer ?? '-' }} 
+            </span> 
+        </p>
+    </div>
+
+
+    {# ---------------------------------- HØJRE SIDE: KONTAKTPERSON ---------------------------------- #}
+    <div style="width: 30%; margin-top: 60px">
+
+      {% if user.omsorgspersonNavn and not app.request.get('edit') %}
+        {#Vis gemt kontaktperson, med redigér-knap #}
+        <h3>Kontaktperson: </h3>
+        <hr style="width: 200px; border: 1px solid #96D0E4; margin: 5px 0;">
+
+        <p>
+            <span style="font-size: 0.9em;"> 
+                <strong>Fulde navn:</strong> <br>
+            </span>
+            <span style="font-size: 0.8em;"> 
+                {{ user.omsorgspersonNavn }}
+            </span> 
+        </p>
+
+        <p>
+            <span style="font-size: 0.9em;"> 
+                <strong>Telefonnr.:</strong> <br>
+            </span>
+            <span style="font-size: 0.8em;"> 
+                {{ user.omsorgspersonTelefon }}
+            </span> 
+        </p>
+
+        <p>
+            <span style="font-size: 0.9em;"> 
+                <strong>Email:</strong> <br>
+            </span>
+            <span style="font-size: 0.8em;"> 
+                {{ user.omsorgspersonEmail }}
+            </span> 
+        </p>
+
+        <a href="{{ path('profil', { edit: 1 }) }}"
+            style="display: block;
+                    width: fit-content;
+                    margin-right: 60px auto;
+                    border: 1.5px solid #96D0E4;
+                    padding: 6px 12px;
+                    border-radius: 4px;
+                    text-decoration: none;
+                    font-size: 0.8em;">
+                Redigér kontaktperson
+        </a>
+
+      {% else %}
+        {#------Vis formular til registrering eller redigering------#}
+        <h3>{{ user.omsorgspersonNavn ? 'Redigering' : 'Registrering' }} af Kontaktperson: </h3>
+        <hr style="width: 300px; border: 1px solid #96D0E4; margin: 20px 0;">
+
+        {{ form_start(caregiverForm) }}
+        <div style="margin-bottom: 15px;">
+            {{ form_label(caregiverForm.omsorgspersonNavn, 'Fulde navn:', {
+              'label_attr': { 'style': 'display: inline-block; width: 120px; font-weight: bold; font-size: 0.9em; color: #212121' }
+            }) }} 
+            <br>
+            {{ form_widget(caregiverForm.omsorgspersonNavn, {
+              'attr': {
+                'style': 'background-color: #ffffff; border: 1px solid #96D0E4;'
+              }
+            }) }}
+          </div>
+          
+
+          <div style="margin-bottom: 10px;">
+            {{ form_label(caregiverForm.omsorgspersonTelefon, 'Telefonnr.:', {
+                'label_attr': { 'style': 'display: inline-block; width: 120px; font-weight: bold; font-size: 0.9em; color: #212121' }
+            }) }} 
+            <br>
+            {{ form_widget(caregiverForm.omsorgspersonTelefon, {
+                'attr': {
+                'style': 'background-color: #ffffff; border: 1px solid #96D0E4;'
+            }
+            }) }}
+          </div>
+
+          <div style="margin-bottom: 20px;">
+            {{ form_label(caregiverForm.omsorgspersonEmail, 'Email:', {
+                'label_attr': { 'style': 'display: inline-block; width: 120px; font-weight: 600; font-size: 0.9em; color: #212121' }
+            }) }}
+            <br>
+            {{ form_widget(caregiverForm.omsorgspersonEmail, {
+                'attr': {
+                'style':'background-color: #ffffff; border: 1px solid #96D0E4;'
+            }
+            }) }}
+          </div>
+
+          <button type="submit" 
+                style="all: unset;
+                    display: inline-block;
+                    padding: 6px 12px;
+                    border: 1.5px solid #96D0E4;
+                    border-radius: 4px;
+                    background-color: transparent;
+                    font-size: 0.8em;
+                    cursor: pointer;
+                    text-align: center;">
+        {{ user.omsorgspersonNavn ? 'Opdatér' : 'Registré' }}
+        </button>
+        {{ form_end(caregiverForm) }}
+      {% endif %}
+
+    </div>
+  </div>
+</div>
 {% endblock %}
+
+
