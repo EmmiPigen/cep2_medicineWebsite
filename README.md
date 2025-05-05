@@ -120,6 +120,10 @@ request.post('http://<address>/api/{event}/{userid}', json=data)
 ```
 where `data` is an base64 encoded json object. What the json object should contain depends on the event you are calling.
 
+
+### Udstyr Liste Info ##
+When making a POST request with the event: `sendUdstyrListeInfo`, the json object should contain the following data:
+```python
 For example, to call the `sendUdstyrListeInfo` event, the json object should contain the following data:
 ```python
 udstyrDataList = {
@@ -146,6 +150,8 @@ x = requests.post(url, json=base64_string)
 ```
 The server will decode the base64 string and convert it back to a json object. The server will then process the request and return a response.
 
+
+### Medication Registration Log ##
 When making a POST request with the event: `MedicationRegistrationLog`, the json object should contain the following data:
 ```python	
 medicationLogEntry = {
