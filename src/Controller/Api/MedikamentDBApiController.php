@@ -185,11 +185,16 @@ class MedikamentDBApiController extends AbstractController
           'timesToTake' => $med->getTidspunkterTages(),
         ];
       }
+
+      //Base64 encode the data to send it as a JSON response
+      $encodedData = base64_encode(json_encode($medikamentData));
+
+
       // Return the data as a JSON response
       return new JsonResponse([
         'status' => 'success',
-        'message' => 'Data received successfully',
-        'list' => $medikamentData,
+        'message' => 'Request recieved successfully',
+        'list' => $encodedData,
       ], Response::HTTP_OK);
 
     }
