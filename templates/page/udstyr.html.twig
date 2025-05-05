@@ -18,13 +18,13 @@
   }
 </style>
 
-<div class="main-container">
+<div class="main-container udstyr">
   {% if udstyrListe is empty %}
   <div class="no-udstyr-msg">{{ 'equipment.noEquipment' | trans }}</div>
   {% else %}
 
   <header class="udstyr-header">
-    <h1>Udstyr</h1>
+    <h1>{{ 'equipment.title'|trans }}</h1>
   </header>
 
   <section class="udstyr-container-wrapper">

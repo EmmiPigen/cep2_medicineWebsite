@@ -103,5 +103,43 @@ If you are using Apache, you can navigate to `http://symfony-site.local` to view
 
 For more information, see the [Symfony documentation](https://symfony.com/doc/current/setup.html).
 
+
+
+## Making API Calls ##
+To give the raspberry pi access to the database, you can make a http request at this address:
+```bash
+http://<address>/api/{event}/{userid}
+```
+Replace `<address>` with the address of the server, if using the Symfony built-in server, it will be `http://localhost:8000`. If using the googlable server, it will be `https://forglemmigej.duckdns.org`.
+
+replace `{event}` with the event you want to call, and `{userid}` with the user id you want to call. You can make either a GET or POST request to the API. 
+
+When making a POST request, use 
+```python
+request.post('http://<address>/api/{event}/{userid}', json=data)
+```
+where `data` is an base64 encoded json object. What the json object should contain depends on the event you are calling.
+
+For example, to call the `sendUdstyrListeInfo` event, the json object should contain the following data:
+```python
+udstyrDataList = {
+    "udstyrData": [
+        {'enhed': "led_Lys1", "status": "tilsluttet", "power": 76, "lokale": "Soveværelse"},
+        {'enhed': "buzzer1", "status": "tilsluttet", "power": 40, "lokale": "Stue"},
+        {'enhed': "movement_sensor1", "status": "Low power", "power": 50, "lokale": "Køkken"},
+        {'enhed': "motion_sensor1", "status": "Online", "power": 40, "lokale": "Badeværelse"},
+    ]
+}
+```
+
+
+
+Making a POST request have the two events:
+- `sendUdstyrListeInfo`: 
+
+-MedicationRegistrationLog
+
+getUserMedikamentListe
+
 ## License ##
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

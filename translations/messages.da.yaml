@@ -51,6 +51,7 @@ history:
 
 
 equipment:
+  title: "Oversigt over udstyr"
   noEquipment: "Ingen udstyr er registreret i systemet."
 
   navKitchen: "Køkken"
