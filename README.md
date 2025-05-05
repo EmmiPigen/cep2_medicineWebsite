@@ -112,7 +112,7 @@ http://<address>/api/{event}/{userid}
 ```
 Replace `<address>` with the address of the server, if using the Symfony built-in server, it will be `http://localhost:8000`. If using the googlable server, it will be `https://forglemmigej.duckdns.org`.
 
-replace `{event}` with the event you want to call, and `{userid}` with the user id you want to call. You can make either a GET or POST request to the API. 
+Replace `{event}` with the event you want to call, and `{userid}` with the user id you want to call. You can make either a GET or POST request to the API. 
 
 When making a POST request, use 
 ```python
@@ -131,13 +131,59 @@ udstyrDataList = {
     ]
 }
 ```
+So the json object should contain the headers: `enhed`, `status`, `power`, and `lokale`. The values of the headers should be the values you want to send to the server. The `udstyrData` key is a list of dictionaries, where each dictionary contains the data for one device. You can add as many devices as you want to the list.
+
+The json object should be base64 encoded before sending it in the request. You can use the following code to encode the json object:
+```python
+udstyrDataList = json.dumps(udstyrDataList, indent=4)
+udstyrDataList_bytes = udstyrDataList.encode('ascii')
+base64_bytes = base64.b64encode(udstyrDataList_bytes)
+base64_string = base64_bytes.decode('ascii')
+```
+Then you can send the base64 encoded string in the request:
+```python
+x = requests.post(url, json=base64_string)
+```
+The server will decode the base64 string and convert it back to a json object. The server will then process the request and return a response.
+
+When making a POST request with the event: `MedicationRegistrationLog`, the json object should contain the following data:
+```python	
+medicationLogEntry = {
+  "medicationLog": 
+    {"name": "Paracetamol", "tagetTid": tid, "status": 1, "lokale": "Stue"},  
+}
+```
+So the json object should contain the headers: `name`, `tagetTid`, `status`, and `lokale`. The values of the headers should be the values you want to send to the server. The `medicationLog` key is a dictionary, where each key contains the data for one device. You can add as many devices as you want to the list.
+The `tagetTid` key should contain the time in the format: `2023-10-01 12:00:00`.
+
+The `status` key should contain the status of the medication. The status can be either 1 or 0. 1 means that the medication has been taken, and 0 means that the medication has not been taken.
+
+Just like the `udstyrDataList`, the json object should be base64 encoded before sending it in the request. You can use the same code to encode the json object:
+```python
+medicationLogEntry = json.dumps(medicationLogEntry, indent=4)
+
+medicationLogEntry_bytes = medicationLogEntry.encode('ascii')
+base64_bytes = base64.b64encode(medicationLogEntry_bytes)
+base64_string = base64_bytes.decode('ascii')
+```
+Then you can send the base64 encoded string in the request:
+```python
+x = requests.post(url, json=base64_string)
+```
+The server will decode the base64 string and convert it back to a json object. The server will then process the request and return a response.
+
+
+There is also one GET request you can make to the server. The GET request is used to get the list of medications for a user. You can use the following code to make the GET request:
+```python
+url = 'http://<address>/api/getUserMedikamentListe/{userid}'
+x = requests.get(url)
+```
+The server will respond with a json object containing the list of medications for the user. The json object will contain the following data:
+```python
 
 
 
-Making a POST request have the two events:
-- `sendUdstyrListeInfo`: 
 
--MedicationRegistrationLog
 
 getUserMedikamentListe
 
