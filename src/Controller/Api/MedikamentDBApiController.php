@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller\Api;
 
+use App\Entity\MedikamentLog;
 use App\Entity\User;
 use App\Entity\Udstyr;
 use App\Enum\Lokale;
@@ -13,6 +14,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MedikamentDBApiController extends AbstractController
 {
+    //
+    // POST data to DB using API
+    //
     #[Route('/api/{event}/{userId}', name: 'api_post', methods: ['POST'])]
     public function apiPost(
         Request $request,
@@ -20,8 +24,13 @@ class MedikamentDBApiController extends AbstractController
         string $event,
         int $userId,
     ): Response {
-        // Handle the POST request
+        // Post Udstyrliste to DB
         if ($event == 'sendUdstyrListeInfo') {
+            $base64_string = $request->getContent();
+            // Decode the base64 string to get the JSON data
+            $data = base64_decode($base64_string);
+
+            // Decode the JSON data into an associative array
             $data = json_decode($request->getContent(), true);
 
             // Check if the userId is valid
@@ -53,14 +62,19 @@ class MedikamentDBApiController extends AbstractController
 
                 if ($existingUdstyr) {
                     //Update the existing Udstyr entity if needed
+                    $existingUdstyr->setEnhed($udstyrListe['enhed']);
                     $existingUdstyr->setStatus($udstyrListe['status']);
                     $existingUdstyr->setPower($udstyrListe['power']);
                     $existingUdstyr->setLokale(Lokale::from($udstyrListe['lokale'])); // Assuming 'lokale' is a valid enum value
+                    $entityManager->persist($existingUdstyr);
+                    $entityManager->flush();
+
                     continue; // Skip if the Udstyr already exists
                 }
+
                 $udstyr = new Udstyr();
                 $udstyr->setUserId($user);
-                $udstyr->setEnhed($udstyrListe['type']);
+                $udstyr->setEnhed($udstyrListe['enhed']);
                 $udstyr->setStatus($udstyrListe['status']);
                 $udstyr->setPower($udstyrListe['power']);
                 $udstyr->setLokale(Lokale::from($udstyrListe['lokale'])); // Assuming 'lokale' is a valid enum value
@@ -77,6 +91,51 @@ class MedikamentDBApiController extends AbstractController
 
         }
 
+
+        // Post medication log to DB
+        if ($event === 'MedicationRegistrationLog') {
+            // Decode the base64 string to get the JSON data
+            $base64_string = $request->getContent();
+            $data          = base64_decode($base64_string);
+            // Decode the JSON data into an associative array
+            $data = json_decode($data, true);
+
+            // Check if the userId is valid
+            $user = $entityManager->getRepository(User::class)->find($userId);
+            if (! $user) {
+                return new JsonResponse([
+                    'status'  => 'error',
+                    'message' => 'User not found',
+                ], Response::HTTP_NOT_FOUND);
+            }
+
+            // Check if the data is valid
+            if (! isset($data['medicationLog']) || ! is_array($data['medicationLog'])) {
+                return new JsonResponse([
+                    'status'  => 'error',
+                    'message' => 'Invalid data format',
+                    'data'    => $data,
+                    'event'   => $event,
+                ], Response::HTTP_BAD_REQUEST);
+            }
+
+            //Create the new medication registration log entry
+            $medication = new MedikamentLog();
+            $medication->setUserId($user);
+            $medication->setMedikamentNavn($data['medicationLog']['name']);
+            $medication->setTagetTid(new \DateTime($data['medicationLog']['tagetTid']));
+            $medication->setTagetStatus($data['medicationLog']['status']);
+            $medication->setTagetLokale(Lokale::from($data['medicationLog']['lokale'])); // Assuming 'lokale' is a valid enum value
+
+            $entityManager->persist($medication);
+            $entityManager->flush();
+
+            return new JsonResponse([
+                'status'  => 'success',
+                'message' => 'Data received successfully',
+            ], Response::HTTP_OK);
+        }
+
         // If the event is not recognized, return an error response
         return new JsonResponse([
             'status'  => 'error',
@@ -84,6 +143,12 @@ class MedikamentDBApiController extends AbstractController
         ], Response::HTTP_BAD_REQUEST);
     }
 
+
+
+
+    //
+    // GET data from DB using API
+    //
     #[Route('/api/{event}/{userId}', name: 'api_get', methods: ['GET'])]
     public function apiGet(
         Request $request,
@@ -91,14 +156,14 @@ class MedikamentDBApiController extends AbstractController
         string $event,
         int $userId,
     ): Response {
-        // Handle the GET request
+        // Get Medikament liste 
         if ($event == 'getUserMedikamentListe') {
             //Check if the userId is valid
             $user = $entityManager->getRepository(User::class)->find($userId);
             if (! $user) {
                 return new JsonResponse([
                     'status'  => 'error',
-                    'message' => 'User not found',
+                    'message' => 'User not found', 
                 ], Response::HTTP_NOT_FOUND);
             }
 
@@ -134,6 +199,26 @@ class MedikamentDBApiController extends AbstractController
             ], Response::HTTP_OK);
 
         }
+
+
+        # Get User id
+        if ($event == 'getUserId') {
+            $user = $entityManager->getRepository(User::class)->find($userId);
+        
+            if (! $user) {
+                return new JsonResponse([
+                    'status'  => 'error',
+                    'message' => 'User not found',
+                ], Response::HTTP_NOT_FOUND);
+            }
+        
+            return new JsonResponse([
+                'status' => 'success',
+                'userId' => $user->getUserId(),
+                // Optional: include more user data if needed
+            ], Response::HTTP_OK);
+        }
+
 
         // If the event is not recognized, return an error response
         return new JsonResponse([
