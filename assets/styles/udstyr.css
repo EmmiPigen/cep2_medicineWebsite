@@ -1,0 +1,95 @@
+html {
+    scroll-behavior: smooth;
+}
+
+.main-container.udstyr{
+  gap: 0;
+}
+
+.udstyr-header h1 {
+  text-align: center;
+  margin: 0.75rem;
+  font-size: 2rem;
+}
+
+.udstyr-nav {
+    background-color: var(--color-dark-blue);
+    border-radius: 2rem;
+    box-shadow: 0 4px 8px #0000001a; /* Skyggeeffekt for at give en "boks"-fornemmelse */
+    margin-bottom: 1.5rem;
+}
+
+.udstyr-nav-list {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-around;
+    margin: 0;
+    padding: 0;
+}
+
+.udstyr-nav-list li {
+    display: inline-block;
+}
+
+.filter-button {
+    background-color: var(--color-dark-blue);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.filter-button:hover {
+    background-color: var(--color-tertiary); /* Skift farve ved hover */
+    transform: scale(1.1); /* Gør knappen lidt større på hover */
+}
+
+.filter-button:active {
+    background-color: rgb(17, 73, 95);
+    color: #fff;
+} 
+
+.udstyr-container-wrapper {
+    padding: 0.5rem;
+}
+
+.udstyr-container { 
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.udstyr-item {
+    background-color: var(--color-light-blue);
+    padding: 0.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--color-tertiary); /* Border for at give en "boks"-fornemmelse */
+}
+
+.udstyr-item h2 {
+    text-align: center;
+    background-color: var(--color-light);
+    padding: 0.5rem;
+    border-radius: 1rem;
+    margin: 0;
+}
+
+.udstyr-item p {
+    background-color: var(--color-light);
+    padding: 0.5rem;
+    border-radius: 1rem;
+    margin: 0.5rem 0;
+}
+
+
+#no-selection-msg {
+    display: none;
+    font-size: 1.2rem;
+    color: #999;
+    text-align: center;
+    margin-top: 20px;
+}

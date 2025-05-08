@@ -1,48 +1,63 @@
 {% extends 'base.html.twig' %} {% block content %}
-<style>
-  body { font-family: Arial, sans-serif; }
-  nav a {
-    margin: 10px;
-    text-decoration: none;
-    color: blue;
-    cursor: pointer;
-  }
-  .section {
-    display: none;
-    margin-top: 20px;
-  }
-  .active {
-    display: block;
-  }
-</style>
+<div class="main-container udstyr">
+  {% if udstyrListe is empty %}
+  <div class="no-udstyr-msg">{{ 'equipment.noEquipment' | trans }}</div>
+  {% else %}
 
+  <header class="udstyr-header">
+    <h1>{{ 'equipment.title'|trans }}</h1>
+  </header>
 
-<nav>
-  <a onclick="loadContent('home')">Home</a>
-  <a onclick="loadContent('about')">About</a>
-  <a onclick="loadContent('contact')">Contact</a>
-</nav>
+  <section class="udstyr-container-wrapper">
+    <nav class="udstyr-nav">
+      <ul class="udstyr-nav-list">
+        <li>
+          <button class="filter-button" data-room="Køkken">
+            {{ 'equipment.navKitchen' | trans }}
+          </button>
+        </li>
+        <li>
+          <button class="filter-button" data-room="Soveværelse">
+            {{ 'equipment.navBedroom' | trans }}
+          </button>
+        </li>
+        <li><button class="filter-button" data-room="Stue">
+            {{ 'equipment.navLivingRoom'|trans }}
+        </button></li>
+        <li>
+          <button class="filter-button" data-room="Spisestue">
+            {{ 'equipment.navDiningRoom'|trans }}
+          </button>
+        </li>
+        <li>
+          <button class="filter-button" data-room="Badeværelse">
+            {{ 'equipment.navBathroom'|trans }}
+          </button>
+        </li>
+        <li>
+          <button class="filter-button" data-room="Alle">
+            {{ 'equipment.navAll'|trans }}
+          </button>
+        </li>
+      </ul>
+    </nav>
 
-<div id="home" class="section active">
-  <h2>Home</h2>
-  <p>Welcome to the homepage!</p>
+    <section class="udstyr-container">
+      {% for udstyr in udstyrListe %}
+      <div
+        class="udstyr-item room-section"
+        data-room="{{ udstyr.lokale.value }}">
+        <h2>{{ udstyr.enhed }}</h2>
+        <p>{{'equipment.room'|trans}}: {{ udstyr.lokale.value }}</p>
+        <p>{{ 'equipment.status'|trans }}: {{ udstyr.status }}</p>
+        <p>{{ 'equipment.power'|trans }}: {{ udstyr.power }}%</p>
+      </div>
+      {% endfor %}
+    </section>
+  </section>
+
+  <p id="no-selection-msg">{{ 'equipment.noSelection'|trans }}</p>
+  {% endif %}
 </div>
-<div id="about" class="section">
-  <h2>About</h2>
-  <p>About us content goes here.</p>
-</div>
-<div id="contact" class="section">
-  <h2>Contact</h2>
-  <p>Contact us here.</p>
-</div>
 
-<script>
-  function loadContent(sectionId) {
-    const sections = document.querySelectorAll('.section');
-    sections.forEach(section => {
-      section.classList.remove('active');
-    });
-    document.getElementById(sectionId).classList.add('active');
-  }
-</script>
 {% endblock %}

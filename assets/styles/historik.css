@@ -1,8 +1,10 @@
 .historik-box {
+  background-color: var(--color-light-blue);
   border-radius: 2rem;
+  border: 2px solid var(--color-tertiary);
   padding: 0.5rem 2rem;
-  background-color: #6094a9;
   height: calc(100% - 1rem);
+
 }
 
 .historik-header h1 {
@@ -14,15 +16,13 @@
 .historik-table-wrapper {
   overflow-x: auto;
   max-height: calc(100% - 6rem);
-  border-bottom: 3px solid #000000;
+  border: 3px solid var(--color-tertiary);
 }
 
 .historik-table {
   width: 100%;
   justify-content: space-between;
-  background-color: #ffffff;
-  border: 3px solid #000000;
-  border-bottom: 0;
+  background-color:white;
   border-collapse: collapse;
 }
 
@@ -34,26 +34,31 @@
 .historik-table-header th {
   font-size: 1.5rem;
   text-align: center;
-  border-bottom: 3px solid rgb(0, 0, 0);
-  background-color: #fcd467;
+  border-bottom: 3px solid var(--color-tertiary);
+  border-left: 2px solid var(--color-tertiary);
+  background-color: var(--color-table-header);
+  color: var(--color-text);
 }
 
 .historik-table-row td {
   text-align: center;
   font-size: 1.2rem;
   padding: 0.2rem;
-  border-top: 2px solid rgb(0, 0, 0);
-  border-left: 2px solid rgb(0, 0, 0);
+  border-top: 2px solid var(--color-tertiary);
+  border-left: 2px solid var(--color-tertiary);
+  color: var(--color-text);
 }
 
 .historik-table-status.red {
-  background-color: #ff6347;
+  background-color: var(--color-red-highlight);
+
 }
 
 .historik-table-status.green {
-  background-color: #90ee90;
+  background-color: var(--color-green-highlight);
+
 }
 
 .historik-table-row:nth-child(even) {
-  background-color: #cccccc;
+  background-color: var(--color-primary);
 }

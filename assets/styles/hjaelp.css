@@ -1,0 +1,68 @@
+.help-box1 {
+    background-color: var(--color-light-blue);
+    border-radius: 2rem;
+    border: 2px solid var(--color-tertiary);
+    padding: 0.5rem 2rem;
+}
+
+/* Hjælpeboks styling */
+.help-box {
+    background-color: var(--color-primary-lighter);
+    padding: 10px; /* Polstring for at gøre indholdet luftigere */
+    border-radius: 10px; /* Afrundede hjørner */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Blød skygge omkring boksen */
+    border: 1px solid var(--color-tertiary); /* Mørkere kant for at adskille boksen */
+    color: var(--color-text); /* mørk tekst */
+    margin-bottom: 15px; /* Afstand mellem boksene */
+    transition: background-color 0.3s, color 0.3s; /* Blød overgang ved hover */
+}
+
+.help-title1 {
+    text-align: center; /* Centrerer teksten */
+    font-weight: bold; /* Fed skrift */
+    color: var(--color-text); /* Mørk tekstfarve */
+    margin-bottom: 2px; /* Plads mellem titel og indhold */
+    padding-bottom: 10px;       /* Plads før linjen */
+    border-bottom: 3px solid var(--color-text);  /* Selve linjen */
+}
+
+.help-description1 {
+    text-align: center; /* Centrerer teksten */
+    font-size: 20px; /* Størrelse på titlen */ 
+    color: var(--color-text); /* Mørk tekstfarve */
+    margin-top: 1rem; 
+}
+
+/* Styling af spørgsmål (titel) */
+.help-title {
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    cursor: pointer; /* Gør det muligt at klikke på spørgsmålet */
+}
+
+.toggle-icon {
+    margin-right: 10px; /* Plads mellem ikonet og spørgsmålet */
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Styling af svaret */
+.help-description {
+    font-size: 16px;
+    color: var(--color-text);
+    margin-top: 10px;
+    display: none; /* Skjult som standard */
+}
+
+/* Når ikonet er ændret til minus, når boksen er åben */
+.open .toggle-icon {
+    content: "-";
+}
+
+.help-box:hover {
+    background-color: var(--color-primary-darker);
+  }
+  
+

@@ -8,7 +8,7 @@
     class="med-status-box"
     data-medicine-status="{{ lastLog.tagetStatus }}">
     <header class="med-status-header">
-      <h1>Seneste medicin status</h1>
+      <h1>{{'home.medTitle'|trans}}</h1>
       <div class="divider dark"></div>
     </header>
 
@@ -19,12 +19,17 @@
       </section>
 
       <!-- Medicine status details -->
-
+{% if lastLog.tagetStatus == 1 %}
       <section class="med-status-details">
         <div class="med-status-labels">
-          <span>Medicin taget kl:</span>
-          <span>Medicin taget i:</span>
+          <span> {{'home.medStatusLabel1'|trans}}</span>
+          <span> {{'home.medStatusLabel2'|trans}}</span>
         </div>
+        {% else %}
+        <div class="med-status-labels">
+          <span> {{'home.medStatusLabel3'|trans}}</span>
+          <span> {{'home.medStatusLabel4'|trans}}</span>
+          {% endif %}
         <div class="med-status-values">
           <span>{{ lastLog.tagetTid|date('H:i') }}</span>
           <span>{{ lastLog.tagetLokale.value }}</span>
@@ -36,12 +41,12 @@
   <!-- If no medicine status is available -->
   <div class="med-status-box">
     <header class="med-status-header">
-      <h1>Seneste medicin status</h1>
+      <h1>{{'home.medTitle'|trans}}</h1>
       <div class="divider dark"></div>
     </header>
 
     <main class="main-med-status-content">
-      <p>Der er endnu ikke registreret nogen medicineringer</p>
+      <p>{{'home.noMedStatus'|trans}}</p>
     </main>
   </div>
   {% endif %}
@@ -50,22 +55,22 @@
   <!-- Next medicine box -->
   <section id="nextMedBox" class="next-med-box">
     <header class="next-med-header">
-      <h1>Næste medicin som skal tages idag</h1>
+      <h1>{{'home.nextMedTitle'|trans}}</h1>
     </header>
 
     <div id="nextMedInfo" class="next-med-info">
       <div class="divider dark"></div>
       {% if restMedsIdag is empty %}
-      <p class="no-meds-msg">Ikke flere medicineringer i dag</p>
+      <p class="no-meds-msg">{{'home.noNextMed'|trans}}</p>
       {% else %}
       <!-- First medicine row -->
       <table class="next-med-box-table">
         <thead>
           <tr class="next-med-header-row">
-            <th scope="col">Medikament</th>
-            <th scope="col">Skal tages</th>
-            <th scope="col">Skal senest tages</th>
-            <th scope="col">Prioritet</th>
+            <th scope="col">{{'home.tableMedName'|trans}}</th>
+            <th scope="col">{{'home.tableMedTime'|trans}}</th>
+            <th scope="col">{{'home.tableMedLastTime'|trans}}</th>
+            <th scope="col">{{'home.tableMedPriority'|trans}}</th>
           </tr>
         </thead>
 
