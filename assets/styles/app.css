@@ -138,7 +138,7 @@ h1, h2, h3, h4, h5, h6, p, span, a {
   background-color: var(--color-primary);
   border-radius: 40px 0 0 40px;
   width: calc(100vw - 300px);
-  min-width: 600px;
+  min-width: 800px;
   height: calc(100vh);
   margin-left: 300px;
 }
@@ -188,7 +188,7 @@ h1, h2, h3, h4, h5, h6, p, span, a {
 
 
 /*Responsive styles*/
-@media (max-width: 768px) {
+@media (max-width: 800px) {
   .sidebar-menu {
     width: 175px;
   }
@@ -206,17 +206,15 @@ h1, h2, h3, h4, h5, h6, p, span, a {
   }
   
   .navigation-text {
-    font-size: 1.2rem;
+    font-size: 1.7rem;
     padding: 0;
   }
 
-  .main-content {
+  .main-content{
     margin-left: 175px;
-    width: unset;
+    width: calc(100vw - 175px - 5rem);
   }
   .main-content-background {
     margin-left: 175px;
   }
-
-
 }

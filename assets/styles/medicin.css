@@ -205,3 +205,17 @@
     margin-bottom: 0.2rem;
   }
 }
+
+@media (max-width: 800px) {
+  .main-container.medicin{
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .medicinListe-container__overview,
+  .medicinListe-container__AddMedicin
+  {
+    width: calc(100% - 3rem);
+    
+  }
+}

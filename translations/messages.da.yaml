@@ -104,6 +104,7 @@ login:
   email: "E-mail"
   password: "Adgangskode"
   remember_me: "Husk mig"
+  forgot_password: "Glemt adgangskode?"
   button: "Log ind"
 
 register:

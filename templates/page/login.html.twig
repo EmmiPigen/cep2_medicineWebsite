@@ -53,14 +53,22 @@
             )
           }}
 
+
           <input
             type="hidden"
             name="_csrf_token"
             value="{{ csrf_token('authenticate') }}" />
 
-          <div class="form-checkbox">
+          <div class="form-group">
+            <div class="remember-me">
             <input type="checkbox" name="_remember_me" id="_remember_me" />
             <label for="_remember_me">{{ 'login.remember_me' | trans }}</label>
+            </div>
+            <p class="forgot-password">
+              <a href="{{ path('app_forgot_password_request') }}">
+                {{ 'login.forgot_password'|trans }}
+              </a>
+            </p>
           </div>
 
           <button class="btn-submit" type="submit">
