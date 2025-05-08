@@ -82,6 +82,12 @@ profile:
   generalInfoAddress: "Adresse"
   noAddress: "Ingen adresse er registreret i systemet."
 
+  editGeneral: "Rediger oplysninger"
+  editGeneralInfo: "Her kan du ændre dine oplysninger"
+  updateGeneralInfo: "Opdater oplysninger"
+
+
+
   contactTitle: "Kontaktperson"
   contactDescription: "Her kan du se og ændre kontaktoplysningerne til din kontaktperson."
   contactInfoName: "Navn"

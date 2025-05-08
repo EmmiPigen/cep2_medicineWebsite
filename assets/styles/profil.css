@@ -22,6 +22,7 @@
 .general-info-container,
 .contact-person-container{
   width: 50%;
+  background-color: var(--color-primary-lighter);
 }
 
 .profil-header h1{
@@ -100,13 +101,15 @@
 .main-info-container {
   display: flex;
   flex-direction: row;
+  padding: 1rem;
+  gap: 1.5rem;
+  height: 100%;
 }
 
 .general-info,
 .contact-person{
   display: flex;
   flex-direction: column;
-  background-color: var(--color-primary-lighter);
   border-radius: 2rem;
   padding: 0.5rem;
   margin: auto 0;
@@ -131,10 +134,11 @@
   border: 2px solid var(--color-tertiary);
 }
 
+.general-info h3,
 .contact-person h3{
   text-align: center;
   font-size: 1rem;
-  margin: 0.5rem 0;
+  margin: 0;
 }
 
 .rediger-button {
