@@ -2,6 +2,9 @@
 namespace App\Controller\Api;
 
 use App\Entity\MedikamentLog;
+
+use App\Entity\User;
+
 use App\Entity\Udstyr;
 use App\Entity\User;
 use App\Enum\Lokale;
@@ -17,13 +20,16 @@ class MedikamentDBApiController extends AbstractController
     //
     // POST data to DB using API
     //
+
     #[Route('/api/{event}/{userId}', name: 'api_post_event', methods: ['POST'])]
+
     public function apiPost(
         Request $request,
         EntityManagerInterface $entityManager,
         string $event,
         int $userId,
     ): Response {
+
         // post Udstyrliste to DB
         if ($event == 'sendUdstyrListeInfo') {
             // Get the base64 string from the request body
@@ -32,6 +38,7 @@ class MedikamentDBApiController extends AbstractController
             $data = base64_decode($base64_string);
             // Decode the JSON data into an associative array
             $data = json_decode($data, true);
+
             // Check if the userId is valid
             $user = $entityManager->getRepository(User::class)->find($userId);
             if (! $user) {
@@ -66,10 +73,12 @@ class MedikamentDBApiController extends AbstractController
                 ]);
 
                 if ($existingUdstyr) {
+
                     $existingUdstyr->setStatus($udstyrListe['status']);
                     $existingUdstyr->setPower($udstyrListe['power']);
                     $existingUdstyr->setLokale(Lokale::from($udstyrListe['lokale'])); // Assuming 'lokale' is a valid enum value
                     $entityManager->persist($existingUdstyr);
+
                 } else {
                     $udstyr = new Udstyr();
                     $udstyr->setUserId($user);
@@ -101,6 +110,7 @@ class MedikamentDBApiController extends AbstractController
 
         }
 
+        // Post medication log to DB
         if ($event === 'MedicationRegistrationLog') {
             // Decode the base64 string to get the JSON data
             $base64_string = $request->getContent();
@@ -150,6 +160,7 @@ class MedikamentDBApiController extends AbstractController
             'message' => 'Invalid event or userId',
         ], Response::HTTP_BAD_REQUEST);
     }
+
     //
     // GET data from DB using API
     //
@@ -162,12 +173,13 @@ class MedikamentDBApiController extends AbstractController
     ): Response {
         // Handle the GET request
         if ($event === 'getUserMedikamentListe') {
+
             //Check if the userId is valid
             $user = $entityManager->getRepository(User::class)->find($userId);
             if (! $user) {
                 return new JsonResponse([
                     'status'  => 'error',
-                    'message' => 'User not found',
+                    'message' => 'User not found', 
                 ], Response::HTTP_NOT_FOUND);
             }
 
@@ -190,7 +202,10 @@ class MedikamentDBApiController extends AbstractController
                     'name'         => $med->getMedikamentNavn(),
                     'timeInterval' => $med->getTimeInterval(),
                     'timesToTake'  => $med->getTidspunkterTages(),
-                    'priority'     => $med->getPrioritet(),
+                    'dose'         => $med->getDosis(),
+                    'unit'         => $med->getEnhed(),
+                    'priority'     => $med->getPrioritet()
+
                 ];
             }
 
@@ -223,6 +238,7 @@ class MedikamentDBApiController extends AbstractController
                 // Optional: include more user data if needed
             ], Response::HTTP_OK);
         }
+
         // If the event is not recognized, return an error response
         return new JsonResponse([
             'status'  => 'error',

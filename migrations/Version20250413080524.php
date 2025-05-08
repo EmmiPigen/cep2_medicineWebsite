@@ -24,7 +24,7 @@ final class Version20250413080524 extends AbstractMigration
             CREATE TABLE medikament_liste (id INT AUTO_INCREMENT NOT NULL, medikament_navn VARCHAR(255) NOT NULL, time_interval INT NOT NULL, dosis INT NOT NULL, enhed VARCHAR(4) NOT NULL, tidspunkter_tages LONGTEXT NOT NULL, userId INT NOT NULL, INDEX IDX_512744C864B64DCC (userId), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci`
         SQL);
         $this->addSql(<<<'SQL'
-            CREATE TABLE medikament_log (id INT AUTO_INCREMENT NOT NULL, medikament_navn VARCHAR(255) NOT NULL, taget_tid DATETIME DEFAULT NULL, taget_status VARCHAR(255) NOT NULL, taget_lokale VARCHAR(255) NOT NULL, userId INT NOT NULL, INDEX IDX_D44E2A7C64B64DCC (userId), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci`
+            CREATE TABLE medikament_log (id INT AUTO_INCREMENT NOT NULL, medikament_navn VARCHAR(255) NOT NULL, taget_tid DATETIME DEFAULT NULL, taget_status TINYINT NOT NULL, taget_lokale VARCHAR(255) NOT NULL, userId INT NOT NULL, INDEX IDX_D44E2A7C64B64DCC (userId), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci`
         SQL);
         $this->addSql(<<<'SQL'
             CREATE TABLE udstyr (id INT AUTO_INCREMENT NOT NULL, lokale VARCHAR(255) NOT NULL, enhed VARCHAR(255) NOT NULL, status VARCHAR(255) NOT NULL, power INT NOT NULL, userId INT NOT NULL, INDEX IDX_EC1BF10D64B64DCC (userId), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci`
