@@ -73,45 +73,53 @@ function dynammiskIndlaesning() {
   });
 
   function handleNavLinks(event) {
-    event.preventDefault();
     const targetURL = this.getAttribute("href");
-    
+    if (targetURL && targetURL.includes("logout")) {
+      return; // Do not load via AJAX if it's a logout link
+    }
+
+    // Check if the link is an internal link
+    event.preventDefault(); // Prevent default link behavior
     if(!targetURL || targetURL === "null") {
       console.warn("Invalid link target:", targetURL);
       return;
     }
+    //Lad the page dynamically
     loadPage(targetURL);
   }
 
+  // Handle the back/forward button
   window.addEventListener("popstate", function (event) {
+    // Check if the event has a state and load the corresponding page
     if (event.state) {
+      //load the page from the history state
       loadPage(event.state.url);
     } else {
+      // If no state, load the default page (home page)
       loadPage("/");
     }
   });
 }
 
-
+// Highlight the current page in the navigation bar
 function highLightCurrentPage() {
+  // Get all navigation links
   const navLinks = document.querySelectorAll("nav a");
+  // Loop through each link and check if it matches the current URL
   navLinks.forEach((link) => {
+    // Get the href attribute of the link
     const href = link.getAttribute("href");
-
     const node = link.closest("li"); // Find the closest <li> ancestor
 
-
+    // Check if the href matches the current URL
+    // If the href is null or empty, skip this link
     if(!href || !node) {
       console.warn("Skipping link due to missing href or node:", link);
       return;
-
     }
+    // Remove the "active" class from all links
     node.classList.remove("active");
-    if (window.location.pathname === href) {
-      node.classList.add("active");
-
-    }
-    node.classList.remove("active");
+    // Add the "active" class to the current link
     if (window.location.pathname === href) {
       node.classList.add("active");
     }

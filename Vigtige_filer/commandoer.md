@@ -1,6 +1,7 @@
 # Useful commands for symfony and php
 symfony server:start
-php bin/console asset-map:compile      
+php bin/console asset-map:compile    
+php bin/console debug:router  
 
 ## Commands for the database
 php bin/console make:migration
