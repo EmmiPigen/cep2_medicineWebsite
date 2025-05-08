@@ -29,9 +29,10 @@ class MedikamentDBApiController extends AbstractController
             // Get the base64 string from the request body
             $base64_string = $request->getContent();
             // Decode the base64 string to get the JSON data
-            $data = base64_decode($base64_string);
+            $data        = base64_decode($base64_string);
             // Decode the JSON data into an associative array
             $data = json_decode($data, true);
+
             // Check if the userId is valid
             $user = $entityManager->getRepository(User::class)->find($userId);
             if (! $user) {
@@ -45,8 +46,9 @@ class MedikamentDBApiController extends AbstractController
             if (! isset($data['udstyrData']) || ! is_array($data['udstyrData'])) {
                 return new JsonResponse([
                     'status'  => 'error',
-                    'message' => 'Invalid data format',
+                    'message' => 'Invalid data format for Udstyr',
                     'data'    => $data,
+                    'event'   => $event,
                 ], Response::HTTP_BAD_REQUEST);
             }
 
@@ -96,7 +98,7 @@ class MedikamentDBApiController extends AbstractController
             // Return a success response
             return new JsonResponse([
                 'status'  => 'success',
-                'message' => 'Data received successfully',
+                'message' => 'Data received successfully and stored in the database',
             ], Response::HTTP_OK);
 
         }
@@ -121,7 +123,7 @@ class MedikamentDBApiController extends AbstractController
             if (! isset($data['medicationLog']) || ! is_array($data['medicationLog'])) {
                 return new JsonResponse([
                     'status'  => 'error',
-                    'message' => 'Invalid data format',
+                    'message' => 'Invalid data format for medicationLog',
                     'data'    => $data,
                     'event'   => $event,
                 ], Response::HTTP_BAD_REQUEST);
@@ -140,7 +142,7 @@ class MedikamentDBApiController extends AbstractController
 
             return new JsonResponse([
                 'status'  => 'success',
-                'message' => 'Data received successfully',
+                'message' => 'Data received successfully and stored in the medication registration log table',
             ], Response::HTTP_OK);
         }
 
@@ -193,15 +195,13 @@ class MedikamentDBApiController extends AbstractController
                     'priority'     => $med->getPrioritet(),
                 ];
             }
-
-            //Base64 encode the data to send it as a JSON response
-            $encodedData = base64_encode(json_encode($medikamentData));
+           
 
             // Return the data as a JSON response
             return new JsonResponse([
                 'status'  => 'success',
                 'message' => 'Request recieved successfully',
-                'list'    => $encodedData,
+                'list'    => $medikamentListe,
             ], Response::HTTP_OK);
 
         }
