@@ -189,7 +189,7 @@ class PageController extends AbstractController
     UdstyrRepository $udstyrRepository,
     LoggerInterface $logger
   ): Response {
-    $user = $this->getUser();
+    $user = $this->getUser(); 
 
     $udstyr = $user->getUdstyrs(); // Get the user's udstyr list
     if ($udstyr->isEmpty()) {
