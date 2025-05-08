@@ -20,3 +20,5 @@ import './styles/login.css'; //CSS styles til login siden
 // Imports til udstyr siden
 import './styles/udstyr.css'; //CSS styles til udstyr siden
 
+//Imports til hjælp siden
+import './styles/hjaelp.css'; //CSS styles til hjælp siden
