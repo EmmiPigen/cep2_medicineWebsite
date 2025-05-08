@@ -1,6 +1,7 @@
 :root {
   --color-primary: #e6dfce; /* Darker Beige */
   --color-primary-lighter: #e6e4d8; /* Light Beige */
+  --color-primary-darker: #d1c6b8; /* Darker Beige */
   --color-secondary: #87CEEB; /* Blue */
   --color-tertiary: #11495f; /* Darker Blue */
   --color-light-blue: #b3c0db; /* Light Blue */
