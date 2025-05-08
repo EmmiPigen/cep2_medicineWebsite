@@ -17,7 +17,7 @@ class MedikamentDBApiController extends AbstractController
     //
     // POST data to DB using API
     //
-    #[Route('/api/{event}/{userId}', name: 'api_post', methods: ['POST'])]
+    #[Route('/api/{event}/{userId}', name: 'api_post_event', methods: ['POST'])]
     public function apiPost(
         Request $request,
         EntityManagerInterface $entityManager,
@@ -25,7 +25,7 @@ class MedikamentDBApiController extends AbstractController
         int $userId,
     ): Response {
         // post Udstyrliste to DB
-        if ($event === 'sendUdstyrListeInfo') {
+        if ($event == 'sendUdstyrListeInfo') {
             // Get the base64 string from the request body
             $base64_string = $request->getContent();
             // Decode the base64 string to get the JSON data
@@ -153,7 +153,7 @@ class MedikamentDBApiController extends AbstractController
     //
     // GET data from DB using API
     //
-    #[Route('/api/{event}/{userId}', name: 'api_get', methods: ['GET'])]
+    #[Route('/api/{event}/{userId}', name: 'api_get_event', methods: ['GET'])]
     public function apiGet(
         Request $request,
         EntityManagerInterface $entityManager,
@@ -161,7 +161,7 @@ class MedikamentDBApiController extends AbstractController
         int $userId,
     ): Response {
         // Handle the GET request
-        if ($event == 'getUserMedikamentListe') {
+        if ($event === 'getUserMedikamentListe') {
             //Check if the userId is valid
             $user = $entityManager->getRepository(User::class)->find($userId);
             if (! $user) {
