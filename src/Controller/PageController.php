@@ -17,6 +17,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 date_default_timezone_set('Europe/Copenhagen');
 setlocale(LC_TIME, 'da_DK');
@@ -217,11 +218,25 @@ class PageController extends AbstractController
 
   #[Route('/hjaelp', name: 'hjaelp')]
   #[IsGranted('IS_AUTHENTICATED_FULLY')]
-  public function hjaelp(): Response
+  public function hjaelp(TranslatorInterface $translator): Response
   {
+    $title = $translator->trans('help.title');
+    $description1 = $translator->trans('help.description1');
 
-    return $this->render('page/hjaelp.html.twig', [
-    ]);
+    $helps = [];
+
+        for ($i = 1; $i <= 8; $i++) {
+            $helps[] = [
+                'help' => $translator->trans("help.help{$i}"),
+                'description' => $translator->trans("help.help{$i}Description")
+            ];
+        }
+
+        return $this->render('page/hjaelp.html.twig', [
+            'title' => $title,
+            'description1' => $description1,
+            'helps' => $helps,
+        ]);
   }
 
   #[Route(path: '/login', name: 'login')]
