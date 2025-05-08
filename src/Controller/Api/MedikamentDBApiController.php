@@ -17,7 +17,7 @@ class MedikamentDBApiController extends AbstractController
     //
     // POST data to DB using API
     //
-    #[Route('/api/{event}/{userId}', name: 'api_post', methods: ['POST'])]
+    #[Route('/api/{event}/{userId}', name: 'api_post_event', methods: ['POST'])]
     public function apiPost(
         Request $request,
         EntityManagerInterface $entityManager,
@@ -25,14 +25,13 @@ class MedikamentDBApiController extends AbstractController
         int $userId,
     ): Response {
         // post Udstyrliste to DB
-        if ($event === 'sendUdstyrListeInfo') {
+        if ($event == 'sendUdstyrListeInfo') {
             // Get the base64 string from the request body
             $base64_string = $request->getContent();
             // Decode the base64 string to get the JSON data
-            $data        = base64_decode($base64_string);
+            $data = base64_decode($base64_string);
             // Decode the JSON data into an associative array
             $data = json_decode($data, true);
-
             // Check if the userId is valid
             $user = $entityManager->getRepository(User::class)->find($userId);
             if (! $user) {
@@ -46,9 +45,8 @@ class MedikamentDBApiController extends AbstractController
             if (! isset($data['udstyrData']) || ! is_array($data['udstyrData'])) {
                 return new JsonResponse([
                     'status'  => 'error',
-                    'message' => 'Invalid data format for Udstyr',
+                    'message' => 'Invalid data format',
                     'data'    => $data,
-                    'event'   => $event,
                 ], Response::HTTP_BAD_REQUEST);
             }
 
@@ -98,7 +96,7 @@ class MedikamentDBApiController extends AbstractController
             // Return a success response
             return new JsonResponse([
                 'status'  => 'success',
-                'message' => 'Data received successfully and stored in the database',
+                'message' => 'Data received successfully',
             ], Response::HTTP_OK);
 
         }
@@ -123,7 +121,7 @@ class MedikamentDBApiController extends AbstractController
             if (! isset($data['medicationLog']) || ! is_array($data['medicationLog'])) {
                 return new JsonResponse([
                     'status'  => 'error',
-                    'message' => 'Invalid data format for medicationLog',
+                    'message' => 'Invalid data format',
                     'data'    => $data,
                     'event'   => $event,
                 ], Response::HTTP_BAD_REQUEST);
@@ -142,7 +140,7 @@ class MedikamentDBApiController extends AbstractController
 
             return new JsonResponse([
                 'status'  => 'success',
-                'message' => 'Data received successfully and stored in the medication registration log table',
+                'message' => 'Data received successfully',
             ], Response::HTTP_OK);
         }
 
@@ -155,7 +153,7 @@ class MedikamentDBApiController extends AbstractController
     //
     // GET data from DB using API
     //
-    #[Route('/api/{event}/{userId}', name: 'api_get', methods: ['GET'])]
+    #[Route('/api/{event}/{userId}', name: 'api_get_event', methods: ['GET'])]
     public function apiGet(
         Request $request,
         EntityManagerInterface $entityManager,
@@ -163,7 +161,7 @@ class MedikamentDBApiController extends AbstractController
         int $userId,
     ): Response {
         // Handle the GET request
-        if ($event == 'getUserMedikamentListe') {
+        if ($event === 'getUserMedikamentListe') {
             //Check if the userId is valid
             $user = $entityManager->getRepository(User::class)->find($userId);
             if (! $user) {
@@ -195,13 +193,15 @@ class MedikamentDBApiController extends AbstractController
                     'priority'     => $med->getPrioritet(),
                 ];
             }
-           
+
+            //Base64 encode the data to send it as a JSON response
+            $encodedData = base64_encode(json_encode($medikamentData));
 
             // Return the data as a JSON response
             return new JsonResponse([
                 'status'  => 'success',
                 'message' => 'Request recieved successfully',
-                'list'    => $medikamentListe,
+                'list'    => $encodedData,
             ], Response::HTTP_OK);
 
         }

@@ -17,7 +17,7 @@ class temp extends AbstractController
     //
     // POST data to DB using API
     //
-    #[Route('/api/{event}/{userId}', name: 'api_post', methods: ['POST'])]
+    #[Route('/test', name: 'api_post', methods: ['POST'])]
     public function apiPost(
         Request $request,
         EntityManagerInterface $entityManager,
