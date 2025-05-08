@@ -8,13 +8,13 @@
 .contact-person-container {
   display: flex;
   flex-direction: column;
-  width: 30%;
   border-radius: 2rem;
   padding: 1rem;
   color: var(--color-text);
 }
 
 .profil-container-left {
+  width: 35%;
   gap: 1rem;
   background-color: var(--color-light-blue);
 }
@@ -22,9 +22,8 @@
 .general-info-container,
 .contact-person-container{
   width: 50%;
+  background-color: var(--color-primary-lighter);
 }
-
-
 
 .profil-header h1{
   text-align: center;
@@ -88,8 +87,6 @@
   align-items: center;
 }
 
-
-
 .main-info-header h1 {
   text-align: center;
   font-size: 2rem;
@@ -104,27 +101,93 @@
 .main-info-container {
   display: flex;
   flex-direction: row;
-
+  padding: 1rem;
+  gap: 1.5rem;
+  height: 100%;
 }
 
-
-.general-info {
-  background-color: var(--color-primary-lighter);
+.general-info,
+.contact-person{
+  display: flex;
+  flex-direction: column;
   border-radius: 2rem;
   padding: 0.5rem;
-  margin: auto 0;;
+  margin: auto 0;
+  height: 100%;
 }
-.general-info h2 {
+
+.general-info h2,
+.contact-person h2{
   text-align: center;
   font-size: 1.5rem;
   margin: 0.5rem 0;
 }
-.general-info p{
+
+.general-info p,
+.contact-person p{
   margin: 0;
-  padding: 0;
-  margin-bottom: 1rem;
+  padding: 0.5rem;
+}
+.contact-person p{
+  background-color: white;
+  border-radius: 0.5rem;
+  border: 2px solid var(--color-tertiary);
 }
 
+.general-info h3,
+.contact-person h3{
+  text-align: center;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.rediger-button {
+  all: unset;
+  background-color: var(--color-dark-blue);
+  color: var(--color-text);
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  text-align: center;
+  color: white;
+  align-self: center;
+  margin: 0.5rem;
+}
+
+.rediger-button:hover {
+  background-color: var(--color-tertiary);
+  color: white;
+  font-weight: bold;
+}
+
+.rediger-form{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.rediger-form form {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 100%;
+  gap: 0.5rem;
+}
+.rediger-form label {
+  font-size: 1.5rem;
+  
+  margin: 0;
+  color: var(--color-text);
+}
+
+.rediger-form input{
+  width: 100%;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  padding: 0.2rem;
+  border: none;
+  box-sizing: border-box;
+}
 
 
 @media (max-width: 800px) {
