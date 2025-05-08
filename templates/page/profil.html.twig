@@ -11,13 +11,30 @@
     <div style="width: 30%;">
       <h2>Min Profil:</h2>
       {#---Tilføj billede her---#}
-      {% if user.profilBillede %}
-        <img src="{{ asset('uploads/' ~ user.profilBillede) }}" alt="Profilbillede" style="max-width: 150px; border-radius: 50%;">
-        {% else %}
-        <p>Ingen profilbillede endnu.</p>
-        {% endif %}
+      <div style="margin-top: 40px;">
+        {% if user.profilBillede %}
+          <img src="{{ asset('uploads/' ~ user.profilBillede) }}"
+               alt="Profilbillede"
+                style="max-width: 400px !important;
+                        height: 350px !important; 
+                        border-radius: 0%;">
 
-        {{ form_start(profilBilledeForm) }}
+               <form method="post" action="{{ path('profil_slet_billede') }}" style="margin-top: 10px;">
+                <button type="submit"
+                        style="background-color: #96D0E4; color: black; padding: 6px 12px; border: none; border-radius: 5px; cursor: pointer;">
+                  Slet billede
+                </button>
+              </form>
+        {% else %}
+            <img src="{{ asset('uploads/nopfp.jpg')}}"
+                alt="Profilbillede"
+                style="max-width: 300px !important;
+                        height: 300px !important; 
+                        border-radius: 0%;">
+        {% endif %}
+      </div>
+
+        {{ form_start(profilBilledeForm, { 'multipart': true }) }}
         {{ form_widget(profilBilledeForm.profilBillede, {
             'attr': {
                 'id': 'profilUpload',
@@ -29,14 +46,28 @@
         onclick="document.getElementById('profil_billede_profilBillede').click();"
         style="background-color: transparent;
                border: 1.5px solid #96D0E4;
-               padding: 8px 16px;
+               padding: 8px 8px;
                border-radius: 5px;
                cursor: pointer;
                font-size: 0.8em;
                margin-top: 20px;">
-  Vælg billede
-</button>
+            Vælg billede
+        </button>
+
+        <button type="submit"
+        style="background-color: transparent;
+                border: 1.5px solid #96D0E4;
+                padding: 8px 8px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 0.8em;
+                margin-top: 20px;">
+            Upload billede
+        </button>
+
         {{ form_end(profilBilledeForm) }}
+
+        
 
       <h3>{{ user.fuldeNavn }}</h3>
     </div>

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Service;
 
 use Twilio\Rest\Client;
 
@@ -14,9 +14,9 @@ class SmsService
     {   
         // Denne information kan findes i bunden af twilio hjemmesiden.
         // MIDLERTIDIGT FJERNET! JEG SÆTTER IND IGEN SENERE
-        $this->twilioSid = '0';    
-        $this->twilioToken = '0';  
-        $this->twilioFrom = '0'; 
+        $this->twilioSid = $twilioSid;
+        $this->twilioToken = $twilioToken;
+        $this->twilioFrom = $twilioFrom;
     }
 
     public function sendSms(string $to, string $message): void
