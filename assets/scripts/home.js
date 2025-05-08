@@ -7,6 +7,7 @@ function runScript() {
   updateMedicineStatus();
   highLightCurrentPage();
   setupRoomFiltering();
+  setupHelpToggle();
 }
 
 function updateMedicineStatus() {
@@ -145,7 +146,7 @@ function setupRoomFiltering() {
     button.addEventListener("click", () => {
       const selectedRoom = button.getAttribute("data-room");
 
-      let anyVisible = false;
+      let anyVisible = false; 
       roomSections.forEach(section => {
       const match = selectedRoom === "Alle" || section.dataset.room === selectedRoom;
       section.style.display = match ? "block" : "none";
@@ -154,6 +155,33 @@ function setupRoomFiltering() {
 
       if (noSelectionMsg) {
         noSelectionMsg.style.display = anyVisible ? "none" : "block";
+      }
+    });
+  });
+}
+
+//åbne og lukke spørgsmål i hjælp
+function setupHelpToggle() {
+  // Find alle elementer med klassen 'help-title' som er de spørgsmål
+  const titles = document.querySelectorAll('.help-title');
+
+  // Gå igennem alle spørgsmålene og tilføj en klik-hændelse
+  titles.forEach(function(title) {
+    title.addEventListener('click', function() {
+      const description = this.nextElementSibling; // Find beskrivelsen (næste element)
+      const icon = this.querySelector('.toggle-icon'); // Find ikonet
+      const box = this.parentElement; 
+
+      const isOpen = description.style.display === 'block';
+
+      if (isOpen) {
+        description.style.display = 'none';
+        icon.textContent = '+';
+        box.classList.remove('active'); // Fjern 'active' klasse når den lukkes
+      } else {
+        description.style.display = 'block';
+        icon.textContent = '-';
+        box.classList.add('active'); // Tilføj 'active' klasse når den åbnes
       }
     });
   });

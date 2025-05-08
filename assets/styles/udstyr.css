@@ -47,11 +47,16 @@ html {
     transform: scale(1.1); /* Gør knappen lidt større på hover */
 }
 
+.filter-button:active {
+    background-color: rgb(17, 73, 95);
+    color: #fff;
+} 
+
 .udstyr-container-wrapper {
     padding: 0.5rem;
 }
 
-.udstyr-container {
+.udstyr-container { 
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
@@ -87,15 +92,4 @@ html {
     color: #999;
     text-align: center;
     margin-top: 20px;
-}
-
-/* Responsivt design */
-@media (max-width: 768px) {
-    .udstyr-container {
-        grid-template-columns: 1fr;
-    }
-
-    .udstyr-nav-list {
-        flex-direction: column;
-    }
 }

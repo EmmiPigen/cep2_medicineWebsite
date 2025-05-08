@@ -1,23 +1,4 @@
 {% extends 'base.html.twig' %} {% block content %}
-<style>
-  body {
-    font-family: Arial, sans-serif;
-  }
-  nav a {
-    margin: 10px;
-    text-decoration: none;
-    color: blue;
-    cursor: pointer;
-  }
-  .section {
-    display: none;
-    margin-top: 20px;
-  }
-  .active {
-    display: block;
-  }
-</style>
-
 <div class="main-container udstyr">
   {% if udstyrListe is empty %}
   <div class="no-udstyr-msg">{{ 'equipment.noEquipment' | trans }}</div>
