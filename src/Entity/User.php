@@ -57,6 +57,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Udstyr::class, mappedBy: 'userId')]
     private Collection $udstyrs;
 
+
+    // Til at indlæse information om kontakperson
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank(message: 'Fulde navn må ikke være tomt')]
+    private ?string $omsorgspersonNavn = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank(message: 'Telefonnummer må ikke være tomt')]
+    private ?string $omsorgspersonTelefon = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank(message: 'Email må ikke være tomt')]
+    #[Assert\Email(message: 'Ugyldig emailadresse')]
+    private ?string $omsorgspersonEmail = null;
+
+    // Til profilbillede
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $profilBillede = null;
+
+
     public function __construct()
     {
         $this->medikamentLogs = new ArrayCollection();
@@ -75,6 +95,53 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getOmsorgspersonNavn(): ?string
+    {
+        return $this->omsorgspersonNavn;
+    }
+
+    public function setOmsorgspersonNavn(?string $omsorgspersonNavn): static
+    {
+        $this->omsorgspersonNavn = $omsorgspersonNavn;
+        return $this;
+    }
+
+    public function getOmsorgspersonTelefon(): ?string
+    {
+        return $this->omsorgspersonTelefon;
+    }
+
+    public function setOmsorgspersonTelefon(?string $omsorgspersonTelefon): static
+    {
+        $this->omsorgspersonTelefon = $omsorgspersonTelefon;
+        return $this;
+    }
+
+    public function getOmsorgspersonEmail(): ?string
+    {
+        return $this->omsorgspersonEmail;
+    }
+
+    public function setOmsorgspersonEmail(?string $omsorgspersonEmail): static
+    {
+        $this->omsorgspersonEmail = $omsorgspersonEmail;
+        return $this;
+    }
+
+    
+    // Oploader profilbillede til user-databasen
+    public function getProfilBillede(): ?string
+    {
+        return $this->profilBillede;
+    }
+
+    public function setProfilBillede(?string $profilBillede): self
+    {
+        $this->profilBillede = $profilBillede;
+        return $this;
+    }
+
 
     /**
      * A visual identifier that represents this user.
