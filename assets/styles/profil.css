@@ -1,0 +1,144 @@
+.main-container.profil {
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.profil-container-left,
+.general-info-container,
+.contact-person-container {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  border-radius: 2rem;
+  padding: 1rem;
+  color: var(--color-text);
+}
+
+.profil-container-left {
+  gap: 1rem;
+  background-color: var(--color-light-blue);
+}
+
+.general-info-container,
+.contact-person-container{
+  width: 50%;
+}
+
+
+
+.profil-header h1{
+  text-align: center;
+  font-size: 2rem;
+  margin: 0;
+  background-color: var(--color-primary-lighter);
+  border-radius: 2rem;
+  padding: 0.5rem;
+}
+
+.profil-billede-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: auto 0;
+}
+
+.profil-billede-container img {
+  margin: 0 auto;
+}
+
+.profil-billede {
+  max-width: 90%;
+}
+
+.profil-billede__form-button-container {
+  display: flex;
+  justify-content: space-between;
+}
+.profil-billede__form-button {
+  background-color: var(--color-dark-blue);
+  color: var(--color-text);
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.profil-billede__form-button.slet {
+  background-color: var(--color-red-highlight);
+  color: white;
+}
+
+.profil-billede__form-button:hover {
+  background-color: var(--color-tertiary);
+  color: white;
+}
+
+.main-container.profil main{
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-dark-blue);
+  border-radius: 2rem;
+  padding: 0.5rem;
+}
+
+.main-info-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+
+
+.main-info-header h1 {
+  text-align: center;
+  font-size: 2rem;
+  padding: 0.5rem;
+  margin: 0;
+  background-color: var(--color-primary-lighter);
+  border-radius: 2rem;
+  width: 45%;
+}
+
+
+.main-info-container {
+  display: flex;
+  flex-direction: row;
+
+}
+
+
+.general-info {
+  background-color: var(--color-primary-lighter);
+  border-radius: 2rem;
+  padding: 0.5rem;
+  margin: auto 0;;
+}
+.general-info h2 {
+  text-align: center;
+  font-size: 1.5rem;
+  margin: 0.5rem 0;
+}
+.general-info p{
+  margin: 0;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+
+
+
+@media (max-width: 800px) {
+  .main-container.profil {
+    flex-direction: column;
+    align-items: center;
+    justify-content: unset;
+  }
+
+  .profil-container-left{
+    width: calc(100% - 2rem);
+  }
+
+  .profil-billede {
+    max-width: 50%;
+  }
+}

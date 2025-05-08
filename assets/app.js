@@ -22,3 +22,6 @@ import './styles/udstyr.css'; //CSS styles til udstyr siden
 
 //Imports til hjælp siden
 import './styles/hjaelp.css'; //CSS styles til hjælp siden
+
+//Imports til profil siden
+import './styles/profil.css'; //CSS styles til profil siden

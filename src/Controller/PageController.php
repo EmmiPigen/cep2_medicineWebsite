@@ -209,18 +209,6 @@ class PageController extends AbstractController
     ]);
   }
 
-  #[Route('/profil', name: 'profil')]
-  #[IsGranted('IS_AUTHENTICATED_FULLY')]
-  public function profil(): Response
-  {
-    $user = $this->getUser();
-    $userName = $user->getFuldeNavn();
-
-
-    return $this->render('page/profil.html.twig', [
-    ]);
-  }
-
   #[Route('/hjaelp', name: 'hjaelp')]
   #[IsGranted('IS_AUTHENTICATED_FULLY')]
   public function hjaelp(TranslatorInterface $translator): Response
@@ -230,7 +218,7 @@ class PageController extends AbstractController
 
     $helps = [];
 
-        for ($i = 1; $i <= 8; $i++) {
+        for ($i = 1; $i <= 9; $i++) {
             $helps[] = [
                 'help' => $translator->trans("help.help{$i}"),
                 'description' => $translator->trans("help.help{$i}Description")
@@ -275,7 +263,11 @@ class PageController extends AbstractController
 
   #[Route('/profil', name: 'profil')]
   #[IsGranted('IS_AUTHENTICATED_FULLY')]
-  public function profil(Request $request, EntityManagerInterface $entityManager): Response
+  public function profil(
+    Request $request, 
+    EntityManagerInterface $entityManager,
+    loggerInterface $logger
+    ): Response
   {
       $user = $this->getUser();
   
@@ -303,7 +295,7 @@ class PageController extends AbstractController
                   $this->getParameter('upload_directory'),
                   $newFilename
               );
-  
+              $logger->info('Profilbillede uploaded: '.$newFilename);
               $user->setProfilBillede($newFilename);
               $entityManager->persist($user);
               $entityManager->flush();

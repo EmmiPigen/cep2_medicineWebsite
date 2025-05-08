@@ -66,7 +66,27 @@ equipment:
   power: "Strøm"
 
   noSelection: "Vælg et rum for at se udstyret."
-  
+
+
+profile:
+  title: "Min profil"
+  altImage: "Profilbillede"
+  deleteImage: "Slet billede"
+  changeImage: "Vælg billede"
+  uploadImage: "Upload billede"
+  generalTitle: "Generelle oplysninger"
+  generalDescription: "Her kan du se og ændre dine generelle oplysninger."
+  generalInfoEmail: "E-mail adresse"
+  generalInfoNumber: "Telefonnummer"
+  noPhone: "Ingen telefonnummer er registreret i systemet."
+  generalInfoAddress: "Adresse"
+  noAddress: "Ingen adresse er registreret i systemet."
+
+  contactTitle: "Kontaktperson"
+
+
+
+
 help:
   title: "Hjælp"
   description1: "Her kan du finde hjælp til at bruge systemet."
@@ -91,6 +111,9 @@ help:
 
   help8: "Hvad kan jeg se på forsiden?"
   help8Description: "På forsiden kan du se status for din seneste medicinering, herunder hvornår medicinen blev taget, hvornår den skulle tages og hvor den blev taget. Du kan også se en liste over din næste medicinering for dagen."
+
+  help9: "Hvordan ændrer jeg mit profilbillede?"
+  help9Description: "For at ændre dit profilbillede, skal du gå til din profil side ved at klikke på 'Profil' i menuen til venstre. Her kan du se dit nuværende profilbillede og vælge et nyt billede ved at klikke på 'Vælg billede' knappen. Vælg det ønskede billede fra din computer og klik på 'Upload billede' knappen for at gemme ændringerne."
 
 
 login:

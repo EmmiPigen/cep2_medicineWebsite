@@ -2,11 +2,8 @@
 namespace App\Controller\Api;
 
 use App\Entity\MedikamentLog;
-
 use App\Entity\User;
-
 use App\Entity\Udstyr;
-use App\Entity\User;
 use App\Enum\Lokale;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
