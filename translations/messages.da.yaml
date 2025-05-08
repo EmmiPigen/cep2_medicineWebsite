@@ -83,6 +83,17 @@ profile:
   noAddress: "Ingen adresse er registreret i systemet."
 
   contactTitle: "Kontaktperson"
+  contactDescription: "Her kan du se og ændre kontaktoplysningerne til din kontaktperson."
+  contactInfoName: "Navn"
+  contactInfoNumber: "Telefonnummer"
+  contactInfoEmail: "E-mail adresse"
+  contactInfoNoEmail: "Ingen e-mail adresse er registreret i systemet."
+
+  editContact: "Rediger oplysninger"
+  editContactTitle: "af kontaktperson"
+
+
+
 
 
 

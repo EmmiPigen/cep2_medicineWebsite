@@ -95,131 +95,59 @@
       </section>
 
       <section class="contact-person-container">
-        {% if user.omsorgspersonNavn and not app.request.get('edit') %} {#Vis
-        gemt kontaktperson, med redigér-knap #}
-        <p>
-          <span style="font-size: 0.9em">
-            <strong>Fulde navn:</strong> <br />
-          </span>
-          <span style="font-size: 0.8em">
+        <div class="contact-person">
+          {% if user.omsorgspersonNavn and not app.request.get('edit') %} {#Vis
+          gemt kontaktperson, med redigér-knap #}
+          <h2>{{ "profile.contactInfoName" | trans }}</h2>
+          <p>
             {{ user.omsorgspersonNavn }}
-          </span>
-        </p>
+          </p>
 
-        <p>
-          <span style="font-size: 0.9em">
-            <strong>Telefonnr.:</strong> <br />
-          </span>
-          <span style="font-size: 0.8em">
+          <h2>{{ "profile.contactInfoNumber" | trans }}</h2>
+          <p>
+            {% if user.omsorgspersonTelefon is empty %}
+            {{ "profile.noPhone" | trans }}
+            {% else %}
             {{ user.omsorgspersonTelefon }}
-          </span>
-        </p>
+            {% endif %}
+          </p>
 
-        <p>
-          <span style="font-size: 0.9em"> <strong>Email:</strong> <br /> </span>
-          <span style="font-size: 0.8em">
+          <h2>{{ "profile.contactInfoEmail" | trans }}</h2>
+          <p>
+            {% if user.omsorgspersonEmail is empty %}
+            {{ "profile.noEmail" | trans }}
+            {% else %}
             {{ user.omsorgspersonEmail }}
-          </span>
-        </p>
+            {% endif %}
+          </p>
 
-        <a
-          href="{{ path('profil', { edit: 1 }) }}"
-          style="
-            display: block;
-            width: fit-content;
-            margin-right: 60px auto;
-            border: 1.5px solid #96d0e4;
-            padding: 6px 12px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-size: 0.8em;
-          ">
-          Redigér kontaktperson
-        </a>
+          <a href="{{ path('profil', { edit: 1 }) }}" class="rediger-button">
+            {{ "profile.editContact" | trans }}
+          </a>
 
-        {% else %} {#------Vis formular til registrering eller
-        redigering------#}
-        <h3>
-          {{ user.omsorgspersonNavn ? "Redigering" : "Registrering" }} af
-          Kontaktperson:
-        </h3>
-        <hr style="width: 300px; border: 1px solid #96d0e4; margin: 20px 0" />
+          {% else %}
+          <!--Vis formular til registrering eller redigering -->
 
-        {{ form_start(caregiverForm) }}
-        <div style="margin-bottom: 15px">
-          {{
-            form_label(caregiverForm.omsorgspersonNavn, "Fulde navn:", {
-              label_attr: {
-                style:
-                  "display: inline-block; width: 120px; font-weight: bold; font-size: 0.9em; color: #212121"
-              }
-            })
-          }}
-          <br />
-          {{
-            form_widget(caregiverForm.omsorgspersonNavn, {
-              attr: {
-                style: "background-color: #ffffff; border: 1px solid #96D0E4;"
-              }
-            })
-          }}
+          <h3>
+            {{ user.omsorgspersonNavn ? "Redigering" : "Registrering" }}
+            {{ "profile.editContactTitle" | trans }}
+          </h3>
+          <div class = "rediger-form"> 
+          {{ form_start(caregiverForm) }}
+
+          {{ form_row(caregiverForm.omsorgspersonNavn) }}
+          {{ form_row(caregiverForm.omsorgspersonTelefon) }}
+          {{ form_row(caregiverForm.omsorgspersonEmail) }}
+
+          <button type="submit" class="rediger-button">
+            {{ user.omsorgspersonNavn ? "Opdater" : "Register" }}
+          </button>
+
+          {{ form_end(caregiverForm) }}
+
+          {% endif %}
+          </div>
         </div>
-
-        <div style="margin-bottom: 10px">
-          {{
-            form_label(caregiverForm.omsorgspersonTelefon, "Telefonnr.:", {
-              label_attr: {
-                style:
-                  "display: inline-block; width: 120px; font-weight: bold; font-size: 0.9em; color: #212121"
-              }
-            })
-          }}
-          <br />
-          {{
-            form_widget(caregiverForm.omsorgspersonTelefon, {
-              attr: {
-                style: "background-color: #ffffff; border: 1px solid #96D0E4;"
-              }
-            })
-          }}
-        </div>
-
-        <div style="margin-bottom: 20px">
-          {{
-            form_label(caregiverForm.omsorgspersonEmail, "Email:", {
-              label_attr: {
-                style:
-                  "display: inline-block; width: 120px; font-weight: 600; font-size: 0.9em; color: #212121"
-              }
-            })
-          }}
-          <br />
-          {{
-            form_widget(caregiverForm.omsorgspersonEmail, {
-              attr: {
-                style: "background-color: #ffffff; border: 1px solid #96D0E4;"
-              }
-            })
-          }}
-        </div>
-
-        <button
-          type="submit"
-          style="
-            all: unset;
-            display: inline-block;
-            padding: 6px 12px;
-            border: 1.5px solid #96d0e4;
-            border-radius: 4px;
-            background-color: transparent;
-            font-size: 0.8em;
-            cursor: pointer;
-            text-align: center;
-          ">
-          {{ user.omsorgspersonNavn ? "Opdatér" : "Registré" }}
-        </button>
-        {{ form_end(caregiverForm) }}
-        {% endif %}
       </section>
     </div>
   </main>
