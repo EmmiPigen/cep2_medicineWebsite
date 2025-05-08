@@ -1,56 +1,63 @@
 {% extends 'base.html.twig' %} {% block content %}
-<style>
-  body { font-family: Arial, sans-serif; }
-  nav a {
-    margin: 10px;
-    text-decoration: none;
-    color: blue;
-    cursor: pointer;
-  }
-  .section {
-    display: none;
-    margin-top: 20px;
-  }
-  .active {
-    display: block;
-  }
-</style>
+<div class="main-container udstyr">
+  {% if udstyrListe is empty %}
+  <div class="no-udstyr-msg">{{ 'equipment.noEquipment' | trans }}</div>
+  {% else %}
 
-<div class="main-container">
-{% if udstyrListe is empty %}
-    <div class="no-udstyr-msg">Ingen udstyr tilgængeligt</div>
-{% else %}
+  <header class="udstyr-header">
+    <h1>{{ 'equipment.title'|trans }}</h1>
+  </header>
 
-    <header class="udstyr-header">
-        <h1>Udstyr</h1>
-    </header>
-
-<section class="udstyr-container-wrapper">
+  <section class="udstyr-container-wrapper">
     <nav class="udstyr-nav">
-        <ul class="udstyr-nav-list">
-            <li><button class="filter-button" data-room="Køkken">Køkken</button></li>
-            <li><button class="filter-button" data-room="Soveværelse">Soveværelse</button></li>
-            <li><button class="filter-button" data-room="Stue">Stue</button></li>
-            <li><button class="filter-button" data-room="Spisestue">Spisestue</button></li>
-            <li><button class="filter-button" data-room="Badeværelse">Badeværelse</button></li>
-            <li><button class="filter-button" data-room="Alle">Alle rum</button></li>
-        </ul>
+      <ul class="udstyr-nav-list">
+        <li>
+          <button class="filter-button" data-room="Køkken">
+            {{ 'equipment.navKitchen' | trans }}
+          </button>
+        </li>
+        <li>
+          <button class="filter-button" data-room="Soveværelse">
+            {{ 'equipment.navBedroom' | trans }}
+          </button>
+        </li>
+        <li><button class="filter-button" data-room="Stue">
+            {{ 'equipment.navLivingRoom'|trans }}
+        </button></li>
+        <li>
+          <button class="filter-button" data-room="Spisestue">
+            {{ 'equipment.navDiningRoom'|trans }}
+          </button>
+        </li>
+        <li>
+          <button class="filter-button" data-room="Badeværelse">
+            {{ 'equipment.navBathroom'|trans }}
+          </button>
+        </li>
+        <li>
+          <button class="filter-button" data-room="Alle">
+            {{ 'equipment.navAll'|trans }}
+          </button>
+        </li>
+      </ul>
     </nav>
 
     <section class="udstyr-container">
-        {% for udstyr in udstyrListe %}
-            <div class="udstyr-item room-section" data-room="{{ udstyr.lokale.value }}">
-                <h2>{{ udstyr.enhed }}</h2>
-                <p>Rum: {{ udstyr.lokale.value }}</p>
-                <p>Status: {{ udstyr.status }}</p>
-                <p>Power: {{ udstyr.power }}%</p>
-            </div>
-        {% endfor %}
+      {% for udstyr in udstyrListe %}
+      <div
+        class="udstyr-item room-section"
+        data-room="{{ udstyr.lokale.value }}">
+        <h2>{{ udstyr.enhed }}</h2>
+        <p>{{'equipment.room'|trans}}: {{ udstyr.lokale.value }}</p>
+        <p>{{ 'equipment.status'|trans }}: {{ udstyr.status }}</p>
+        <p>{{ 'equipment.power'|trans }}: {{ udstyr.power }}%</p>
+      </div>
+      {% endfor %}
     </section>
-</section>
+  </section>
 
-<p id="no-selection-msg">Vælg et rum for at se udstyr.</p>
-{% endif %}
+  <p id="no-selection-msg">{{ 'equipment.noSelection'|trans }}</p>
+  {% endif %}
 </div>
 
 {% endblock %}

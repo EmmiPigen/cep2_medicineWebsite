@@ -2,17 +2,21 @@ html {
     scroll-behavior: smooth;
 }
 
-.udstyr-header {
-    text-align: center;
+.main-container.udstyr{
+  gap: 0;
 }
 
+.udstyr-header h1 {
+  text-align: center;
+  margin: 0.75rem;
+  font-size: 2rem;
+}
 
 .udstyr-nav {
-    background-color: skyblue;
-    padding: 10px;
+    background-color: var(--color-dark-blue);
     border-radius: 2rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Skyggeeffekt for at give en "boks"-fornemmelse */
-    margin-bottom: 30px; /* Plads mellem navigation og udstyr */
+    box-shadow: 0 4px 8px #0000001a; /* Skyggeeffekt for at give en "boks"-fornemmelse */
+    margin-bottom: 1.5rem;
 }
 
 .udstyr-nav-list {
@@ -28,38 +32,59 @@ html {
 }
 
 .filter-button {
-    background-color: skyblue;
+    background-color: var(--color-dark-blue);
     color: white;
     border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
+    padding: 1rem 2rem;
+    border-radius: 1rem;
     cursor: pointer;
     font-weight: bold;
     transition: background-color 0.3s, transform 0.3s;
 }
 
 .filter-button:hover {
-    background-color: rgb(17, 73, 95);
+    background-color: var(--color-tertiary); /* Skift farve ved hover */
     transform: scale(1.1); /* Gør knappen lidt større på hover */
 }
 
+.filter-button:active {
+    background-color: rgb(17, 73, 95);
+    color: #fff;
+} 
+
 .udstyr-container-wrapper {
-    padding: 10px;
+    padding: 0.5rem;
 }
 
-.udstyr-container {
+.udstyr-container { 
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
 }
 
 .udstyr-item {
-    background-color: #f9f9f9;
-    padding: 20px;
+    background-color: var(--color-light-blue);
+    padding: 0.5rem;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border: 1px solid #ccc;
+    border: 1px solid var(--color-tertiary); /* Border for at give en "boks"-fornemmelse */
 }
+
+.udstyr-item h2 {
+    text-align: center;
+    background-color: var(--color-light);
+    padding: 0.5rem;
+    border-radius: 1rem;
+    margin: 0;
+}
+
+.udstyr-item p {
+    background-color: var(--color-light);
+    padding: 0.5rem;
+    border-radius: 1rem;
+    margin: 0.5rem 0;
+}
+
 
 #no-selection-msg {
     display: none;
@@ -67,15 +92,4 @@ html {
     color: #999;
     text-align: center;
     margin-top: 20px;
-}
-
-/* Responsivt design */
-@media (max-width: 768px) {
-    .udstyr-container {
-        grid-template-columns: 1fr;
-    }
-
-    .udstyr-nav-list {
-        flex-direction: column;
-    }
 }

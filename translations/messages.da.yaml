@@ -1,0 +1,116 @@
+base:
+  pageTitle: "ForglemMigEj"
+  navHome: "Forside"
+  navMedicin: "Medicin"
+  navHistory: "Historik"
+  navEquipment: "Udstyr"
+  navProfile: "Profil"
+  navLogin: "Log ind"
+  navHelp: "Hjælp"
+  navLogout: "Log ud"
+
+  userInfo: "Logget ind som"
+
+home:
+  medTitle: "Seneste medicin status"
+  medStatusLabel1: "Medicin taget kl:"
+  medStatusLabel2: "Medicin taget i lokalet:"
+  medStatusLabel3: "Medicin skulle tages kl:"
+  medStatusLabel4: "Medicin skulle tages i:"
+  noMedStatus: "Der er endnu ikke registreret nogen medicineringer i systemet."
+  nextMedTitle: "Næste medicin som skal tages idag"
+  noNextMed: "Ingen medicin er planlagt til at blive taget i dag."
+  tableMedName: "Medikament"
+  tableMedTime: "Skal tages kl"
+  tableMedLastTime: "Skal senest tages kl"
+  tableMedPriority: "Prioritet"
+
+
+medicin:
+  mainTitle: "Oversigt over medikamenter"
+
+  tableMedName: "Medikament"
+  tableTime: "Tages kl"
+  tableDosage: "Dose"
+  tableTimeInterval: "Interval"
+  tablePriority: "Prioritet"
+  tableDelete: "Slet"
+
+  confirmDelete: "Er du sikker på, at du vil slette dette medicin?"
+
+  addMedTitle: "Tilføj medicin"
+  addMedDescription1: "Her kan du tilføje de medikmater som du skal tage i løbet af dagen"
+  addMedDescription2: "Udfyld venligst formularen nedenfor."
+  addMedButton: "Tilføj medicin"
+
+history:
+  title: "Oversigt over registede medicineringer"
+  tableStatus: "Status"
+  tableTime: "Taget kl"
+  tableLocation: "Taget i lokalet"
+
+
+equipment:
+  title: "Oversigt over udstyr"
+  noEquipment: "Ingen udstyr er registreret i systemet."
+
+  navKitchen: "Køkken"
+  navBathroom: "Badeværelse"
+  navLivingRoom: "Stue"
+  navBedroom: "Soveværelse"
+  navDiningRoom: "Spisestue"
+  navAll: "Alle rum"
+
+  room: "Rum"
+  status: "Status"
+  power: "Strøm"
+
+  noSelection: "Vælg et rum for at se udstyret."
+  
+help:
+  title: "Hjælp"
+  description1: "Her kan du finde hjælp til at bruge systemet."
+  help1: "Hvordan tilføjer jeg medicin?"
+  help1Description: "For at tilføje medicin, skal du gå til medicin siden ved at klikke på 'Medicin' i menuen til venstre. Her kan du se en liste over dine medikamenter og tilføje nye bruge formularen til højre. Udfyld venligst formularen med oplysninger om medicinen, herunder navnet på medikamentet, tidspunkt(er) for indtagelse, dosis, enhed som medikamentet er givet i, for langt tid der må gå fra medicinen skal tages og hvor vigtigt det er at tage medicinen til tiden. Når du har udfyldt formularen, skal du klikke på 'Tilføj medicin' knappen for at gemme oplysningerne."
+  help2: "Hvordan registrerer jeg medicin som taget?"
+  help2Description: "Medicinen bliver automatisk registreret som taget, når sensoren på medicinbøtten registrerer at medicinen er blevet taget. Du ved at det er sket, når led-lysene i dit hjem lyser grønt." 
+  help3: "Hvordan sletter jeg medicin fra systemet?"
+  help3Description: "For at slette medicin, skal du gå til medicin siden ved at klikke på 'Medicin' i menuen til venstre. Her kan du se en liste over dine medikamenter. Find den medicin du vil slette og klik på ✖ ikonet til højre for medicinen. Du vil blive bedt om at bekræfte at du vil slette medicinen. Klik på 'OK' for at slette medicinen eller 'cancel' for at annullere."
+
+  help4: "Hvor kan jeg finde min medicin historik?"
+  help4Description: "For at finde din medicin historik, skal du gå til historik siden ved at klikke på 'Historik' i menuen til venstre. Her kan du se en liste over alle dine registrerede medicineringer, herunder status, tidspunkt for indtagelse og hvor medicinen blev taget."
+
+  help5: "Hvordan logger jeg ind?"
+  help5Description: "For at logge ind, skal du klikke på 'Log ind' i menuen til venstre. Udfyld venligst formularen med din e-mail og adgangskode. Hvis du ikke har en bruger, kan du oprette en bruger i formularen til højre. Når du har udfyldt formularen, skal du klikke på 'Log ind' knappen for at logge ind på din konto."
+
+  help6: "Hvordan logger jeg ud?"
+  help6Description: "For at logge ud, skal du klikke på 'Log ud' i menuen til venstre. Du vil blive logget ud af systemet og sendt tilbage til login siden."
+
+  help7: "Hvor kan jeg se mit forbundet udstyr?"
+  help7Description: "For at se dit forbundne udstyr, skal du klikke på 'Udstyr' i menuen til venstre. Her kan du se en liste over dit udstyr og deres status. Du kan også se udstyret i de forskellige rum ved at klikke på rummene i menuen til venstre."
+
+  help8: "Hvad kan jeg se på forsiden?"
+  help8Description: "På forsiden kan du se status for din seneste medicinering, herunder hvornår medicinen blev taget, hvornår den skulle tages og hvor den blev taget. Du kan også se en liste over din næste medicinering for dagen."
+
+
+login:
+  header1: "Du er logget ind som:"
+  header2: "Du er ikke logget ind endnu"
+  logout: "Log ud"
+  title: "Log ind"
+  description1: "Log ind for at få adgang til din konto"
+  description2: "Udfyld venligst formularen nedenfor for at logge ind på din konto."
+  email: "E-mail"
+  password: "Adgangskode"
+  remember_me: "Husk mig"
+  forgot_password: "Glemt adgangskode?"
+  button: "Log ind"
+
+register:
+  title: "Opret en ny bruger"
+  description1: "For at kunne bruge systemet, skal du oprette en bruger."
+  description2: "Udfyld venligst formularen, hvis du ikke allerede har en bruger."
+  fullname: "Fulde navn"
+  email: "E-mail"
+  password: "Adgangskode"
+  button: "Opret bruger"
