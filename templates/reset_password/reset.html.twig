@@ -1,12 +1,22 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %}{% block content %}
+<div class="main-container reset-password">
+    {% for flash_error in app.flashes('reset_password_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+    <main class="reset-password-container">
+        <header class="reset-header">
+            <h1>{{ "reset_form.title"|trans }}</h1>
+        </header>
+        <div class="divider dark"></div>
+    <div class="reset-text-container">
+        <p>
+          {{ "reset_form.description1"|trans }}
+        </p>
 
-{% block title %}Reset your password{% endblock %}
-
-{% block body %}
-    <h1>Reset your password</h1>
-
-    {{ form_start(resetForm) }}
+        {{ form_start(resetForm) }}
         {{ form_row(resetForm.plainPassword) }}
-        <button class="btn btn-primary">Reset password</button>
-    {{ form_end(resetForm) }}
+        <button class="reset-password-button">Reset password</button>
+        {{ form_end(resetForm) }}
+
+        
 {% endblock %}

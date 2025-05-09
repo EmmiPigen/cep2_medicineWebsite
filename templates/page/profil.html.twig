@@ -1,10 +1,11 @@
 {% extends 'base.html.twig' %} {% block content %}
+
 <div class="main-container profil">
   <!--VENSTRE SIDE: BRUGERINFO-->
   <!------profilbillede------>
   <aside class="profil-container-left">
     <header class="profil-header">
-      <h1>{{ 'profile.title' | trans }}</h1>
+      <h1>{{ "profile.title" | trans }}</h1>
     </header>
     {#---Tilføj billede her---#}
     <div class="profil-billede-container">
@@ -12,19 +13,21 @@
       <img
         src="{{ asset('uploads/' ~ user.profilBillede) }}"
         alt="{{ 'profile.altImage' | trans }}"
+        loading="eager"
         class="profil-billede" />
       <div class="profil-billede__form-button-container">
         <form method="post" action="{{ path('profil_slet_billede') }}">
           <button type="submit" class="profil-billede__form-button slet">
-            {{ 'profile.deleteImage' | trans }}
+            {{ "profile.deleteImage" | trans }}
           </button>
         </form>
-        {{ form_start(profilBilledeForm, { multipart: true }) }}
+
+        {{ form_start(profilBilledeForm) }}
         {{
           form_widget(profilBilledeForm.profilBillede, {
             attr: {
-              id: 'profilUpload',
-              style: 'display: none;'
+              id: "profilUpload",
+              style: "display: none;"
             }
           })
         }}
@@ -33,11 +36,11 @@
           type="button"
           onclick="document.getElementById('profil_billede_profilBillede').click();"
           class="profil-billede__form-button">
-          {{ 'profile.changeImage' | trans }}
+          {{ "profile.changeImage" | trans }}
         </button>
 
         <button type="submit" class="profil-billede__form-button">
-          {{ 'profile.uploadImage' | trans }}
+          {{ "profile.uploadImage" | trans }}
         </button>
 
         {{ form_end(profilBilledeForm) }}
@@ -48,6 +51,11 @@
         alt="No {{ 'profile.altImage' | trans }}"
         class="profil-billede" />
       {% endif %}
+      {% if error %}
+      <div class="alert-danger">
+        {{ error.messageKey|trans(error.messageData, 'security') }}
+      </div>
+      {% endif %}
     </div>
   </aside>
 
@@ -56,64 +64,67 @@
   <main>
     {#------Generel information------#}
     <header class="main-info-header">
-      <h1>{{ 'profile.generalTitle' | trans }}</h1>
-      <h1>{{ 'profile.contactTitle' | trans }}</h1>
+      <h1>{{ "profile.generalTitle" | trans }}</h1>
+      <h1>{{ "profile.contactTitle" | trans }}</h1>
     </header>
     <div class="divider dark"></div>
     <div class="main-info-container">
       <section class="general-info-container">
         <div class="general-info">
-          {% if not app.request.get('edit') %}
+          {% if app.request.get('edit') != 'general' %}
           <h2>{{ user.fuldeNavn }}</h2>
-          <p>{{ 'profile.generalDescription' | trans }}</p>
+          <p>{{ "profile.generalDescription" | trans }}</p>
 
           <p>
-            <strong>{{ 'profile.generalInfoEmail' | trans }}</strong>
+            <strong>{{ "profile.generalInfoEmail" | trans }}</strong>
             <br />
             {{ user.email }}
           </p>
 
           <p>
-            <strong>{{ 'profile.generalInfoNumber' | trans }}</strong>
+            <strong>{{ "profile.generalInfoNumber" | trans }}</strong>
             <br />
             {% if user.telefonNummer is not empty %}
             {{ user.telefonNummer }}
             {% else %}
-            {{ 'profile.noPhone' | trans }}
+            {{ "profile.noPhone" | trans }}
             {% endif %}
           </p>
           <p>
-            <strong>{{ 'profile.generalInfoAddress' | trans }}</strong>
+            <strong>{{ "profile.generalInfoAddress" | trans }}</strong>
             <br />
             {% if user.addresse is empty %}
-            {{ 'profile.noAddress' | trans }}
+            {{ "profile.noAddress" | trans }}
             {% else %}
             {{ user.addresse }}
             {{ user.postnummer }} {{ user.byNavn }}
             {% endif %}
           </p>
 
-          <a href="{{ path('profil', { edit: 1 }) }}" class="rediger-button">
-            {{ 'profile.editGeneral' | trans }}
+          <a href="{{ path('profil', { edit: 'general' }) }}" class="rediger-button">
+            {{ "profile.editGeneral" | trans }}
           </a>
 
           {% else %}
 
-          <h3>{{ 'profile.editGeneralInfo' | trans }}</h3>
+          <h3>{{ "profile.editGeneralInfo" | trans }}</h3>
 
-          <div class="rediger-form">
+          <div class="rediger-form__general-info">
             {{ form_start(updateInfoForm) }}
 
             {{ form_row(updateInfoForm.FuldeNavn) }}
             {{ form_row(updateInfoForm.email) }}
             {{ form_row(updateInfoForm.telefonNummer) }}
             {{ form_row(updateInfoForm.addresse) }}
-            {{ form_row(updateInfoForm.postnummer) }}
-            {{ form_row(updateInfoForm.byNavn) }}
+            <div class="rediger-form__input-group">
+              {{ form_row(updateInfoForm.postnummer) }}
+              {{ form_row(updateInfoForm.byNavn) }}
+            </div>
+
             {{ form_row(updateInfoForm.land) }}
 
             <button type="submit" class="rediger-button">
-              {{ 'profile.updateGeneralInfo' | trans }}
+              {{ "profile.updateGeneralInfo" | trans }}
             </button>
             {{ form_end(updateInfoForm) }}
           </div>
@@ -123,41 +134,41 @@
 
       <section class="contact-person-container">
         <div class="contact-person">
-          {% if user.omsorgspersonNavn and not app.request.get('edit') %} {#Vis
+          {% if user.omsorgspersonNavn and app.request.get('edit') != 'contact' %} {#Vis
           gemt kontaktperson, med redigér-knap #}
-          <h2>{{ 'profile.contactInfoName' | trans }}</h2>
+          <h2>{{ "profile.contactInfoName" | trans }}</h2>
           <p>
             {{ user.omsorgspersonNavn }}
           </p>
 
-          <h2>{{ 'profile.contactInfoNumber' | trans }}</h2>
+          <h2>{{ "profile.contactInfoNumber" | trans }}</h2>
           <p>
             {% if user.omsorgspersonTelefon is empty %}
-            {{ 'profile.noPhone' | trans }}
+            {{ "profile.noPhone" | trans }}
             {% else %}
             {{ user.omsorgspersonTelefon }}
             {% endif %}
           </p>
 
-          <h2>{{ 'profile.contactInfoEmail' | trans }}</h2>
+          <h2>{{ "profile.contactInfoEmail" | trans }}</h2>
           <p>
             {% if user.omsorgspersonEmail is empty %}
-            {{ 'profile.noEmail' | trans }}
+            {{ "profile.noEmail" | trans }}
             {% else %}
             {{ user.omsorgspersonEmail }}
             {% endif %}
           </p>
 
-          <a href="{{ path('profil', { edit: 1 }) }}" class="rediger-button">
-            {{ 'profile.editContact' | trans }}
+          <a href="{{ path('profil', { edit: 'contact' }) }}" class="rediger-button">
+            {{ "profile.editContact" | trans }}
           </a>
 
           {% else %}
           <!--Vis formular til registrering eller redigering -->
 
           <h3>
-            {{ user.omsorgspersonNavn ? 'Redigering' : 'Registrering' }}
-            {{ 'profile.editContactTitle' | trans }}
+            {{ user.omsorgspersonNavn ? "Redigering" : "Registrering" }}
+            {{ "profile.editContactTitle" | trans }}
           </h3>
           <div class="rediger-form">
             {{ form_start(caregiverForm) }}
@@ -167,7 +178,7 @@
             {{ form_row(caregiverForm.omsorgspersonEmail) }}
 
             <button type="submit" class="rediger-button">
-              {{ user.omsorgspersonNavn ? 'Opdater' : 'Register' }}
+              {{ user.omsorgspersonNavn ? "Opdater" : "Register" }}
             </button>
 
             {{ form_end(caregiverForm) }}

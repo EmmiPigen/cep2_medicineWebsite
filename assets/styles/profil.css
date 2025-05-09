@@ -78,6 +78,8 @@
   background-color: var(--color-dark-blue);
   border-radius: 2rem;
   padding: 0.5rem;
+  min-width: calc(65% - 2rem);
+  max-width: calc(65% - 2rem);
 }
 
 .main-info-header {
@@ -111,7 +113,6 @@
   display: flex;
   flex-direction: column;
   border-radius: 2rem;
-  padding: 0.5rem;
   margin: auto 0;
   height: 100%;
 }
@@ -161,21 +162,44 @@
   font-weight: bold;
 }
 
+.rediger-form__general-info{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.rediger-form__general-info label {
+  font-size: 1rem;
+  margin: 0;
+  color: var(--color-text);
+}
+
+.rediger-form__general-info input{
+  width: 100%;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  padding: 0.2rem;
+  border: none;
+  box-sizing: border-box;
+}
+
+
+.rediger-form__input-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  gap: 0.5rem;
+}
+
 .rediger-form{
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
-.rediger-form form {
-  display: flex;
-  flex-direction: column;
-  margin: auto;
-  width: 100%;
-  gap: 0.5rem;
-}
+
 .rediger-form label {
-  font-size: 1.5rem;
-  
+  font-size: 1.2rem;
+
   margin: 0;
   color: var(--color-text);
 }

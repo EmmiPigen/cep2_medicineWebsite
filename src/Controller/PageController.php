@@ -255,8 +255,10 @@ class PageController extends AbstractController
     public function profil(
         Request $request,
         EntityManagerInterface $entityManager,
-        loggerInterface $logger
+        loggerInterface $logger,
+        AuthenticationUtils $authenticationUtils
     ): Response {
+        $error = $authenticationUtils->getLastAuthenticationError();
         $user           = $this->getUser();
         $updateInfoForm = $this->createForm(UpdateInfoType::class, $user);
         $updateInfoForm->handleRequest($request);
@@ -301,6 +303,7 @@ class PageController extends AbstractController
         }
 
         return $this->render('page/profil.html.twig', [
+            'error'             => $error,
             'user'              => $user,
             'updateInfoForm'    => $updateInfoForm->createView(),
             'caregiverForm'     => $form->createView(),
