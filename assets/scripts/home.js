@@ -163,12 +163,13 @@ function setupRoomFiltering() {
 //åbne og lukke spørgsmål i hjælp
 function setupHelpToggle() {
   // Find alle elementer med klassen 'help-title' som er de spørgsmål
-  const titles = document.querySelectorAll('.help-title');
+  const boxes = document.querySelectorAll('.help-box');
 
   // Gå igennem alle spørgsmålene og tilføj en klik-hændelse
-  titles.forEach(function(title) {
-    title.addEventListener('click', function() {
-      const description = this.nextElementSibling; // Find beskrivelsen (næste element)
+  boxes.forEach(function(box) {
+    box.addEventListener('click', function() {
+      const title = this.querySelector('.help-title'); // Find titlen (spørgsmålet)
+      const description = this.querySelector('.help-description'); // Find beskrivelsen (næste element)
       const icon = this.querySelector('.toggle-icon'); // Find ikonet
       const box = this.parentElement; 
 
