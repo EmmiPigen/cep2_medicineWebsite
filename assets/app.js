@@ -1,3 +1,4 @@
+import './bootstrap.js';
 import './scripts/home.js'; 
 
 import './styles/colors.css'; //CSS styles for colors
