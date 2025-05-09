@@ -1,23 +1,22 @@
 {% extends 'base.html.twig' %} {% block content %}
 <div class="main-container">
-
   <main id="helpBox" class="help-box1">
-  <h1 class="help-title1"> {{ 'help.title'| trans }}</h1>
-  <p class="help-description1">{{ 'help.description1' | trans }}</p>
+    <h1 class="help-title1">{{ 'help.title' | trans }}</h1>
+    <p class="help-description1">{{ 'help.description1' | trans }}</p>
 
-  {% for help in helps %}
+    {% for help in helps %}
     <div class="help-box">
       <h3 class="help-title">
-        <span class="toggle-icon">+</span> <!-- Plus-ikon -->
+        <span class="toggle-icon">+</span>
+        <!-- Plus-ikon -->
         {{ help.help }}
       </h3>
-      <p class="help-description" style="display:none;">
+      <p class="help-description" style="display: none">
         {{ help.description }}
       </p>
     </div>
-  {% endfor %}
-</main>
-
+    {% endfor %}
+  </main>
 </div>
 
 {% endblock %}

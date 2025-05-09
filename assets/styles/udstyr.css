@@ -22,7 +22,7 @@ html {
 .udstyr-nav-list {
     list-style-type: none;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     margin: 0;
     padding: 0;
 }
@@ -59,13 +59,13 @@ html {
 .udstyr-container { 
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
+    gap: 1.5rem;
 }
 
 .udstyr-item {
     background-color: var(--color-light-blue);
-    padding: 0.5rem;
-    border-radius: 10px;
+    padding: 1.5rem;
+    border-radius: 1rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border: 1px solid var(--color-tertiary); /* Border for at give en "boks"-fornemmelse */
 }
@@ -73,9 +73,11 @@ html {
 .udstyr-item h2 {
     text-align: center;
     background-color: var(--color-light);
-    padding: 0.5rem;
+    padding: 0.5rem 1rem; 
     border-radius: 1rem;
-    margin: 0;
+    margin: 0 auto;
+    width: max-content;
+    align-self: center;
 }
 
 .udstyr-item p {
@@ -88,8 +90,33 @@ html {
 
 #no-selection-msg {
     display: none;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     color: #999;
     text-align: center;
-    margin-top: 20px;
+    margin-top: 2rem;
+}
+
+
+@media (max-width: 800px) {
+    .udstyr-container {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+    
+    .udstyr-nav{
+      border-radius: 0.5rem;
+    }
+
+    .udstyr-item {
+        padding: 1rem;
+    }
+
+    .udstyr-header h1 {
+        font-size: 2rem;
+    }
+
+    .filter-button {
+        padding: 1rem 1rem;
+        font-size: 1rem;
+    }
+        
 }
