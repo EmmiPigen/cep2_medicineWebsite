@@ -92,10 +92,7 @@
         {{ form_row(form.Prioritet) }}
       </div>
 
-      <input
-        type="hidden"
-        name="_csrf_token"
-        value="{{ csrf_token('add_medicin') }}" />
+
 
       <button class="medicinListe-container__AddMedicin-button" type="submit">
         {{'medicin.addMedButton'|trans}}
