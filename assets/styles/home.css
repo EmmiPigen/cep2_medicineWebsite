@@ -84,12 +84,6 @@
   display: grid;
 }
 
-.no-meds-msg {
-  font-size: 2rem;
-  text-align: center;
-  margin: 0.5rem 0;
-}
-
 .next-med-box-table {
   width: 100%;
   border-spacing: 1rem 0.5rem;

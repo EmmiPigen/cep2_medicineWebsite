@@ -27,13 +27,13 @@ home:
 
 medicin:
   mainTitle: "Oversigt over medikamenter"
-
   tableMedName: "Medikament"
   tableTime: "Tages kl"
   tableDosage: "Dose"
   tableTimeInterval: "Interval"
   tablePriority: "Prioritet"
   tableDelete: "Slet"
+  noMedsMsg: "Du har ikke oprettet nogle medicineringer endnu."
 
   confirmDelete: "Er du sikker på, at du vil slette dette medicin?"
 

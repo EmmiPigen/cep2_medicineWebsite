@@ -6,7 +6,7 @@
   <main class="medicinListe-container__overview">
     <!--Container for overview of medikamenter-->
     <header class="medicinListe-container__header">
-      <h1>{{'medicin.mainTitle'|trans}}</h1>
+      <h1>{{ "medicin.mainTitle" | trans }}</h1>
       <div class="divider dark"></div>
     </header>
 
@@ -14,15 +14,16 @@
       <table class="medicinListe-container__table">
         <thead>
           <tr class="medicinListe-container__table-header">
-            <th scope="col">{{'medicin.tableMedName'|trans}}</th>
-            <th scope="col">{{'medicin.tableTime'|trans}}</th>
-            <th scope="col">{{'medicin.tableDosage'|trans}}</th>
-            <th scope="col">{{'medicin.tableTimeInterval'|trans}}</th>
-            <th scope="col">{{'medicin.tablePriority'|trans}}</th>
-            <th scope="col">{{'medicin.tableDelete'|trans}}</th>
+            <th scope="col">{{ "medicin.tableMedName" | trans }}</th>
+            <th scope="col">{{ "medicin.tableTime" | trans }}</th>
+            <th scope="col">{{ "medicin.tableDosage" | trans }}</th>
+            <th scope="col">{{ "medicin.tableTimeInterval" | trans }}</th>
+            <th scope="col">{{ "medicin.tablePriority" | trans }}</th>
+            <th scope="col">{{ "medicin.tableDelete" | trans }}</th>
           </tr>
         </thead>
 
+        {% if medicinList is not empty %}
         <tbody class="medicinListe-container__table-body">
           {% for medicin in medicinList %}
           <tr class="medicinListe-container__table-row">
@@ -38,7 +39,7 @@
               {% endif %}
             </td>
             <td>{{ medicin.dosis }} {{ medicin.enhed }}</td>
-            <td>{{ medicin.timeInterval }}  min</td>
+            <td>{{ medicin.timeInterval }} min</td>
             <td class="{{ medicin.prioritet | priority_class }}">
               {{ medicin.prioritet }}
             </td>
@@ -46,7 +47,9 @@
               <form
                 method="post"
                 action="{{ path('delete_medicin', { id: medicin.id }) }}"
-                onsubmit="return confirm('{{'medicin.confirmDelete'|trans}}');"
+                onsubmit="return confirm('{{
+                  'medicin.confirmDelete' | trans
+                }}');"
                 class="delete-form">
                 <input
                   type="hidden"
@@ -58,8 +61,12 @@
           </tr>
           {% endfor %}
         </tbody>
+        {% endif %}
       </table>
     </section>
+      {% if medicinList is empty %}
+      <p class="no-meds-msg">{{ "medicin.noMedsMsg" | trans }}</p>
+      {% endif %}
   </main>
 
   <!--Container for the table to add medikamenter-->
@@ -69,8 +76,8 @@
       <div class="divider dark"></div>
     </header>
     <section class="medicinListe-container__AddMedicin-description">
-      <p>{{'medicin.addMedDescription1'|trans}}</p>
-      <p>{{'medicin.addMedDescription2'|trans}}</p>
+      <p>{{ "medicin.addMedDescription1" | trans }}</p>
+      <p>{{ "medicin.addMedDescription2" | trans }}</p>
     </section>
     <section class="medicinListe-container__AddMedicin-form">
       {{ form_start(form) }}
@@ -92,10 +99,8 @@
         {{ form_row(form.Prioritet) }}
       </div>
 
-
-
       <button class="medicinListe-container__AddMedicin-button" type="submit">
-        {{'medicin.addMedButton'|trans}}
+        {{ "medicin.addMedButton" | trans }}
       </button>
       {{ form_end(form) }}
     </section>

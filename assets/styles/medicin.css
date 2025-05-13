@@ -188,6 +188,7 @@
   color: white;
 }
 
+
 @media (min-width: 1440px) {
   .medicinListe-container__AddMedicin-description {
     font-size: 1.5rem;

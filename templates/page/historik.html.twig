@@ -7,7 +7,7 @@
     </header>
 
       {% if medicinLogs is empty %}
-      <p class="no-meds-msg">{{home.noMedsMsg|trans}}</p>
+      <p class="no-meds-msg">{{'home.noMedStatus'|trans}}</p>
       {% else %}
       <div class="historik-table-wrapper">
         <table class="historik-table">
