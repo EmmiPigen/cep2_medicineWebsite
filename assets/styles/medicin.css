@@ -8,10 +8,12 @@
   flex-direction: column;
   background-color: var(--color-light-blue);
   border-radius: 2rem;
-  border: 2px solid var(--color-tertiary);
+  border : 2px solid var(--color-tertiary);
+  box-shadow: 0px 1px 2px #00000080;
   padding: 0.5rem 1rem;
   height: calc(100% - 1rem);
   width: 65%;
+  
 }
 .medicinListe-container__AddMedicin {
   background-color: var(--color-dark-blue);
@@ -104,6 +106,8 @@
   font-size: 1.2rem;
   margin: 0.5rem auto 0 auto;
   color: var(--color-text);
+    border : 2px solid var(--color-tertiary);
+  box-shadow: 0px 1px 2px #00000080;
 }
 
 .medicinListe-container__AddMedicin-description p {
@@ -118,7 +122,9 @@
   background-color: var(--color-primary-lighter);
   border-radius: 1rem;
   padding: 0.5rem;
-  margin: auto 0 auto -0.5rem;
+  margin: auto 0 auto -0.6rem;
+    border : 2px solid var(--color-tertiary);
+  box-shadow: 0px 1px 2px #00000080;
 }
 .medicinListe-container__AddMedicin-form form {
   display: flex;
@@ -219,5 +225,8 @@
     width: calc(100% - 3rem);
     height: auto;
     min-height: 40%;
+  }
+  .medicinListe-container__AddMedicin-description{
+    font-size: 1.5rem;
   }
 }

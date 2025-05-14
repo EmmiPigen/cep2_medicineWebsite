@@ -11,6 +11,8 @@
   border-radius: 2rem;
   padding: 1rem;
   color: var(--color-text);
+  box-shadow: 0px 1px 2px #00000080;
+  border: 2px solid var(--color-tertiary);
 }
 
 .profil-container-left {
@@ -81,6 +83,8 @@
   padding: 0.5rem;
   min-width: calc(65% - 2rem);
   max-width: calc(65% - 2rem);
+  box-shadow: 0px 1px 2px #00000080;
+  border: 2px solid var(--color-tertiary);
 }
 
 .main-info-header {
@@ -128,11 +132,7 @@
 .contact-person p {
   margin: 0;
   padding: 0.5rem;
-}
-.contact-person p {
-  background-color: white;
-  border-radius: 0.5rem;
-  border: 2px solid var(--color-tertiary);
+  text-align: center;
 }
 
 .general-info h3,
@@ -226,7 +226,7 @@
   .main-container.profil main {
     max-width: unset;
     width: calc(100% - 2rem);
-    padding: 1rem
+    padding: 1rem;
   }
 
   .profil-billede {

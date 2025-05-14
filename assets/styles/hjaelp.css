@@ -1,68 +1,67 @@
 .help-box1 {
-    background-color: var(--color-light-blue);
-    border-radius: 2rem;
-    border: 2px solid var(--color-tertiary);
-    padding: 0.5rem 2rem;
+  background-color: var(--color-light-blue);
+  border-radius: 2rem;
+  padding: 0.5rem 2rem;
+  border: 2px solid var(--color-tertiary);
+  box-shadow: 0px 2px 4px #00000080;
 }
 
 /* Hjælpeboks styling */
 .help-box {
-    background-color: var(--color-primary-lighter);
-    padding: 0.5rem; /* Polstring for at gøre indholdet luftigere */
-    border-radius: 1rem; /* Afrundede hjørner */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Blød skygge omkring boksen */
-    border: 1px solid var(--color-tertiary); /* Mørkere kant for at adskille boksen */
-    color: var(--color-text); /* mørk tekst */
-    margin-bottom: 1rem; /* Afstand mellem boksene */
-    transition: background-color 0.3s, color 0.3s; /* Blød overgang ved hover */
+  background-color: var(--color-primary-lighter);
+  padding: 0.5rem; /* Polstring for at gøre indholdet luftigere */
+  border-radius: 1rem; /* Afrundede hjørner */
+  border: 2px solid var(--color-tertiary);
+  box-shadow: 0px 2px 4px #00000080;
+  color: var(--color-text); /* mørk tekst */
+  margin-bottom: 1rem; /* Afstand mellem boksene */
+  transition: background-color 0.3s, color 0.3s; /* Blød overgang ved hover */
 }
 
 .help-title1 {
-    text-align: center; /* Centrerer teksten */
-    font-weight: bold; /* Fed skrift */
-    color: var(--color-text); /* Mørk tekstfarve */
-    margin-bottom: 0; /* Plads mellem titel og indhold */
-    padding-bottom: 0.5rem;    /* Plads før linjen */
-    border-bottom: 3px solid var(--color-text);  /* Selve linjen */
+  text-align: center; /* Centrerer teksten */
+  font-weight: bold; /* Fed skrift */
+  color: var(--color-text); /* Mørk tekstfarve */
+  margin-bottom: 0; /* Plads mellem titel og indhold */
+  padding-bottom: 0.5rem; /* Plads før linjen */
+  border-bottom: 3px solid var(--color-text); /* Selve linjen */
 }
 
 .help-description1 {
-    text-align: center; /* Centrerer teksten */
-    font-size: 1.5rem; /* Størrelse på titlen */ 
-    color: var(--color-text); /* Mørk tekstfarve */
-    margin-top: 1rem; 
+  text-align: center; /* Centrerer teksten */
+  font-size: 1.5rem; /* Størrelse på titlen */
+  color: var(--color-text); /* Mørk tekstfarve */
+  margin-top: 1rem;
 }
 
 /* Styling af spørgsmål (titel) */
 .help-title {
-    font-size: 1.2rem; /* Størrelse på titlen */
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    cursor: pointer; /* Gør det muligt at klikke på spørgsmålet */
+  font-size: 1.2rem; /* Størrelse på titlen */
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  cursor: pointer; /* Gør det muligt at klikke på spørgsmålet */
 }
 
 .toggle-icon {
-    margin-right: 10px; /* Plads mellem ikonet og spørgsmålet */
-    font-size: 1.5rem;
-    font-weight: bold;
+  margin-right: 10px; /* Plads mellem ikonet og spørgsmålet */
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 /* Styling af svaret */
 .help-description {
-    font-size: 1.2rem;
-    color: var(--color-text);
-    margin-top: 1rem; /* Plads mellem spørgsmålet og svaret */
-    display: none; /* Skjult som standard */
+  font-size: 1.2rem;
+  color: var(--color-text);
+  margin-top: 1rem; /* Plads mellem spørgsmålet og svaret */
+  display: none; /* Skjult som standard */
 }
 
 /* Når ikonet er ændret til minus, når boksen er åben */
 .open .toggle-icon {
-    content: "-";
+  content: '-';
 }
 
 .help-box:hover {
-    background-color: var(--color-primary-darker);
-  }
-  
-
+  background-color: var(--color-primary-darker);
+}
