@@ -20,6 +20,10 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use App\Form\ProfilBilledeType;
+use App\Service\SmsService;
+use App\Form\UserEditType;
+
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 date_default_timezone_set('Europe/Copenhagen');
@@ -202,15 +206,15 @@ class PageController extends AbstractController
         ]);
     }
 
+
     #[Route('/hjaelp', name: 'hjaelp')]
     public function hjaelp(TranslatorInterface $translator): Response
     {
         $title        = $translator->trans('help.title');
         $description1 = $translator->trans('help.description1');
-
         $helps = [];
-
         for ($i = 1; $i <= 9; $i++) {
+
             $helps[] = [
                 'help'        => $translator->trans("help.help{$i}"),
                 'description' => $translator->trans("help.help{$i}Description"),
@@ -308,6 +312,187 @@ class PageController extends AbstractController
             'caregiverForm'     => $form->createView(),
             'profilBilledeForm' => $profilBilledeForm->createView(),
         ]);
+
+  }
+
+  #[Route(path: '/login', name: 'login')]
+  public function login(
+    Request $request,
+    AuthenticationUtils $authenticationUtils,
+    UserPasswordHasherInterface $userPasswordHasher,
+    EntityManagerInterface $entityManager
+  ): Response {
+    $error = $authenticationUtils->getLastAuthenticationError();
+    $lastUsername = $authenticationUtils->getLastUsername();
+
+    // Prepare registration form
+    $user = new User();
+    $registrationForm = $this->createForm(RegistrationFormType::class, $user);
+
+    return $this->render('page/login.html.twig', [
+      'last_username' => $lastUsername,
+      'error' => $error,
+      'registration_error' => null,
+      'registrationForm' => $registrationForm,
+    ]);
+  }
+
+  #[Route('/logout', name: 'logout')]
+  public function logout(): void
+  {
+    throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+  }
+
+
+  #[Route('/profil', name: 'profil')]
+  #[IsGranted('IS_AUTHENTICATED_FULLY')]
+  public function profil(Request $request, EntityManagerInterface $entityManager): Response
+  {
+      $user = $this->getUser();
+  
+      // Kontaktperson-formular
+      $form = $this->createForm(CaregiverType::class, $user);
+      $form->handleRequest($request);
+  
+      if ($form->isSubmitted() && $form->isValid()) {
+          $entityManager->persist($user);
+          $entityManager->flush();
+          $this->addFlash('success', 'Kontaktperson opdateret!');
+          return $this->redirectToRoute('profil');
+      }
+  
+      // Profilbillede-formular
+      $profilBilledeForm = $this->createForm(ProfilBilledeType::class);
+      $profilBilledeForm->handleRequest($request);
+  
+      if ($profilBilledeForm->isSubmitted() && $profilBilledeForm->isValid()) {
+          $file = $profilBilledeForm->get('profilBillede')->getData();
+  
+          if ($file) {
+              $newFilename = uniqid().'.'.$file->guessExtension();
+              $file->move(
+                  $this->getParameter('upload_directory'),
+                  $newFilename
+              );
+  
+              $user->setProfilBillede($newFilename);
+              $entityManager->persist($user);
+              $entityManager->flush();
+  
+              $this->addFlash('success', 'Profilbillede opdateret!');
+              return $this->redirectToRoute('profil');
+          }
+      }
+  
+      return $this->render('page/profil.html.twig', [
+          'user' => $user,
+          'caregiverForm' => $form->createView(),
+          'profilBilledeForm' => $profilBilledeForm->createView(),
+      ]);
+  }
+
+  #[Route('/profil/slet-billede', name: 'profil_slet_billede', methods: ['POST'])]
+  #[IsGranted('IS_AUTHENTICATED_FULLY')]
+  public function sletProfilbillede(EntityManagerInterface $entityManager): Response
+  {
+      /** @var User $user */
+      $user = $this->getUser();
+
+
+      $uploadDir = $this->getParameter('upload_directory');
+      $billedePath = $uploadDir . '/' . $user->getProfilBillede();
+
+      if ($user->getProfilBillede() && file_exists($billedePath)) {
+          unlink($billedePath);
+      }
+
+      $user->setProfilBillede(null);
+      $entityManager->persist($user);
+      $entityManager->flush();
+
+      
+
+      $this->addFlash('success', 'Profilbilledet er blevet slettet.');
+      return $this->redirectToRoute('profil');
+  }
+
+  #[Route('/tjek-medicin', name: 'tjek_medicin')]
+  #[IsGranted('IS_AUTHENTICATED_FULLY')]
+  public function tjekMedicintider(
+      EntityManagerInterface $em,
+      MedikamentLogRepository $logRepo,
+      SmsService $smsService // Twilio service
+  ): Response {
+      $user = $this->getUser();
+      $now = new \DateTime();
+
+      foreach ($user->getMedikamentListes() as $med) {
+          foreach ($med->getTidspunkterTages() as $tidspunkt) {
+              // Opbyg medicinens planlagte tidspunkt
+              $medTime = \DateTime::createFromFormat('H:i', $tidspunkt);
+              $medTime->setDate($now->format('Y'), $now->format('m'), $now->format('d'));
+
+              // Skip hvis tiden ikke er overskredet endnu
+              if ($now < $medTime) {
+                  continue;
+              }
+
+              // Tjek om medicinen er logget som "taget"
+              $matchFundet = false;
+              foreach ($user->getMedikamentLogs() as $log) {
+                  if (
+                      $log->getMedikamentNavn() === $med->getMedikamentNavn() &&
+                      $log->getTagetTid()?->format('Y-m-d') === $now->format('Y-m-d') &&
+                      $log->getTagetStatus() === 'taget'
+                  ) {
+                      $matchFundet = true;
+                      break;
+                  }
+              }
+
+              // Hvis intet log-match => medicinen er ikke taget → send besked
+              if (!$matchFundet && $user->getOmsorgspersonTelefon()) {
+                  $smsService->sendSms(
+                      $user->getOmsorgspersonTelefon(),
+                      'OBS: ' . $user->getFuldeNavn() . ' har ikke taget medicinen "' . $med->getMedikamentNavn() . '" kl. ' . $tidspunkt
+                  );
+
+                  $this->addFlash('success', 'Besked sendt til kontaktperson om manglende medicin.');
+              }
+          }
+      }
+
+      return $this->redirectToRoute('profil');
+  }
+
+
+  
+  
+
+  #[Route('/register', name: 'register')]
+  public function register(
+    Request $request,
+    AuthenticationUtils $authenticationUtils,
+    UserPasswordHasherInterface $userPasswordHasher,
+    EntityManagerInterface $entityManager
+  ): Response {
+    $user = new User();
+    $error = $authenticationUtils->getLastAuthenticationError();
+
+    $form = $this->createForm(RegistrationFormType::class, $user);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+      /** @var string $plainPassword */ // Retrieve the plain password from the form
+      $plainPassword = $form->get('plainPassword')->getData();
+
+      // encode the plain password
+      $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
+
+      $entityManager->persist($user);
+      $entityManager->flush();
+      return $this->redirectToRoute('home');
+
     }
 
     #[Route('/profil/slet-billede', name: 'profil_slet_billede', methods: ['POST'])]
@@ -450,6 +635,7 @@ class PageController extends AbstractController
         }
 
         return new Response('Ingen manglende medicin ingen SMS sendt.');
+
     }
 
     #[Route('/medicin/{id}/delete', name: 'delete_medicin', methods: ['POST'])]

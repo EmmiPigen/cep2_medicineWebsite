@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use App\Entity\MedikamentAlarmLog;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -56,6 +57,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     
     #[ORM\OneToMany(targetEntity: Udstyr::class, mappedBy: 'userId')]
     private Collection $udstyrs;
+
+    /**
+     * @var Collection<int, MedikamentAlarmLog>
+     */
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: MedikamentAlarmLog::class)]
+    private Collection $medikamentAlarmLogs;
+
+
 
 
     // Til at indlæse information om kontakperson
@@ -111,6 +120,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+
     public function getOmsorgspersonNavn(): ?string
     {
         return $this->omsorgspersonNavn;
@@ -129,9 +139,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setOmsorgspersonTelefon(?string $omsorgspersonTelefon): static
     {
+        if ($omsorgspersonTelefon !== null) {
+            // Fjern mellemrum
+            $omsorgspersonTelefon = str_replace(' ', '', $omsorgspersonTelefon);
+
+            // Hvis nummeret ikke allerede starter med +, tilføj +45
+            if (!str_starts_with($omsorgspersonTelefon, '+')) {
+                $omsorgspersonTelefon = '+45' . $omsorgspersonTelefon;
+            }
+        }
+
         $this->omsorgspersonTelefon = $omsorgspersonTelefon;
         return $this;
     }
+
 
     public function getOmsorgspersonEmail(): ?string
     {

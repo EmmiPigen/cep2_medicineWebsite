@@ -10,10 +10,13 @@ class SmsService
     private string $twilioToken;
     private string $twilioFrom;
 
-    public function __construct()
+    public function __construct(string $twilioSid, string $twilioToken, string $twilioFrom)
     {   
+        dump('TWILIO_SID:', $twilioSid);
+        dump('TWILIO_TOKEN:', $twilioToken);
+        dump('TWILIO_FROM:', $twilioFrom);
+
         // Denne information kan findes i bunden af twilio hjemmesiden.
-        // MIDLERTIDIGT FJERNET! JEG SÆTTER IND IGEN SENERE
         $this->twilioSid = $twilioSid;
         $this->twilioToken = $twilioToken;
         $this->twilioFrom = $twilioFrom;
@@ -24,11 +27,12 @@ class SmsService
         $client = new Client($this->twilioSid, $this->twilioToken);
 
         $client->messages->create(
-            $to,
+            $to, // eksempel: '+4521900301'
             [
                 'from' => $this->twilioFrom,
                 'body' => $message
             ]
         );
     }
+
 }

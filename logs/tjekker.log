@@ -1,0 +1,29 @@
+PHP Fatal error:  Uncaught TypeError: Doctrine\ORM\QueryBuilder::setParameters(): Argument #1 ($parameters) must be of type Doctrine\Common\Collections\ArrayCollection, array given, called in /Users/Ramla/Documents/GitHub/cep2_medicineWebsite/src/Repository/MedikamentLogRepository.php on line 38 and defined in /Users/Ramla/Documents/GitHub/cep2_medicineWebsite/vendor/doctrine/orm/src/QueryBuilder.php:482
+Stack trace:
+#0 /Users/Ramla/Documents/GitHub/cep2_medicineWebsite/src/Repository/MedikamentLogRepository.php(38): Doctrine\ORM\QueryBuilder->setParameters(Array)
+#1 /Users/Ramla/Documents/GitHub/cep2_medicineWebsite/src/Background/MedicintjekRunner.php(45): App\Repository\MedikamentLogRepository->findTodayLogsFor(Object(App\Entity\User), 'Panodil')
+#2 /Users/Ramla/Documents/GitHub/cep2_medicineWebsite/src/Background/MedicintjekRunner.php(24): App\Background\MedicintjekRunner->tjekMedicin()
+#3 /Users/Ramla/Documents/GitHub/cep2_medicineWebsite/start_tjekker.php(23): App\Background\MedicintjekRunner->run()
+#4 {main}
+  thrown in /Users/Ramla/Documents/GitHub/cep2_medicineWebsite/vendor/doctrine/orm/src/QueryBuilder.php on line 482
+
+Fatal error: Uncaught TypeError: Doctrine\ORM\QueryBuilder::setParameters(): Argument #1 ($parameters) must be of type Doctrine\Common\Collections\ArrayCollection, array given, called in /Users/Ramla/Documents/GitHub/cep2_medicineWebsite/src/Repository/MedikamentLogRepository.php on line 38 and defined in /Users/Ramla/Documents/GitHub/cep2_medicineWebsite/vendor/doctrine/orm/src/QueryBuilder.php:482
+Stack trace:
+#0 /Users/Ramla/Documents/GitHub/cep2_medicineWebsite/src/Repository/MedikamentLogRepository.php(38): Doctrine\ORM\QueryBuilder->setParameters(Array)
+#1 /Users/Ramla/Documents/GitHub/cep2_medicineWebsite/src/Background/MedicintjekRunner.php(45): App\Repository\MedikamentLogRepository->findTodayLogsFor(Object(App\Entity\User), 'Panodil')
+#2 /Users/Ramla/Documents/GitHub/cep2_medicineWebsite/src/Background/MedicintjekRunner.php(24): App\Background\MedicintjekRunner->tjekMedicin()
+#3 /Users/Ramla/Documents/GitHub/cep2_medicineWebsite/start_tjekker.php(23): App\Background\MedicintjekRunner->run()
+#4 {main}
+  thrown in /Users/Ramla/Documents/GitHub/cep2_medicineWebsite/vendor/doctrine/orm/src/QueryBuilder.php on line 482
+1 in SmsService.php on line 15:
+"TWILIO_SID:"
+2 in SmsService.php on line 15:
+"AC261da035ec6da6e8f4b85b504ea1c0e2"
+1 in SmsService.php on line 16:
+"TWILIO_TOKEN:"
+2 in SmsService.php on line 16:
+"ca7c911c8443aa543ec18ed1a0481c73"
+1 in SmsService.php on line 17:
+"TWILIO_FROM:"
+2 in SmsService.php on line 17:
+"+19787055940"
