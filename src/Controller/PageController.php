@@ -19,6 +19,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Form\ProfilBilledeType;
 use App\Service\SmsService;
+use App\Form\UserEditType;
 
 date_default_timezone_set('Europe/Copenhagen');
 setlocale(LC_TIME, 'da_DK');
@@ -253,61 +254,11 @@ class PageController extends AbstractController
       $entityManager->persist($user);
       $entityManager->flush();
 
+      
+
       $this->addFlash('success', 'Profilbilledet er blevet slettet.');
       return $this->redirectToRoute('profil');
   }
-
-  #[Route('/tjek-medicin', name: 'tjek_medicin')]
-  #[IsGranted('IS_AUTHENTICATED_FULLY')]
-  public function tjekMedicintider(
-      EntityManagerInterface $em,
-      MedikamentLogRepository $logRepo,
-      SmsService $smsService // Twilio service
-  ): Response {
-      $user = $this->getUser();
-      $now = new \DateTime();
-
-      foreach ($user->getMedikamentListes() as $med) {
-          foreach ($med->getTidspunkterTages() as $tidspunkt) {
-              // Opbyg medicinens planlagte tidspunkt
-              $medTime = \DateTime::createFromFormat('H:i', $tidspunkt);
-              $medTime->setDate($now->format('Y'), $now->format('m'), $now->format('d'));
-
-              // Skip hvis tiden ikke er overskredet endnu
-              if ($now < $medTime) {
-                  continue;
-              }
-
-              // Tjek om medicinen er logget som "taget"
-              $matchFundet = false;
-              foreach ($user->getMedikamentLogs() as $log) {
-                  if (
-                      $log->getMedikamentNavn() === $med->getMedikamentNavn() &&
-                      $log->getTagetTid()?->format('Y-m-d') === $now->format('Y-m-d') &&
-                      $log->getTagetStatus() === 'taget'
-                  ) {
-                      $matchFundet = true;
-                      break;
-                  }
-              }
-
-              // Hvis intet log-match => medicinen er ikke taget → send besked
-              if (!$matchFundet && $user->getOmsorgspersonTelefon()) {
-                  $smsService->sendSms(
-                      $user->getOmsorgspersonTelefon(),
-                      'OBS: ' . $user->getFuldeNavn() . ' har ikke taget medicinen "' . $med->getMedikamentNavn() . '" kl. ' . $tidspunkt
-                  );
-
-                  $this->addFlash('success', 'Besked sendt til kontaktperson om manglende medicin.');
-              }
-          }
-      }
-
-      return $this->redirectToRoute('profil');
-  }
-
-
-  
   
 
   #[Route('/register', name: 'register')]
@@ -340,44 +291,6 @@ class PageController extends AbstractController
       'error' => null,
       'registration_error' => $error,
     ]);
-  }
-
-  #[Route('/test-send-sms', name: 'test_send_sms')]
-  #[IsGranted('IS_AUTHENTICATED_FULLY')]
-  public function testSendSms(
-        EntityManagerInterface $em,
-        \App\Service\SmsService $smsService // Husk korrekt namespace
-    ): Response {
-        $user = $this->getUser();
-
-        $now = new \DateTime();
-        $logs = $user->getMedikamentLogs();
-
-        foreach ($logs as $log) {
-            if (
-                $log->getTagetStatus() !== 'taget' &&
-                $log->getTagetTid() !== null &&
-                $log->getTagetTid() < $now
-            ) {
-                $kontaktNavn = $user->getOmsorgspersonNavn();
-                $kontaktTlf = $user->getOmsorgspersonTelefon();
-
-                if (!$kontaktTlf) {
-                    return new Response(' Kontaktpersonens telefonnummer mangler.');
-                }
-
-                $besked = " {$user->getFuldeNavn()} har ikke taget medicinen '{$log->getMedikamentNavn()}' som planlagt.";
-
-                try {
-                    $smsService->sendSms($kontaktTlf, $besked);
-                    return new Response(" SMS sendt til $kontaktNavn: $besked");
-                } catch (\Exception $e) {
-                    return new Response('Fejl ved SMS: ' . $e->getMessage());
-                }
-            }
-        }
-
-        return new Response('Ingen manglende medicin ingen SMS sendt.');
   }
 
 
