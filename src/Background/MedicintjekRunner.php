@@ -47,10 +47,19 @@ class MedicintjekRunner
                     $matchFundet = false;
                     foreach ($logs as $log) {
                         $logTid = $log->getTagetTid();
+                        if (!$logTid) continue;
                         if (
                             $log->getTagetStatus() === 'taget' 
                             // &&
                             // abs($logTid->getTimestamp() - $planlagtTid->getTimestamp()) <= 900 // 15 min
+                        ) {
+                            $matchFundet = true;
+                            break;
+                        }
+                        if (
+                            $log->getTagetStatus() === 'glemt'
+                            //  &&
+                            // $sekunderFraPlanlagt <= 900
                         ) {
                             $matchFundet = true;
                             break;

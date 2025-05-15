@@ -210,17 +210,17 @@ class PageController extends AbstractController
     ]);
   }
 
-  #[Route('/profil', name: 'profil')]
-  #[IsGranted('IS_AUTHENTICATED_FULLY')]
-  public function profil(): Response
-  {
-    $user = $this->getUser();
-    $userName = $user->getFuldeNavn();
+  // #[Route('/profil', name: 'profil')]
+  // #[IsGranted('IS_AUTHENTICATED_FULLY')]
+  // public function profil(): Response
+  // {
+  //   $user = $this->getUser();
+  //   $userName = $user->getFuldeNavn();
 
 
-    return $this->render('page/profil.html.twig', [
-    ]);
-  }
+  //   return $this->render('page/profil.html.twig', [
+  //   ]);
+  // }
 
   #[Route('/hjaelp', name: 'hjaelp')]
   #[IsGranted('IS_AUTHENTICATED_FULLY')]
