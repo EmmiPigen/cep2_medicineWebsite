@@ -68,18 +68,9 @@ class MedicintjekRunner
 
                     if (!$matchFundet && $user->getOmsorgspersonTelefon()) {
                         $this->smsService->sendSms(
-                            $user->getOmsorgspersonTelefon(),
+                            '+4521900301',
                             'OBS: ' . $user->getFuldeNavn() . ' har ikke taget medicinen "' . $med->getMedikamentNavn() . '" kl. ' . $tidspunkt
                         );
-
-                        $log = new MedikamentLog();
-                        $log->setUserId($user);
-                        $log->setMedikamentNavn($med->getMedikamentNavn());
-                        $log->setTagetTid($planlagtTid);
-                        $log->setTagetStatus('glemt');
-                        $log->setTagetLokale(Lokale::Køkken); // justér evt. her
-
-                        $this->em->persist($log);
                     }
                 }
             }
