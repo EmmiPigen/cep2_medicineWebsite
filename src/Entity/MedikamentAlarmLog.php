@@ -16,7 +16,7 @@ class MedikamentAlarmLog
     #[ORM\Column(length: 255)]
     private string $medikamentNavn;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'datetime', )]
     private \DateTimeInterface $dato;
 
     #[ORM\Column(length: 5)]

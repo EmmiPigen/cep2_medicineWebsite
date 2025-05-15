@@ -1,7 +1,7 @@
 <?php
-
 namespace App\Entity;
 
+use App\Entity\MedikamentAlarmLog;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use App\Entity\MedikamentAlarmLog;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -54,18 +53,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Udstyr>
      */
-    
+
     #[ORM\OneToMany(targetEntity: Udstyr::class, mappedBy: 'userId')]
     private Collection $udstyrs;
 
     /**
      * @var Collection<int, MedikamentAlarmLog>
      */
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: MedikamentAlarmLog::class)]
+    #[ORM\OneToMany(targetEntity: MedikamentAlarmLog::class, mappedBy: 'userId')]
     private Collection $medikamentAlarmLogs;
-
-
-
 
     // Til at indlæse information om kontakperson
     #[ORM\Column(length: 255, nullable: true)]
@@ -100,12 +96,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $land = null;
 
-
     public function __construct()
     {
-        $this->medikamentLogs = new ArrayCollection();
+        $this->medikamentLogs   = new ArrayCollection();
         $this->medikamentListes = new ArrayCollection();
-        $this->udstyrs = new ArrayCollection();
+        $this->udstyrs          = new ArrayCollection();
+        $this->medikamentAlarmLogs = new ArrayCollection();
     }
 
     public function getEmail(): ?string
@@ -119,7 +115,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
 
     public function getOmsorgspersonNavn(): ?string
     {
@@ -144,7 +139,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             $omsorgspersonTelefon = str_replace(' ', '', $omsorgspersonTelefon);
 
             // Hvis nummeret ikke allerede starter med +, tilføj +45
-            if (!str_starts_with($omsorgspersonTelefon, '+')) {
+            if (! str_starts_with($omsorgspersonTelefon, '+')) {
                 $omsorgspersonTelefon = '+45' . $omsorgspersonTelefon;
             }
         }
@@ -152,7 +147,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->omsorgspersonTelefon = $omsorgspersonTelefon;
         return $this;
     }
-
 
     public function getOmsorgspersonEmail(): ?string
     {
@@ -165,7 +159,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    
     // Oploader profilbillede til user-databasen
     public function getProfilBillede(): ?string
     {
@@ -177,7 +170,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->profilBillede = $profilBillede;
         return $this;
     }
-
 
     /**
      * A visual identifier that represents this user.
@@ -249,7 +241,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-
     public function getUserId(): ?int
     {
         return $this->userId;
@@ -265,7 +256,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function addMedikamentLog(MedikamentLog $medikamentLog): static
     {
-        if (!$this->medikamentLogs->contains($medikamentLog)) {
+        if (! $this->medikamentLogs->contains($medikamentLog)) {
             $this->medikamentLogs->add($medikamentLog);
             $medikamentLog->setUserId($this);
         }
@@ -295,7 +286,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function addMedikamentListe(MedikamentListe $medikamentListe): static
     {
-        if (!$this->medikamentListes->contains($medikamentListe)) {
+        if (! $this->medikamentListes->contains($medikamentListe)) {
             $this->medikamentListes->add($medikamentListe);
             $medikamentListe->setUserId($this);
         }
@@ -325,7 +316,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function addUdstyr(Udstyr $udstyr): static
     {
-        if (!$this->udstyrs->contains($udstyr)) {
+        if (! $this->udstyrs->contains($udstyr)) {
             $this->udstyrs->add($udstyr);
             $udstyr->setUserId($this);
         }
@@ -344,6 +335,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    
 
     public function getTelefonNummer(): ?string
     {
@@ -401,6 +394,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLand(?string $land): static
     {
         $this->land = $land;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, MedikamentAlarmLog>
+     */
+    public function getMedikamentAlarmLogs(): Collection
+    {
+        return $this->medikamentAlarmLogs;
+    }
+
+    public function addMedikamentAlarmLog(MedikamentAlarmLog $medikamentAlarmLog): static
+    {
+        if (!$this->medikamentAlarmLogs->contains($medikamentAlarmLog)) {
+            $this->medikamentAlarmLogs->add($medikamentAlarmLog);
+            $medikamentAlarmLog->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMedikamentAlarmLog(MedikamentAlarmLog $medikamentAlarmLog): static
+    {
+        if ($this->medikamentAlarmLogs->removeElement($medikamentAlarmLog)) {
+            // set the owning side to null (unless already changed)
+            if ($medikamentAlarmLog->getUserId() === $this) {
+                $medikamentAlarmLog->setUserId(null);
+            }
+        }
 
         return $this;
     }
