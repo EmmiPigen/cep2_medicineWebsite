@@ -68,7 +68,7 @@ class MedicintjekRunner
 
                     if (!$matchFundet && $user->getOmsorgspersonTelefon()) {
                         $this->smsService->sendSms(
-                            $user->getOmsorgspersonTelefon(),
+                            21900301,
                             'OBS: ' . $user->getFuldeNavn() . ' har ikke taget medicinen "' . $med->getMedikamentNavn() . '" kl. ' . $tidspunkt
                         );
 
