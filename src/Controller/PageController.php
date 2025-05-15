@@ -1,9 +1,10 @@
 <?php
 namespace App\Controller;
 
-use App\Entity\Udstyr;
 use App\Entity\User;
+use App\Entity\MedikamentListe;
 use App\Form\RegistrationFormType;
+use App\Form\AddMedicinType;
 use App\Repository\MedikamentListeRepository;
 use App\Repository\MedikamentLogRepository;
 use App\Repository\UdstyrRepository;
@@ -17,9 +18,12 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+
 use App\Form\ProfilBilledeType;
 use App\Service\SmsService;
 use App\Form\UserEditType;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
 
 date_default_timezone_set('Europe/Copenhagen');
 setlocale(LC_TIME, 'da_DK');
@@ -98,13 +102,52 @@ class PageController extends AbstractController
   #[Route('/medicin', name: 'medicin')]
   #[IsGranted('IS_AUTHENTICATED_FULLY')]
   public function medicin(
-    MedikamentListeRepository $medikamentListe,
-    LoggerInterface $logger
+    EntityManagerInterface $entityManager,
+    AuthenticationUtils $authenticationUtils,
+    Request $request,
   ): Response {
-    $user = $this->getUser();
+    $error = $authenticationUtils->getLastAuthenticationError();
 
+    //Prepare the form for adding a new medication
+    $user = $this->getUser();
+    $medicinList = [];
+
+    $medikament = new MedikamentListe(); // Create a new MedikamentListe object
+
+    $form = $this->createForm(AddMedicinType::class, $medikament); // Create the form using the AddMedicinType class
+    $form->handleRequest($request); // Handle the form submission
+
+    if ($form->isSubmitted() && $form->isValid()) {
+      $medikament->setUserId($user); // Set the user for the medication
+
+      //Persist the new medication to the database
+      $entityManager->persist($medikament);
+      $entityManager->flush();
+
+      return $this->redirectToRoute('medicin'); // Redirect to the medicin page after saving
+    }
+
+    //Get the current logged in user's medication list if it exists
+    $medList = $user->getMedikamentListes(); // Get the user's medication list
+
+    if ($medList->isEmpty()) {
+      $medicinList = null;
+
+    } else {
+      //Create an array containing all medications sorted by name
+      $medListArray = $medList->toArray();
+
+      usort($medListArray, function ($a, $b) {
+        return strcmp($a->getMedikamentNavn(), $b->getMedikamentNavn()); // Sort by medicament name
+      });
+
+      $medicinList = $medListArray;
+    }
 
     return $this->render('page/medicin.html.twig', [
+      'medicinList' => $medicinList,
+      'form' => $form, // Pass the form to the template
+      'error' => $error,
     ]);
   }
 
@@ -147,18 +190,59 @@ class PageController extends AbstractController
     UdstyrRepository $udstyrRepository,
     LoggerInterface $logger
   ): Response {
+    $user = $this->getUser();
 
+    $udstyr = $user->getUdstyrs(); // Get the user's udstyr list
+    if ($udstyr->isEmpty()) {
+      $udstyrListe= null; 
+    } else {
+      //Create an array containing all udstyr sorted by date
+      $udstyrArray = $udstyr->toArray();
+
+      usort($udstyrArray, function ($a, $b) {
+        return $b->getLokale() <=> $a->getLokale();
+    } );
+      $udstyrListe = $udstyrArray;
+    }
+  
     return $this->render('page/udstyr.html.twig', [
+      'udstyrListe' => $udstyrListe,
+    ]);
+  }
+
+  #[Route('/profil', name: 'profil')]
+  #[IsGranted('IS_AUTHENTICATED_FULLY')]
+  public function profil(): Response
+  {
+    $user = $this->getUser();
+    $userName = $user->getFuldeNavn();
+
+
+    return $this->render('page/profil.html.twig', [
     ]);
   }
 
   #[Route('/hjaelp', name: 'hjaelp')]
   #[IsGranted('IS_AUTHENTICATED_FULLY')]
-  public function hjaelp(): Response
+  public function hjaelp(TranslatorInterface $translator): Response
   {
+    $title = $translator->trans('help.title');
+    $description1 = $translator->trans('help.description1');
 
-    return $this->render('page/hjaelp.html.twig', [
-    ]);
+    $helps = [];
+
+        for ($i = 1; $i <= 8; $i++) {
+            $helps[] = [
+                'help' => $translator->trans("help.help{$i}"),
+                'description' => $translator->trans("help.help{$i}Description")
+            ];
+        }
+
+        return $this->render('page/hjaelp.html.twig', [
+            'title' => $title,
+            'description1' => $description1,
+            'helps' => $helps,
+        ]);
   }
 
   #[Route(path: '/login', name: 'login')]
@@ -170,11 +254,11 @@ class PageController extends AbstractController
   ): Response {
     $error = $authenticationUtils->getLastAuthenticationError();
     $lastUsername = $authenticationUtils->getLastUsername();
-  
+
     // Prepare registration form
     $user = new User();
     $registrationForm = $this->createForm(RegistrationFormType::class, $user);
-  
+
     return $this->render('page/login.html.twig', [
       'last_username' => $lastUsername,
       'error' => $error,
@@ -188,6 +272,7 @@ class PageController extends AbstractController
   {
     throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
   }
+
 
   #[Route('/profil', name: 'profil')]
   #[IsGranted('IS_AUTHENTICATED_FULLY')]
@@ -243,6 +328,7 @@ class PageController extends AbstractController
       /** @var User $user */
       $user = $this->getUser();
 
+
       $uploadDir = $this->getParameter('upload_directory');
       $billedePath = $uploadDir . '/' . $user->getProfilBillede();
 
@@ -259,6 +345,58 @@ class PageController extends AbstractController
       $this->addFlash('success', 'Profilbilledet er blevet slettet.');
       return $this->redirectToRoute('profil');
   }
+
+  #[Route('/tjek-medicin', name: 'tjek_medicin')]
+  #[IsGranted('IS_AUTHENTICATED_FULLY')]
+  public function tjekMedicintider(
+      EntityManagerInterface $em,
+      MedikamentLogRepository $logRepo,
+      SmsService $smsService // Twilio service
+  ): Response {
+      $user = $this->getUser();
+      $now = new \DateTime();
+
+      foreach ($user->getMedikamentListes() as $med) {
+          foreach ($med->getTidspunkterTages() as $tidspunkt) {
+              // Opbyg medicinens planlagte tidspunkt
+              $medTime = \DateTime::createFromFormat('H:i', $tidspunkt);
+              $medTime->setDate($now->format('Y'), $now->format('m'), $now->format('d'));
+
+              // Skip hvis tiden ikke er overskredet endnu
+              if ($now < $medTime) {
+                  continue;
+              }
+
+              // Tjek om medicinen er logget som "taget"
+              $matchFundet = false;
+              foreach ($user->getMedikamentLogs() as $log) {
+                  if (
+                      $log->getMedikamentNavn() === $med->getMedikamentNavn() &&
+                      $log->getTagetTid()?->format('Y-m-d') === $now->format('Y-m-d') &&
+                      $log->getTagetStatus() === 'taget'
+                  ) {
+                      $matchFundet = true;
+                      break;
+                  }
+              }
+
+              // Hvis intet log-match => medicinen er ikke taget → send besked
+              if (!$matchFundet && $user->getOmsorgspersonTelefon()) {
+                  $smsService->sendSms(
+                      $user->getOmsorgspersonTelefon(),
+                      'OBS: ' . $user->getFuldeNavn() . ' har ikke taget medicinen "' . $med->getMedikamentNavn() . '" kl. ' . $tidspunkt
+                  );
+
+                  $this->addFlash('success', 'Besked sendt til kontaktperson om manglende medicin.');
+              }
+          }
+      }
+
+      return $this->redirectToRoute('profil');
+  }
+
+
+  
   
 
   #[Route('/register', name: 'register')]
@@ -275,7 +413,7 @@ class PageController extends AbstractController
     $form->handleRequest($request);
 
     if ($form->isSubmitted() && $form->isValid()) {
-      /** @var string $plainPassword */
+      /** @var string $plainPassword */ // Retrieve the plain password from the form
       $plainPassword = $form->get('plainPassword')->getData();
 
       // encode the plain password
@@ -285,7 +423,7 @@ class PageController extends AbstractController
       $entityManager->flush();
       return $this->redirectToRoute('home');
     }
-    
+
     return $this->render('page/login.html.twig', [
       'registrationForm' => $form,
       'error' => null,
@@ -294,5 +432,18 @@ class PageController extends AbstractController
   }
 
 
+  #[Route('/medicin/{id}/delete', name: 'delete_medicin', methods: ['POST'])]
+  public function deleteMedicin(
+    Request $request,
+    MedikamentListe $medikamentListe,
+    EntityManagerInterface $entityManager
+  ): Response {
+    if ($this->isCsrfTokenValid('delete' . $medikamentListe->getId(), $request->request->get('_token'))) {
+      $entityManager->remove($medikamentListe);
+      $entityManager->flush();
+    }
 
+    return $this->redirectToRoute('medicin', [], Response::HTTP_SEE_OTHER);
+  }
 }
+

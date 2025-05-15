@@ -1,22 +1,22 @@
 {% extends 'base.html.twig' %} {% block content %}
 <div class="main-container">
-  <div id="historikBox" class="historik-box">
+  <main id="historikBox" class="historik-box">
     <header class="historik-header">
-      <h1>Oversigt over registede medicineringer</h1>
-      <div class="line-separator darker"></div>
+      <h1>{{'history.title'|trans}}</h1>
+      <div class="divider dark"></div>
     </header>
 
       {% if medicinLogs is empty %}
-      <p class="no-meds-msg">Der er ingen registrerede medicineringer</p>
+      <p class="no-meds-msg">{{home.noMedsMsg|trans}}</p>
       {% else %}
       <div class="historik-table-wrapper">
         <table class="historik-table">
           <thead> 
             <tr class="historik-table-header">
-              <th scope="col">Status</th>
-              <th scope="col">Medikament</th>
-              <th scope="col">Taget kl</th>
-              <th scope="col">Lokalet taget i</th>
+              <th scope="col">{{'history.tableStatus'|trans}}</th>
+              <th scope="col">{{'home.tableMedName'|trans}}</th>
+              <th scope="col">{{'history.tableTime'|trans}}</th>
+              <th scope="col">{{'history.tableLocation'|trans}}</th>
             </tr>
           </thead>
           <tbody class="historik-table-body">
@@ -37,6 +37,6 @@
         </table>
       </div>
       {%endif%}
-  </div>
+  </main>
 </div>
 {% endblock %}

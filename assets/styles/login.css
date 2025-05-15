@@ -75,10 +75,23 @@
   box-sizing: border-box;
 }
 
-.form-checkbox {
+.form-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1rem;
+}
+.remember-me {
   display: flex;
   align-items: center;
-  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.forgot-password {
+  font-size: 1rem;
+  color: var(--color-text);
+  margin-top: 0.5rem;
 }
 
 .login-description,
@@ -94,11 +107,6 @@
   font-size: 1.5rem;
   margin: 0.5rem 0;
   color: rgb(29, 29, 29);
-}
-
-.register-description p {
-  font-size: 1.2rem;
-  margin: 0.1rem 0;
 }
 
 .login-form,
@@ -118,9 +126,9 @@
   color: var(--color-text);
 }
 
-.register-form input[type='text'],
-.register-form input[type='email'],
-.register-form input[type='password'] {
+.register-form input[type="text"],
+.register-form input[type="email"],
+.register-form input[type="password"] {
   width: 100%;
   padding: 0.6rem 0.8rem;
   font-size: 1rem;
@@ -151,7 +159,7 @@
   background-color: var(--color-tertiary);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 800px) {
   .main-container.login-page main {
     flex-direction: column;
     align-items: center;
@@ -163,7 +171,6 @@
     width: calc(100% - 5rem);
   }
 }
-
 
 .alert-danger {
   background-color: #f8d7da;
