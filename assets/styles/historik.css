@@ -1,10 +1,10 @@
 .historik-box {
   background-color: var(--color-light-blue);
   border-radius: 2rem;
-  border: 2px solid var(--color-tertiary);
   padding: 0.5rem 2rem;
   height: calc(100% - 1rem);
-
+  border: 2px solid var(--color-tertiary);
+  box-shadow: 0px 1px 2px #00000080;
 }
 
 .historik-header h1 {
@@ -22,7 +22,7 @@
 .historik-table {
   width: 100%;
   justify-content: space-between;
-  background-color:white;
+  background-color: white;
   border-collapse: collapse;
 }
 
@@ -51,12 +51,10 @@
 
 .historik-table-status.red {
   background-color: var(--color-red-highlight);
-
 }
 
 .historik-table-status.green {
   background-color: var(--color-green-highlight);
-
 }
 
 .historik-table-row:nth-child(even) {

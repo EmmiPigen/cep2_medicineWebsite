@@ -11,7 +11,7 @@
 
     {% block javascripts %} {% block importmap %}
     {{
-      importmap('app')
+      importmap("app")
     }}
 
     {% endblock %} {% endblock %}
@@ -25,11 +25,9 @@
             <img
               src="{{ asset('Images/favicon.ico') }}"
               alt="ForglemMigEj logo" />
-            <h2>{{'base.pageTitle'|trans}}</h2>
+            <h2>{{ "base.pageTitle" | trans }}</h2>
           </div>
-          <div >
-            
-          </div>
+          <div></div>
         </header>
 
         <nav class="navigation" role="navigation">
@@ -40,7 +38,9 @@
                 href="{{ path('home') }}"
                 class="navigation-link"
                 data-page="home">
-                <span class="navigation-text">&gt; {{'base.navHome'|trans}}</span>
+                <span class="navigation-text"
+                  >&gt; {{ "base.navHome" | trans }}</span
+                >
               </a>
             </li>
             <li class="navigation-item">
@@ -48,7 +48,9 @@
                 href="{{ path('medicin') }}"
                 class="navigation-link"
                 data-page="medicin">
-                <span class="navigation-text">&gt; {{'base.navMedicin'|trans}}</span>
+                <span class="navigation-text"
+                  >&gt; {{ "base.navMedicin" | trans }}</span
+                >
               </a>
             </li>
             <li class="navigation-item">
@@ -56,7 +58,9 @@
                 href="{{ path('historik') }}"
                 class="navigation-link"
                 data-page="historik">
-                <span class="navigation-text">&gt; {{'base.navHistory'|trans}}</span>
+                <span class="navigation-text"
+                  >&gt; {{ "base.navHistory" | trans }}</span
+                >
               </a>
             </li>
             <li class="navigation-item">
@@ -64,7 +68,9 @@
                 href="{{ path('udstyr') }}"
                 class="navigation-link"
                 data-page="udstyr">
-                <span class="navigation-text">&gt; {{'base.navEquipment'|trans}}</span>
+                <span class="navigation-text"
+                  >&gt; {{ "base.navEquipment" | trans }}</span
+                >
               </a>
             </li>
             <li class="navigation-item">
@@ -72,7 +78,9 @@
                 href="{{ path('profil') }}"
                 class="navigation-link"
                 data-page="profil">
-                <span class="navigation-text">&gt; {{'base.navProfile'|trans}}</span>
+                <span class="navigation-text"
+                  >&gt; {{ "base.navProfile" | trans }}</span
+                >
               </a>
             </li>
             <li class="navigation-item">
@@ -80,12 +88,16 @@
                 href="{{ path('hjaelp') }}"
                 class="navigation-link"
                 data-page="hjaelp">
-                <span class="navigation-text">&gt; {{'base.navHelp'|trans}}</span>
+                <span class="navigation-text"
+                  >&gt; {{ "base.navHelp" | trans }}</span
+                >
               </a>
             </li>
             <li class="navigation-item">
               <a href="{{ path('logout') }}" class="navigation-link">
-                <span class="navigation-text">&gt; {{'base.navLogout'|trans}}</span>
+                <span class="navigation-text"
+                  >&gt; {{ "base.navLogout" | trans }}</span
+                >
               </a>
             </li>
           </ul>
@@ -95,7 +107,9 @@
               href="{{ path('login') }}"
               class="navigation-link"
               data-page="login">
-              <span class="navigation-text">&gt; {{'base.navLogin'|trans}}</span>
+              <span class="navigation-text"
+                >&gt; {{ "base.navLogin" | trans }}</span
+              >
             </a>
           </li>
           <li class="navigation-item">
@@ -103,7 +117,9 @@
               href="{{ path('hjaelp') }}"
               class="navigation-link"
               data-page="hjaelp">
-              <span class="navigation-text">&gt; {{'base.navHelp'|trans}}</span>
+              <span class="navigation-text"
+                >&gt; {{ "base.navHelp" | trans }}</span
+              >
             </a>
           </li>
           {% endif %}
@@ -117,10 +133,10 @@
         <section class="user-info-section">
           <header class="user-info-header">
             {% if app.user %}
-            <h1 class="user-info-title">{{'base.userInfo'|trans}}</h1>
+            <h1 class="user-info-title">{{ "base.userInfo" | trans }}</h1>
             <h1 class="user-info-name">{{ app.user.fuldeNavn }}</h1>
             {% else %}
-            <h1 class="user-info-title">{{'login.header2'|trans}}</h1>
+            <h1 class="user-info-title">{{ "login.header2" | trans }}</h1>
             {% endif %}
           </header>
           <div class="divider dark"></div>

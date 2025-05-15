@@ -1,8 +1,8 @@
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
-.main-container.udstyr{
+.main-container.udstyr {
   gap: 0;
 }
 
@@ -13,83 +13,111 @@ html {
 }
 
 .udstyr-nav {
-    background-color: var(--color-dark-blue);
-    border-radius: 2rem;
-    box-shadow: 0 4px 8px #0000001a; /* Skyggeeffekt for at give en "boks"-fornemmelse */
-    margin-bottom: 1.5rem;
+  background-color: var(--color-dark-blue);
+  border-radius: 1rem;
+  border: 2px solid var(--color-tertiary);
+  margin-bottom: 1.5rem;
 }
 
 .udstyr-nav-list {
-    list-style-type: none;
-    display: flex;
-    justify-content: space-around;
-    margin: 0;
-    padding: 0;
+  list-style-type: none;
+  display: flex;
+  justify-content: space-evenly;
+  margin: 0;
+  padding: 0;
 }
 
 .udstyr-nav-list li {
-    display: inline-block;
+  display: inline-block;
 }
 
 .filter-button {
-    background-color: var(--color-dark-blue);
-    color: white;
-    border: none;
-    padding: 1rem 2rem;
-    border-radius: 1rem;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s, transform 0.3s;
+  background-color: var(--color-dark-blue);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s, transform 0.3s;
 }
 
 .filter-button:hover {
-    background-color: var(--color-tertiary); /* Skift farve ved hover */
-    transform: scale(1.1); /* Gør knappen lidt større på hover */
+  background-color: var(--color-tertiary); /* Skift farve ved hover */
+  transform: scale(1.1); /* Gør knappen lidt større på hover */
 }
 
 .filter-button:active {
-    background-color: rgb(17, 73, 95);
-    color: #fff;
-} 
-
-.udstyr-container-wrapper {
-    padding: 0.5rem;
+  background-color: rgb(17, 73, 95);
+  color: #fff;
 }
 
-.udstyr-container { 
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
+.udstyr-container-wrapper {
+  padding: 0.5rem;
+}
+
+.udstyr-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
 }
 
 .udstyr-item {
-    background-color: var(--color-light-blue);
-    padding: 0.5rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border: 1px solid var(--color-tertiary); /* Border for at give en "boks"-fornemmelse */
+  background-color: var(--color-light-blue);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid var(--color-tertiary);
+  box-shadow: 0px 1px 2px #00000080;
+
 }
 
 .udstyr-item h2 {
-    text-align: center;
-    background-color: var(--color-light);
-    padding: 0.5rem;
-    border-radius: 1rem;
-    margin: 0;
+  text-align: center;
+  background-color: var(--color-primary-lighter);
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  margin: 0 auto;
+  width: calc(100% - 2rem); /* Juster bredden for at tage højde for padding */
+  align-self: center;
+  box-shadow: 0px 2px 4px #00000080;
 }
 
 .udstyr-item p {
-    background-color: var(--color-light);
-    padding: 0.5rem;
-    border-radius: 1rem;
-    margin: 0.5rem 0;
+  background-color: var(--color-primary-lighter);
+  padding: 0.5rem;
+  border-radius: 1rem;
+  margin: 0.5rem 0;
+  box-shadow: 0px 2px 4px #00000080;
 }
 
-
 #no-selection-msg {
-    display: none;
-    font-size: 1.2rem;
-    color: #999;
-    text-align: center;
-    margin-top: 20px;
+  display: none;
+  font-size: 1.5rem;
+  color: #999;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+@media (max-width: 800px) {
+  .udstyr-container {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+
+  .udstyr-nav {
+    border-radius: 0.5rem;
+  }
+
+  .udstyr-item {
+    padding: 1rem;
+  }
+
+  .udstyr-header h1 {
+    font-size: 2rem;
+  }
+
+  .filter-button {
+    padding: 1rem 1rem;
+    font-size: 1rem;
+  }
 }

@@ -1,0 +1,235 @@
+.main-container.profil {
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.profil-container-left,
+.general-info-container,
+.contact-person-container {
+  display: flex;
+  flex-direction: column;
+  border-radius: 2rem;
+  padding: 1rem;
+  color: var(--color-text);
+  box-shadow: 0px 1px 2px #00000080;
+  border: 2px solid var(--color-tertiary);
+}
+
+.profil-container-left {
+  width: 35%;
+  gap: 1rem;
+  background-color: var(--color-light-blue);
+}
+
+.general-info-container,
+.contact-person-container {
+  width: 50%;
+  background-color: var(--color-primary-lighter);
+}
+
+.profil-header h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin: 0;
+  background-color: var(--color-primary-lighter);
+  border-radius: 2rem;
+  padding: 0.5rem;
+}
+
+.profil-billede-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: auto 0;
+}
+
+.profil-billede-container img {
+  margin: 0 auto;
+}
+
+.profil-billede {
+  max-width: 90%;
+  max-height: 75%;
+}
+
+.profil-billede__form-button-container {
+  display: flex;
+  justify-content: space-between;
+}
+.profil-billede__form-button {
+  background-color: var(--color-dark-blue);
+  color: var(--color-text);
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.profil-billede__form-button.slet {
+  background-color: var(--color-red-highlight);
+  color: white;
+}
+
+.profil-billede__form-button:hover {
+  background-color: var(--color-tertiary);
+  color: white;
+}
+
+.main-container.profil main {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-dark-blue);
+  border-radius: 2rem;
+  padding: 0.5rem;
+  min-width: calc(65% - 2rem);
+  max-width: calc(65% - 2rem);
+  box-shadow: 0px 1px 2px #00000080;
+  border: 2px solid var(--color-tertiary);
+}
+
+.main-info-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.main-info-header h1 {
+  text-align: center;
+  font-size: 2rem;
+  padding: 0.5rem;
+  margin: 0;
+  background-color: var(--color-primary-lighter);
+  border-radius: 2rem;
+  width: 45%;
+}
+
+.main-info-container {
+  display: flex;
+  flex-direction: row;
+  padding: 1rem;
+  gap: 1.5rem;
+  height: 100%;
+}
+
+.general-info,
+.contact-person {
+  display: flex;
+  flex-direction: column;
+  border-radius: 2rem;
+  margin: auto 0;
+  height: 100%;
+}
+
+.general-info h2,
+.contact-person h2 {
+  text-align: center;
+  font-size: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+.general-info p,
+.contact-person p {
+  margin: 0;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.general-info h3,
+.contact-person h3 {
+  text-align: center;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.rediger-button {
+  all: unset;
+  background-color: var(--color-dark-blue);
+  color: var(--color-text);
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  text-align: center;
+  color: white;
+  align-self: center;
+  margin: 0.5rem;
+}
+
+.rediger-button:hover {
+  background-color: var(--color-tertiary);
+  color: white;
+  font-weight: bold;
+}
+
+.rediger-form__general-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.rediger-form__general-info label {
+  font-size: 1rem;
+  margin: 0;
+  color: var(--color-text);
+}
+
+.rediger-form__general-info input {
+  width: 100%;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  padding: 0.2rem;
+  border: none;
+  box-sizing: border-box;
+}
+
+.rediger-form__input-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  gap: 0.5rem;
+}
+
+.rediger-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.rediger-form label {
+  font-size: 1.2rem;
+
+  margin: 0;
+  color: var(--color-text);
+}
+
+.rediger-form input {
+  width: 100%;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  padding: 0.2rem;
+  border: none;
+  box-sizing: border-box;
+}
+
+@media (max-width: 800px) {
+  .main-container.profil {
+    flex-direction: column;
+    align-items: center;
+    justify-content: unset;
+  }
+
+  .profil-container-left {
+    width: calc(100% - 2rem);
+  }
+
+  .main-container.profil main {
+    max-width: unset;
+    width: calc(100% - 2rem);
+    padding: 1rem;
+  }
+
+  .profil-billede {
+    max-width: 50%;
+  }
+}

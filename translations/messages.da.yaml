@@ -25,16 +25,15 @@ home:
   tableMedLastTime: "Skal senest tages kl"
   tableMedPriority: "Prioritet"
 
-
 medicin:
   mainTitle: "Oversigt over medikamenter"
-
   tableMedName: "Medikament"
   tableTime: "Tages kl"
   tableDosage: "Dose"
   tableTimeInterval: "Interval"
   tablePriority: "Prioritet"
   tableDelete: "Slet"
+  noMedsMsg: "Du har ikke oprettet nogle medicineringer endnu."
 
   confirmDelete: "Er du sikker på, at du vil slette dette medicin?"
 
@@ -48,7 +47,6 @@ history:
   tableStatus: "Status"
   tableTime: "Taget kl"
   tableLocation: "Taget i lokalet"
-
 
 equipment:
   title: "Oversigt over udstyr"
@@ -66,14 +64,42 @@ equipment:
   power: "Strøm"
 
   noSelection: "Vælg et rum for at se udstyret."
-  
+
+profile:
+  title: "Min profil"
+  altImage: "Profilbillede"
+  deleteImage: "Slet billede"
+  changeImage: "Vælg billede"
+  uploadImage: "Upload billede"
+  generalTitle: "Generelle oplysninger"
+  generalDescription: "Her kan du se og ændre dine generelle oplysninger."
+  generalInfoEmail: "E-mail adresse"
+  generalInfoNumber: "Telefonnummer"
+  noPhone: "Ingen telefonnummer er registreret i systemet."
+  generalInfoAddress: "Adresse"
+  noAddress: "Ingen adresse er registreret i systemet."
+
+  editGeneral: "Rediger oplysninger"
+  editGeneralInfo: "Her kan du ændre dine oplysninger"
+  updateGeneralInfo: "Opdater oplysninger"
+
+  contactTitle: "Kontaktperson"
+  contactDescription: "Her kan du se og ændre kontaktoplysningerne til din kontaktperson."
+  contactInfoName: "Navn"
+  contactInfoNumber: "Telefonnummer"
+  contactInfoEmail: "E-mail adresse"
+  contactInfoNoEmail: "Ingen e-mail adresse er registreret i systemet."
+
+  editContact: "Rediger oplysninger"
+  editContactTitle: "af kontaktperson"
+
 help:
   title: "Hjælp"
   description1: "Her kan du finde hjælp til at bruge systemet."
   help1: "Hvordan tilføjer jeg medicin?"
   help1Description: "For at tilføje medicin, skal du gå til medicin siden ved at klikke på 'Medicin' i menuen til venstre. Her kan du se en liste over dine medikamenter og tilføje nye bruge formularen til højre. Udfyld venligst formularen med oplysninger om medicinen, herunder navnet på medikamentet, tidspunkt(er) for indtagelse, dosis, enhed som medikamentet er givet i, for langt tid der må gå fra medicinen skal tages og hvor vigtigt det er at tage medicinen til tiden. Når du har udfyldt formularen, skal du klikke på 'Tilføj medicin' knappen for at gemme oplysningerne."
   help2: "Hvordan registrerer jeg medicin som taget?"
-  help2Description: "Medicinen bliver automatisk registreret som taget, når sensoren på medicinbøtten registrerer at medicinen er blevet taget. Du ved at det er sket, når led-lysene i dit hjem lyser grønt." 
+  help2Description: "Medicinen bliver automatisk registreret som taget, når sensoren på medicinbøtten registrerer at medicinen er blevet taget. Du ved at det er sket, når led-lysene i dit hjem lyser grønt."
   help3: "Hvordan sletter jeg medicin fra systemet?"
   help3Description: "For at slette medicin, skal du gå til medicin siden ved at klikke på 'Medicin' i menuen til venstre. Her kan du se en liste over dine medikamenter. Find den medicin du vil slette og klik på ✖ ikonet til højre for medicinen. Du vil blive bedt om at bekræfte at du vil slette medicinen. Klik på 'OK' for at slette medicinen eller 'cancel' for at annullere."
 
@@ -92,6 +118,8 @@ help:
   help8: "Hvad kan jeg se på forsiden?"
   help8Description: "På forsiden kan du se status for din seneste medicinering, herunder hvornår medicinen blev taget, hvornår den skulle tages og hvor den blev taget. Du kan også se en liste over din næste medicinering for dagen."
 
+  help9: "Hvordan ændrer jeg mit profilbillede?"
+  help9Description: "For at ændre dit profilbillede, skal du gå til din profil side ved at klikke på 'Profil' i menuen til venstre. Her kan du se dit nuværende profilbillede og vælge et nyt billede ved at klikke på 'Vælg billede' knappen. Vælg det ønskede billede fra din computer og klik på 'Upload billede' knappen for at gemme ændringerne."
 
 login:
   header1: "Du er logget ind som:"
@@ -114,3 +142,26 @@ register:
   email: "E-mail"
   password: "Adgangskode"
   button: "Opret bruger"
+
+reset_password:
+  title: "Glemt adgangskode?"
+  description1: "Indtast venligst den E-mail adresse, som du brugte til at oprette din konto."
+  description2: "Du vil modtage en e-mail med et link til at nulstille din adgangskode."
+  email: "E-mail"
+  send_button: "Send nulstillingslink til mig"
+
+check_email:
+  title: "Tjek din e-mail"
+  description1: "Hvis en konto med den angivne e-mail adresse eksisterer, vil du modtage en e-mail med et link til at nulstille din adgangskode."
+  description2: "Hvis du ikke modtager en e-mail, kan du prøve at tjekke din spam-mappe."
+  description3: "E-mailen indeholder et link til at nulstille din adgangskode. Klik på linket for at nulstille din adgangskode."
+  description4: "Linket vil udløbe efter "
+  description5: "Hvis du ikke har modtaget e-mailen, kan du klikke på knappen nedenfor for at få tilsendt en ny e-mail."
+  button: "Send ny e-mail"
+
+reset_form:
+  title: "Nulstil adgangskode"
+  description1: "Indtast venligst din nye adgangskode."
+  password: "Nye Adgangskode"
+  password_confirm: "Nye Adgangskode igen"
+  button: "Nulstil adgangskode"

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
@@ -9,8 +8,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
-use Symfony\Component\Validator\Constraints\PasswordStrength;
 
 class ChangePasswordFormType extends AbstractType
 {
@@ -18,35 +15,34 @@ class ChangePasswordFormType extends AbstractType
     {
         $builder
             ->add('plainPassword', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'options' => [
+                'type'            => PasswordType::class,
+                'options'         => [
                     'attr' => [
                         'autocomplete' => 'new-password',
+                        'class'        => 'form-control',
                     ],
                 ],
-                'first_options' => [
+                'first_options'   => [
                     'constraints' => [
                         new NotBlank([
-                            'message' => 'Please enter a password',
+                            'message' => 'Indtast venligst dit kodeord',
                         ]),
                         new Length([
-                            'min' => 12,
-                            'minMessage' => 'Your password should be at least {{ limit }} characters',
+                            'min'        => 6,
+                            'minMessage' => 'Dit kodeord skal være mindst {{ limit }} tegn langt og indeholde midst 1 stort bogstav og 1 tal.',
                             // max length allowed by Symfony for security reasons
-                            'max' => 4096,
+                            'max'        => 4096,
                         ]),
-                        new PasswordStrength(),
-                        new NotCompromisedPassword(),
                     ],
-                    'label' => 'New password',
+                    'label'       => 'Nye adgangskode',
                 ],
-                'second_options' => [
-                    'label' => 'Repeat Password',
+                'second_options'  => [
+                    'label' => 'Gentag adgangskode',
                 ],
-                'invalid_message' => 'The password fields must match.',
+                'invalid_message' => 'De to adgangskoder skal være ens.',
                 // Instead of being set onto the object directly,
                 // this is read and encoded in the controller
-                'mapped' => false,
+                'mapped'          => false,
             ])
         ;
     }

@@ -85,6 +85,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $profilBillede = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $telefonNummer = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $addresse = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $byNavn = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $postnummer = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $land = null;
+
 
     public function __construct()
     {
@@ -326,6 +341,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $udstyr->setUserId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTelefonNummer(): ?string
+    {
+        return $this->telefonNummer;
+    }
+
+    public function setTelefonNummer(?string $telefonNummer): static
+    {
+        $this->telefonNummer = $telefonNummer;
+
+        return $this;
+    }
+
+    public function getAddresse(): ?string
+    {
+        return $this->addresse;
+    }
+
+    public function setAddresse(?string $addresse): static
+    {
+        $this->addresse = $addresse;
+
+        return $this;
+    }
+
+    public function getByNavn(): ?string
+    {
+        return $this->byNavn;
+    }
+
+    public function setByNavn(?string $byNavn): static
+    {
+        $this->byNavn = $byNavn;
+
+        return $this;
+    }
+
+    public function getPostnummer(): ?string
+    {
+        return $this->postnummer;
+    }
+
+    public function setPostnummer(?string $postnummer): static
+    {
+        $this->postnummer = $postnummer;
+
+        return $this;
+    }
+
+    public function getLand(): ?string
+    {
+        return $this->land;
+    }
+
+    public function setLand(?string $land): static
+    {
+        $this->land = $land;
 
         return $this;
     }

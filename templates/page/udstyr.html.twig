@@ -48,9 +48,13 @@
         class="udstyr-item room-section"
         data-room="{{ udstyr.lokale.value }}">
         <h2>{{ udstyr.enhed }}</h2>
+        <div class="divider dark"></div>
         <p>{{'equipment.room'|trans}}: {{ udstyr.lokale.value }}</p>
         <p>{{ 'equipment.status'|trans }}: {{ udstyr.status }}</p>
+
+        {% if udstyr.enhed != 'led' %}
         <p>{{ 'equipment.power'|trans }}: {{ udstyr.power }}%</p>
+        {% endif %}
       </div>
       {% endfor %}
     </section>

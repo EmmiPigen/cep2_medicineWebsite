@@ -1,11 +1,43 @@
-{% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %}{% block content %}
+<div class="main-container reset-password">
+  {% for flash_error in app.flashes('reset_password_error') %}
+  <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+  {% endfor %}
 
-{% block title %}Password Reset Email Sent{% endblock %}
+  <main class="reset-password-container check-email">
+    <header class="reset-header">
+      <h1>{{ "check_email.title" | trans }}</h1>
+    </header>
+    <div class="divider dark"></div>
 
-{% block body %}
-    <p>
-        If an account matching your email exists, then an email was just sent that contains a link that you can use to reset your password.
-        This link will expire in {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
-    </p>
-    <p>If you don't receive an email please check your spam folder or <a href="{{ path('app_forgot_password_request') }}">try again</a>.</p>
+    <div class="reset-text-container check-email">
+      <p>
+        {{ "check_email.description1" | trans }}
+      </p>
+
+      <p>
+        {{ "check_email.description2" | trans }}
+      </p>
+
+      <p>
+        {{ "check_email.description3" | trans }}
+      </p>
+
+      <p>
+        {{ "check_email.description4" | trans }}
+        {{resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle')}}
+      </p>
+
+      <p>
+        {{ "check_email.description5" | trans }}
+      </p>
+
+      <a
+        class="reset-password-button check-email-button"
+        href="{{ path('app_forgot_password_request') }}">
+        {{ "check_email.button" | trans }}
+      </a>
+    </div>
+  </main>
+</div>
 {% endblock %}
