@@ -19,7 +19,6 @@ class MedikamentDBApiController extends AbstractController
     //
 
     #[Route('/api/{event}/{userId}', name: 'api_post_event', methods: ['POST'])]
-
     public function apiPost(
         Request $request,
         EntityManagerInterface $entityManager,

@@ -17,15 +17,15 @@ security:
             lazy: true
             provider: app_user_provider
             form_login:
-                login_path: login
-                check_path: login
+                login_path: login # The route for the login form
+                check_path: login # The route for the login form submission
                 username_parameter: _username
                 password_parameter: _password
                 default_target_path: home  # Redirect after successful login
                 enable_csrf: true
             logout:
                 path: /logout  # The default route for logout
-                target: /login      # Redirect here after logout (home page)
+                target: /login      # Redirect here after logout 
             remember_me:
                 secret: '%kernel.secret%'
                 lifetime: 604800  # 1 week in seconds

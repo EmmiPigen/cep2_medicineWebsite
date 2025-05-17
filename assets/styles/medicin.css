@@ -1,3 +1,7 @@
+/*The classes here follow the BEM naming convention. SInce i only descovered this after i started writing the css, i will not change the classes that are already written. I have used BEM for most of the new classes.
+That is why you will notice the classes in the other files are not following the BEM naming convention. I might change this in the future, but for now i will leave it as is.
+*/
+
 .main-container.medicin {
   flex-direction: row;
 }

@@ -5,10 +5,12 @@ use App\Entity\MedikamentListe;
 use App\Entity\User;
 use App\Form\AddMedicinType;
 use App\Form\CaregiverType;
+use App\Form\ProfilBilledeType;
 use App\Form\RegistrationFormType;
 use App\Form\UpdateInfoType;
 use App\Repository\MedikamentListeRepository;
 use App\Repository\MedikamentLogRepository;
+use App\Service\SmsService;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,10 +20,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use App\Form\ProfilBilledeType;
-use App\Service\SmsService;
-use App\Form\UserEditType;
-
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 date_default_timezone_set('Europe/Copenhagen');
@@ -152,7 +150,7 @@ class PageController extends AbstractController
     #[Route('/historik', name: 'historik')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function historik(
-        MedikamentLogRepository $medikamnetLog,
+        MedikamentLogRepository $medikamentLog,
         LoggerInterface $logger
     ): Response {
         $user        = $this->getUser();
@@ -171,6 +169,7 @@ class PageController extends AbstractController
                 return $b->getTagetTid() <=> $a->getTagetTid(); // Sort by tagetTid in descending order
             });
 
+            //Add the logs to the array
             $medicinLogs = $medLogsArray;
         }
 
@@ -204,13 +203,12 @@ class PageController extends AbstractController
         ]);
     }
 
-
     #[Route('/hjaelp', name: 'hjaelp')]
     public function hjaelp(TranslatorInterface $translator): Response
     {
         $title        = $translator->trans('help.title');
         $description1 = $translator->trans('help.description1');
-        $helps = [];
+        $helps        = [];
         for ($i = 1; $i <= 9; $i++) {
 
             $helps[] = [
@@ -259,7 +257,7 @@ class PageController extends AbstractController
         loggerInterface $logger,
         AuthenticationUtils $authenticationUtils
     ): Response {
-        $error = $authenticationUtils->getLastAuthenticationError();
+        $error          = $authenticationUtils->getLastAuthenticationError();
         $user           = $this->getUser();
         $updateInfoForm = $this->createForm(UpdateInfoType::class, $user);
         $updateInfoForm->handleRequest($request);
@@ -311,78 +309,78 @@ class PageController extends AbstractController
             'profilBilledeForm' => $profilBilledeForm->createView(),
         ]);
 
-  }
+    }
 
-  #[Route('/profil/slet-billede', name: 'profil_slet_billede', methods: ['POST'])]
-  #[IsGranted('IS_AUTHENTICATED_FULLY')]
-  public function sletProfilbillede(EntityManagerInterface $entityManager): Response
-  {
-      /** @var User $user */
-      $user = $this->getUser();
+    #[Route('/profil/slet-billede', name: 'profil_slet_billede', methods: ['POST'])]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    public function sletProfilbillede(EntityManagerInterface $entityManager): Response
+    {
+        /** @var User $user */
+        $user = $this->getUser();
 
-      $uploadDir = $this->getParameter('upload_directory');
-      $billedePath = $uploadDir . '/' . $user->getProfilBillede();
+        $uploadDir   = $this->getParameter('upload_directory');
+        $billedePath = $uploadDir . '/' . $user->getProfilBillede();
 
-      if ($user->getProfilBillede() && file_exists($billedePath)) {
-          unlink($billedePath);
-      }
+        if ($user->getProfilBillede() && file_exists($billedePath)) {
+            unlink($billedePath);
+        }
 
-      $user->setProfilBillede(null);
-      $entityManager->persist($user);
-      $entityManager->flush();
+        $user->setProfilBillede(null);
+        $entityManager->persist($user);
+        $entityManager->flush();
 
-      $this->addFlash('success', 'Profilbilledet er blevet slettet.');
-      return $this->redirectToRoute('profil');
-  }
+        $this->addFlash('success', 'Profilbilledet er blevet slettet.');
+        return $this->redirectToRoute('profil');
+    }
 
-  #[Route('/tjek-medicin', name: 'tjek_medicin')]
-  #[IsGranted('IS_AUTHENTICATED_FULLY')]
-  public function tjekMedicintider(
-      EntityManagerInterface $em,
-      MedikamentLogRepository $logRepo,
-      SmsService $smsService // Twilio service
-  ): Response {
-      $user = $this->getUser();
-      $now = new \DateTime();
+    #[Route('/tjek-medicin', name: 'tjek_medicin')]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    public function tjekMedicintider(
+        EntityManagerInterface $em,
+        MedikamentLogRepository $logRepo,
+        SmsService $smsService // Twilio service
+    ): Response {
+        $user = $this->getUser();
+        $now  = new \DateTime();
 
-      foreach ($user->getMedikamentListes() as $med) {
-          foreach ($med->getTidspunkterTages() as $tidspunkt) {
-              // Opbyg medicinens planlagte tidspunkt
-              $medTime = \DateTime::createFromFormat('H:i', $tidspunkt);
-              $medTime->setDate($now->format('Y'), $now->format('m'), $now->format('d'));
+        foreach ($user->getMedikamentListes() as $med) {
+            foreach ($med->getTidspunkterTages() as $tidspunkt) {
+                // Opbyg medicinens planlagte tidspunkt
+                $medTime = \DateTime::createFromFormat('H:i', $tidspunkt);
+                $medTime->setDate($now->format('Y'), $now->format('m'), $now->format('d'));
 
-              // Skip hvis tiden ikke er overskredet endnu
-              if ($now < $medTime) {
-                  continue;
-              }
+                // Skip hvis tiden ikke er overskredet endnu
+                if ($now < $medTime) {
+                    continue;
+                }
 
-              // Tjek om medicinen er logget som "taget"
-              $matchFundet = false;
-              foreach ($user->getMedikamentLogs() as $log) {
-                  if (
-                      $log->getMedikamentNavn() === $med->getMedikamentNavn() &&
-                      $log->getTagetTid()?->format('Y-m-d') === $now->format('Y-m-d') &&
-                      $log->getTagetStatus() === 'taget'
-                  ) {
-                      $matchFundet = true;
-                      break;
-                  }
-              }
+                // Tjek om medicinen er logget som "taget"
+                $matchFundet = false;
+                foreach ($user->getMedikamentLogs() as $log) {
+                    if (
+                        $log->getMedikamentNavn() === $med->getMedikamentNavn() &&
+                        $log->getTagetTid()?->format('Y-m-d') === $now->format('Y-m-d') &&
+                        $log->getTagetStatus() === 'taget'
+                    ) {
+                        $matchFundet = true;
+                        break;
+                    }
+                }
 
-              // Hvis intet log-match => medicinen er ikke taget → send besked
-              if (!$matchFundet && $user->getOmsorgspersonTelefon()) {
-                  $smsService->sendSms(
-                      $user->getOmsorgspersonTelefon(),
-                      'OBS: ' . $user->getFuldeNavn() . ' har ikke taget medicinen "' . $med->getMedikamentNavn() . '" kl. ' . $tidspunkt
-                  );
+                // Hvis intet log-match => medicinen er ikke taget → send besked
+                if (! $matchFundet && $user->getOmsorgspersonTelefon()) {
+                    $smsService->sendSms(
+                        $user->getOmsorgspersonTelefon(),
+                        'OBS: ' . $user->getFuldeNavn() . ' har ikke taget medicinen "' . $med->getMedikamentNavn() . '" kl. ' . $tidspunkt
+                    );
 
-                  $this->addFlash('success', 'Besked sendt til kontaktperson om manglende medicin.');
-              }
-          }
-      }
+                    $this->addFlash('success', 'Besked sendt til kontaktperson om manglende medicin.');
+                }
+            }
+        }
 
-      return $this->redirectToRoute('profil');
-  }
+        return $this->redirectToRoute('profil');
+    }
 
     #[Route('/register', name: 'register')]
     public function register(
