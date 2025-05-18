@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use App\Entity\MedikamentAlarmLog;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -58,11 +57,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Udstyr::class, mappedBy: 'userId')]
     private Collection $udstyrs;
 
-    /**
-     * @var Collection<int, MedikamentAlarmLog>
-     */
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: MedikamentAlarmLog::class)]
-    private Collection $medikamentAlarmLogs;
+
 
 
 
@@ -85,7 +80,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $profilBillede = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(name: "telefonnummer", length: 255, nullable: true)]
     private ?string $telefonNummer = null;
 
     #[ORM\Column(length: 255, nullable: true)]

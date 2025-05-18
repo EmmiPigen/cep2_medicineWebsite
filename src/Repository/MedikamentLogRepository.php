@@ -25,28 +25,7 @@ class MedikamentLogRepository extends ServiceEntityRepository
      * @param string $medikamentNavn
      * @return MedikamentLog[]
      */
-    public function findTodayLogsFor(User $user, string $medikamentNavn): array
-    {
-        $qb = $this->createQueryBuilder('l');
-
-        $startOfDay = (new \DateTime())->setTime(0, 0);
-        $endOfDay   = (new \DateTime())->setTime(23, 59, 59);
-
-        return $qb
-            ->andWhere('l.userId = :user')
-            ->andWhere('l.medikamentNavn = :navn')
-            ->andWhere('l.tagetTid BETWEEN :start AND :end')
-            ->setParameter('user', $user)
-            ->setParameter('navn', $medikamentNavn)
-            ->setParameter('start', $startOfDay)
-            ->setParameter('end', $endOfDay)
-
-            ->orderBy('l.tagetTid', 'ASC')
-            ->getQuery()
-            ->getResult();
     
-    }
-
 //    /**
 //     * @return MedikamentLog[] Returns an array of MedikamentLog objects
 //     */

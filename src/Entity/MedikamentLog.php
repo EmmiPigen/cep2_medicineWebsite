@@ -31,6 +31,22 @@ class MedikamentLog
     #[ORM\JoinColumn(name: 'userId', referencedColumnName: 'user_id', nullable: false)]
     public ?User $userId = null;
 
+    # til sms service
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
+    private bool $alarmSent = false;
+
+    
+    public function isAlarmSent(): bool
+    {
+        return $this->alarmSent;
+    }
+
+    public function setAlarmSent(bool $sent): static
+    {
+        $this->alarmSent = $sent;
+        return $this;
+    }
+
 
     public function getId(): ?int
     {
