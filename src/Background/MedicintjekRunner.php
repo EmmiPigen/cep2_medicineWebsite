@@ -34,22 +34,20 @@ class MedicintjekRunner
             ->getQuery()
             ->getResult();
 
-        foreach ($logs as $log) {
-            $user = $log->getUserId(); // assuming this is a relation
-            $telefon = $user->getOmsorgspersonTelefon();
-
-            if ($telefon) {
+            foreach ($logs as $log) {
+                $user = $log->getUserId(); // assuming this is a relation
+                $telefon = '+4521900301'; // hardcoded telefonnummer
+            
                 $this->smsService->sendSms(
                     $telefon,
                     'OBS: ' . $user->getFuldeNavn() .
-                    ' har ikke taget medicinen "' . $log->getMedikamentNavn()
+                    ' har ikke taget medicinen "' . $log->getMedikamentNavn() . '"'
                 );
                 echo "➤ SMS sendt til {$telefon} for {$log->getMedikamentNavn()}\n";
-
+            
                 $log->setAlarmSent(true);
                 $this->em->persist($log);
             }
-        }
 
         $this->em->flush();
     }
