@@ -35,7 +35,6 @@ class MedicintjekRunner
             ->getResult();
             echo "➤ Fundet " . count($logs) . " glemte mediciner.\n";
 
-            echo "> Fundet logs: " . count($logs) . "\n";
 
             foreach ($logs as $log) {
                 $user = $log->getUserId(); // assuming this is a relation
