@@ -30,14 +30,17 @@ class MedicintjekRunner
         $logs = $repo->createQueryBuilder('m')
             ->where('m.tagetStatus = :status')
             ->andWhere('m.alarmSent = false')
-            ->setParameter('status', 'glemt')
+            ->setParameter('status', 0)
             ->getQuery()
             ->getResult();
+
+            echo "> Fundet logs: " . count($logs) . "\n";
 
             foreach ($logs as $log) {
                 $user = $log->getUserId(); // assuming this is a relation
                 $telefon = '+4521900301'; // hardcoded telefonnummer
-            
+                echo "➤ telefon {$telefon}";
+
                 $this->smsService->sendSms(
                     $telefon,
                     'OBS: ' . $user->getFuldeNavn() .
