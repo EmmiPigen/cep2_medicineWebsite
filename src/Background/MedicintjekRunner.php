@@ -30,11 +30,11 @@ class MedicintjekRunner
         $logs = $repo->createQueryBuilder('m')
             ->where('m.tagetStatus = :status')
             ->andWhere('m.alarmSent = false')
-            ->setParameter('status', 0)
+            ->setParameter('status', '0')
             ->getQuery()
             ->getResult();
+            echo "➤ Fundet " . count($logs) . " glemte mediciner.\n";
 
-            echo "> Fundet logs: " . count($logs) . "\n";
 
             foreach ($logs as $log) {
                 $user = $log->getUserId(); // assuming this is a relation

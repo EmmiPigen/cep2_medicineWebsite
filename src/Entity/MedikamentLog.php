@@ -30,7 +30,7 @@ class MedikamentLog
     #[ORM\JoinColumn(name: 'userId', referencedColumnName: 'user_id', nullable: false)]
     public ?User $userId = null;
 
-# til sms service
+  # til sms service
     #[ORM\Column(type: 'boolean', options: ['default' => false])]
     private bool $alarmSent = false;
 

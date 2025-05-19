@@ -17,6 +17,14 @@ class SmsService
         dump('TWILIO_FROM:', $twilioFrom);
 
         // Denne information kan findes i bunden af twilio hjemmesiden.
+        #$this->twilioSid = getenv('TWILIO_SID');
+        #$this->twilioToken = getenv('TWILIO_TOKEN');
+        #$this->twilioFrom = getenv('TWILIO_FROM');
+
+        #dump('TWILIO_SID:', $this->twilioSid);
+        #dump('TWILIO_TOKEN:', $this->twilioToken);
+        #dump('TWILIO_FROM:', $this->twilioFrom);
+        
         $this->twilioSid = $twilioSid;
         $this->twilioToken = $twilioToken;
         $this->twilioFrom = $twilioFrom;
@@ -24,6 +32,8 @@ class SmsService
 
     public function sendSms(string $to, string $message): void
     {
+        echo "Sender SMS til {$to} med besked: {$message}\n";
+
         $client = new Client($this->twilioSid, $this->twilioToken);
 
         $client->messages->create(
